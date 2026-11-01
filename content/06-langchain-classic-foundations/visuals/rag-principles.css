@@ -1,0 +1,16 @@
+/* RAG from first principles (lesson 6.3). Colours from the shared .sd-* figure styles: amber = documents, chunks,
+   vectors and the question; blue = the model; gray = the prompt; rose = the answer and the warning.
+   The active piece glows; hidden pieces fade out (instantly with reduced motion). */
+.rp-stage { margin-bottom: 4px; }
+.rp-el { transition: opacity var(--dur) var(--ease); }
+.rp-el.is-hidden { opacity: 0; }
+.rp-stage .sd-ring { opacity: 0; transition: opacity var(--dur) var(--ease); }
+.rp-stage .is-hot .sd-ring { opacity: 1; }
+.rp-stage .sd-model.is-hot .sd-ring { stroke: var(--model-tint); }
+.rp-stage .sd-cls.is-hot .sd-ring { stroke: var(--line-strong); }
+.rp-stage .sd-obj.is-hot .sd-ring { stroke: var(--data-tint); }
+.rp-cells .box { transition: fill var(--dur) var(--ease); }
+.rp-cells .box.is-picked { fill: var(--data); stroke: var(--data-ink); }
+@media (prefers-reduced-motion: reduce) {
+  .rp-el, .rp-stage .sd-ring, .rp-cells .box { transition: none; }
+}

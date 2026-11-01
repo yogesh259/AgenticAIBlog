@@ -1,0 +1,10 @@
+      <nav class="pager" aria-label="Page navigation" data-pagefind-ignore>
+{% if prev %}
+        <a href="{{ root }}{{ prev.url }}"><small>← Previous</small><b>{{ prev.label }}</b></a>
+{% else %}
+        <span></span>
+{% endif %}
+{% if next %}
+        <a class="next" href="{{ root }}{{ next.url }}"><small>Next →</small><b>{{ next.label }}</b></a>
+{% endif %}
+      </nav>

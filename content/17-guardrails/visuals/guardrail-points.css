@@ -1,0 +1,7 @@
+/* Where guardrails run (lesson 17.1). Static figure on the shared .sd-* styles. Colours: amber = the request,
+   gray = the checks and edges, blue = the model, green = the tools, rose = the answer and the blocked path. */
+.gp .sd-stage { padding: 6px 4px; }
+.gp .sd-stage svg { max-width: 460px; margin: 0 auto; }
+.gp .gp-hook { font: 500 11.5px var(--font-mono); fill: var(--ink-2); }
+.gp .gp-block { fill: none; stroke: var(--out); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.gp .sd-stage .gp-block-label { fill: var(--out-ink); font-weight: 600; }

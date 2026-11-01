@@ -1,0 +1,67 @@
+<figure class="card demo sd ra" aria-labelledby="ra-title">
+  <div class="demo-head">
+    <h3 id="ra-title">Replace or append</h3>
+    <p>What a key holds after a node's update, without a reducer and with <code>add_messages</code>. The values are those of lesson 10.2's graph and of the cell above.</p>
+  </div>
+
+  <div class="sd-stage ra-stage">
+    <div class="ra-row">
+      <div class="ra-key"><code>graph_info: str</code><small>no reducer</small></div>
+      <div class="ra-flow">
+        <div class="ra-box"><span class="ra-label">state</span><span class="ra-text">"Hey My name is Alice"</span></div>
+        <span class="ra-op" aria-hidden="true">+</span>
+        <div class="ra-box ra-box--update"><span class="ra-label">update</span><span class="ra-text">"Hey My name is Alice I am planning to play"</span></div>
+        <span class="ra-op" aria-hidden="true">=</span>
+        <div class="ra-box ra-box--result"><span class="ra-label">new state</span><span class="ra-text ra-hot">"Hey My name is Alice I am planning to play"</span><small>the update replaces the value</small></div>
+      </div>
+    </div>
+
+    <div class="ra-row">
+      <div class="ra-key"><code>messages: Annotated[list, add_messages]</code><small>a new message</small></div>
+      <div class="ra-flow">
+        <div class="ra-box">
+          <span class="ra-label">state</span>
+          <span class="ra-msg"><b>human</b><i>id 1</i>Hi, my name is Alice</span>
+          <span class="ra-msg"><b>ai</b><i>id 2</i>Hello Alice!</span>
+        </div>
+        <span class="ra-op" aria-hidden="true">+</span>
+        <div class="ra-box ra-box--update"><span class="ra-label">update</span><span class="ra-text">"I like cricket"</span></div>
+        <span class="ra-op" aria-hidden="true">=</span>
+        <div class="ra-box ra-box--result">
+          <span class="ra-label">new state</span>
+          <span class="ra-msg"><b>human</b><i>id 1</i>Hi, my name is Alice</span>
+          <span class="ra-msg"><b>ai</b><i>id 2</i>Hello Alice!</span>
+          <span class="ra-msg ra-hot"><b>human</b><i>new id</i>I like cricket</span>
+          <small>appended; the string became a HumanMessage</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="ra-row">
+      <div class="ra-key"><code>messages: Annotated[list, add_messages]</code><small>an ID already in the list</small></div>
+      <div class="ra-flow">
+        <div class="ra-box">
+          <span class="ra-label">state</span>
+          <span class="ra-msg"><b>human</b><i>id 1</i>Hi, my name is Alice</span>
+          <span class="ra-msg"><b>ai</b><i>id 2</i>Hello Alice!</span>
+        </div>
+        <span class="ra-op" aria-hidden="true">+</span>
+        <div class="ra-box ra-box--update"><span class="ra-label">update</span><span class="ra-msg"><b>ai</b><i>id 2</i>Hello, Alice! Nice to meet you.</span></div>
+        <span class="ra-op" aria-hidden="true">=</span>
+        <div class="ra-box ra-box--result">
+          <span class="ra-label">new state</span>
+          <span class="ra-msg"><b>human</b><i>id 1</i>Hi, my name is Alice</span>
+          <span class="ra-msg ra-hot"><b>ai</b><i>id 2</i>Hello, Alice! Nice to meet you.</span>
+          <small>same ID: replaced in place</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b>No reducer:</b> the key takes the update and the old value is gone. Right for a value a node recomputes, wrong for a conversation.</li>
+    <li><b><code>add_messages</code></b> appends new messages and gives each an ID; a string, a <code>("user", text)</code> tuple or a role and content dict becomes a message.</li>
+    <li><b>Same ID:</b> an update carrying a message whose ID is already in the list replaces that message where it stands. Corrections and summaries edit a conversation this way.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> the node returns the same kind of update in every row; the reducer, chosen per key in the state class, decides what happens to it.</p>
+</figure>

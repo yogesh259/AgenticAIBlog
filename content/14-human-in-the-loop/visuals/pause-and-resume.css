@@ -1,0 +1,13 @@
+/* Two ways to pause (lesson 14.3). A static figure on the shared .sd-* classes. Colours: gray = START, the feedback
+   node, the arrows and the numbered steps; blue = the model node; rose = where the run pauses. */
+.pr-stage { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; margin-top: 16px; }
+.pr-col { display: flex; flex-direction: column; min-width: 0; }
+.pr-pause circle { fill: var(--out-tint); stroke: var(--out); stroke-width: 1.5; filter: drop-shadow(0 0 5px rgba(209, 77, 99, .45)); }
+.pr-pause rect { fill: var(--out); }
+.pr .sd-stage .pr-line { font: 500 11.5px var(--font-mono); fill: var(--ink-2); }
+.pr .sd-stage .pr-hot { font-weight: 600; fill: var(--out-ink); }
+.pr-hot-bg { fill: var(--out-tint); stroke: var(--out-line); stroke-width: 1; }
+.pr-bracket { fill: none; stroke: var(--ink-2); stroke-width: 1.25; }
+.pr-keys { margin: 12px 0 0; padding-left: 1.4em; font-size: 14px; line-height: 1.55; color: var(--ink-2); }
+.pr-keys li + li { margin-top: 4px; }
+.pr-keys code { overflow-wrap: anywhere; }

@@ -1,0 +1,61 @@
+<figure class="card demo sd" aria-labelledby="tp-title">
+  <div class="demo-head">
+    <h3 id="tp-title">Threads share a process; processes share nothing</h3>
+    <p>What each option shares, and what can run Python code at the same moment.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 640 250" role="img" aria-labelledby="tp-svg-title tp-svg-desc">
+      <title id="tp-svg-title">One process with two threads beside two processes</title>
+      <desc id="tp-svg-desc">Left: one process holds shared memory, one GIL and two threads; thread 1 runs Python code while thread 2 waits for the GIL. Right: two processes, each with its own memory, its own GIL and one running thread, on core 1 and core 2. Data passed between the processes is copied.</desc>
+      <defs>
+        <marker id="tp-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <!-- one process, two threads -->
+      <text class="sd-label" x="16" y="24">one process, two threads</text>
+      <g class="sd-cls"><rect class="box" x="16" y="36" width="284" height="200" rx="12"/></g>
+      <g class="sd-obj">
+        <rect class="box" x="32" y="52" width="252" height="52" rx="9"/>
+        <text class="sd-t" x="46" y="74">shared memory</text>
+        <text class="sd-small" x="46" y="94">every thread sees the same objects</text>
+      </g>
+      <g class="sd-alert"><rect x="98" y="118" width="120" height="28" rx="14"/><text x="158" y="137" text-anchor="middle">one GIL</text></g>
+      <rect class="sd-run" x="32" y="160" width="252" height="28" rx="7"/>
+      <text class="sd-run-text" x="46" y="179">thread 1: runs Python code</text>
+      <rect class="sd-idle" x="32" y="196" width="252" height="28" rx="7"/>
+      <text class="sd-idle-text" x="46" y="215">thread 2: waits for the GIL</text>
+
+      <line class="sd-divider" x1="316" y1="14" x2="316" y2="240"/>
+
+      <!-- two processes -->
+      <text class="sd-label" x="332" y="24">two processes</text>
+      <g class="sd-cls"><rect class="box" x="332" y="36" width="128" height="200" rx="12"/></g>
+      <g class="sd-obj">
+        <rect class="box" x="344" y="52" width="104" height="52" rx="9"/>
+        <text class="sd-t" x="356" y="74">memory</text>
+        <text class="sd-small" x="356" y="94">its own</text>
+      </g>
+      <g class="sd-alert"><rect x="352" y="118" width="88" height="28" rx="14"/><text x="396" y="137" text-anchor="middle">own GIL</text></g>
+      <rect class="sd-run" x="344" y="160" width="104" height="28" rx="7"/>
+      <text class="sd-run-text" x="356" y="179">thread: runs</text>
+      <text class="sd-small" x="396" y="222" text-anchor="middle">core 1</text>
+
+      <g class="sd-cls"><rect class="box" x="496" y="36" width="128" height="200" rx="12"/></g>
+      <g class="sd-obj">
+        <rect class="box" x="508" y="52" width="104" height="52" rx="9"/>
+        <text class="sd-t" x="520" y="74">memory</text>
+        <text class="sd-small" x="520" y="94">its own</text>
+      </g>
+      <g class="sd-alert"><rect x="516" y="118" width="88" height="28" rx="14"/><text x="560" y="137" text-anchor="middle">own GIL</text></g>
+      <rect class="sd-run" x="508" y="160" width="104" height="28" rx="7"/>
+      <text class="sd-run-text" x="520" y="179">thread: runs</text>
+      <text class="sd-small" x="560" y="222" text-anchor="middle">core 2</text>
+
+      <path class="sd-arrow" d="M464 78 L 492 78" marker-start="url(#tp-arrow)" marker-end="url(#tp-arrow)"/>
+      <text class="sd-small" x="478" y="68" text-anchor="middle">copy</text>
+    </svg>
+  </div>
+
+  <p class="observe"><b>Observe:</b> threads see the same objects but take turns running Python code. Processes run at the same moment on separate cores, and share nothing: arguments and results are copied between them.</p>
+</figure>

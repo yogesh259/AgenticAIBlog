@@ -1,0 +1,39 @@
+<section class="card demo sx" data-slice-explorer aria-labelledby="sx-title">
+  <div class="demo-head">
+    <h3 id="sx-title">Slice explorer</h3>
+    <p>Pick one of the slices above, or type your own start, stop and step. The cursor walks the slice; the lit cells are the result.</p>
+  </div>
+
+  <div class="controls">
+    <div class="seg sx-presets" role="group" aria-label="Slices of numbers">
+      <button type="button" data-preset="2|5|" aria-pressed="true">[2:5]</button>
+      <button type="button" data-preset="|5|" aria-pressed="false">[:5]</button>
+      <button type="button" data-preset="5||" aria-pressed="false">[5:]</button>
+      <button type="button" data-preset="||2" aria-pressed="false">[::2]</button>
+      <button type="button" data-preset="||-1" aria-pressed="false">[::-1]</button>
+      <button type="button" data-preset="||3" aria-pressed="false">[::3]</button>
+      <button type="button" data-preset="||-2" aria-pressed="false">[::-2]</button>
+      <button type="button" data-preset="-3||" aria-pressed="false">[-3:]</button>
+    </div>
+    <div class="sx-inputs">
+      <label>start<input type="number" data-in="start" step="1" aria-label="start, blank for none"></label>
+      <label>stop<input type="number" data-in="stop" step="1" aria-label="stop, blank for none"></label>
+      <label>step<input type="number" data-in="step" step="1" aria-label="step, blank for none"></label>
+    </div>
+  </div>
+
+  <div class="sx-expr"><code data-expr>numbers[2:5]</code><span class="sx-eq" aria-hidden="true">&rarr;</span><code class="sx-result" data-result>[3, 4, 5]</code></div>
+
+  <div class="sx-strip" data-strip aria-hidden="true"></div>
+
+  <div class="readouts">
+    <div class="stat"><span class="label">Start</span><output data-out="start">2</output><small>first index taken</small></div>
+    <div class="stat"><span class="label">Stop</span><output data-out="stop">5</output><small>never taken</small></div>
+    <div class="stat"><span class="label">Step</span><output data-out="step">1</output><small>stride and direction</small></div>
+    <div class="stat stat--data"><span class="label">Items</span><output data-out="count">3</output><small>in the result</small></div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> the stop index is never taken, so <code>numbers[a:b]</code> has <code>b - a</code> items. A missing start or stop means "from the far end", and a negative step walks right to left.</p>
+</section>

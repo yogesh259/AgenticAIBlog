@@ -1,0 +1,47 @@
+/* A trace of the tool-calling agent (lesson 12.1). A static figure: the graph in SVG on the shared .sd-* classes,
+   the trace as nested HTML lists, so it reflows on phones. Colours: blue = model runs and the model's tool request,
+   green = the tool run and its result, gray = chains, routing functions and control flow, amber = the state that goes
+   in and out, rose = the answer. */
+.trt { container: trt / inline-size; }
+.trt-stage { display: grid; gap: 10px; padding: 14px; }
+.trt-graph { justify-self: center; width: 100%; max-width: 230px; }
+.trt-trace { min-width: 0; }
+.trt-cap { margin: 2px 0 8px; font: 600 10.5px var(--font-sans); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+
+.trt-tree, .trt-tree ul { list-style: none; margin: 0; padding: 0; }
+.trt-tree ul { margin-left: 12px; padding-left: 14px; border-left: 1.5px solid var(--line-strong); }
+.trt-tree li { position: relative; margin: 5px 0; }
+.trt-tree ul > li::before {
+  content: ""; position: absolute; left: -14px; top: 16px; width: 12px; border-top: 1.5px solid var(--line-strong);
+}
+.trt-row {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 5px 9px;
+  border: 1px solid var(--line); border-radius: 9px; background: #fff;
+}
+.trt-name { font: 600 12.5px var(--font-mono); color: var(--ink); }
+.trt-type {
+  padding: 1px 7px; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--soft);
+  font: 600 10.5px/1.5 var(--font-sans); letter-spacing: .05em; color: var(--muted);
+}
+.trt-type.trt-llm { border-color: var(--model-line); background: var(--model-tint); color: var(--model-ink); }
+.trt-type.trt-tool { border-color: var(--tool-line); background: var(--tool-tint); color: var(--tool-ink); }
+.trt-out {
+  margin-left: auto; max-width: 100%; padding: 2px 8px; border: 1px solid var(--line-strong); border-radius: 7px;
+  background: #fff; font: 500 12px/1.45 var(--font-mono); color: var(--ink-2); overflow-wrap: anywhere;
+}
+.trt-o-data { border-color: var(--data-line); background: var(--data-tint); color: var(--data-ink); }
+.trt-o-model { border-color: var(--model-line); background: var(--model-tint); color: var(--model-ink); }
+.trt-o-tool { border-color: var(--tool-line); background: var(--tool-tint); color: var(--tool-ink); }
+.trt-o-ctrl { background: var(--soft); }
+.trt-o-answer { border-color: var(--out-line); background: var(--out-tint); color: var(--out-ink); font-weight: 600; }
+.trt-step {
+  display: inline-grid; place-items: center; flex: none; width: 20px; height: 20px; border: 1.25px solid var(--ink-2);
+  border-radius: 50%; background: #fff; font: 600 11px var(--font-mono); color: var(--ink-2);
+}
+
+@container trt (max-width: 460px) {
+  .trt-stage { padding: 10px; }
+  .trt-tree ul { margin-left: 6px; padding-left: 10px; }
+  .trt-tree ul > li::before { left: -10px; width: 8px; }
+  .trt-out { margin-left: 0; }
+}

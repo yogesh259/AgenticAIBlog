@@ -1,0 +1,1 @@
+Python at a glance, on two reference pages: the Python that coding problems need, and the Python patterns that agentic AI code relies on. Each section is a short, runnable reference with its output, followed by practice tasks: write the code yourself before you open the solution.

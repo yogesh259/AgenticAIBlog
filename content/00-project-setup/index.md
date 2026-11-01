@@ -1,0 +1,1 @@
+Every agentic AI project starts with the same three pieces: an isolated Python environment for its packages, a notebook to try ideas in, and API keys kept out of the code. This module sets up all three. The commands here are the ones you will reuse at the start of every project.

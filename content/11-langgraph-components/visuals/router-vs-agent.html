@@ -1,0 +1,93 @@
+<figure class="card demo sd rva" aria-labelledby="rva-title">
+  <div class="demo-head">
+    <h3 id="rva-title">Router or agent</h3>
+    <p>The same two nodes and the same routing function. Only the edge out of <code>tools</code> differs.</p>
+  </div>
+
+  <div class="sd-stage rva-stage">
+    <svg viewBox="0 0 350 318" role="img" aria-labelledby="rva-a-title rva-a-desc">
+      <title id="rva-a-title">The router graph</title>
+      <desc id="rva-a-desc">__start__ leads to tool_calling_llm; from there a dotted edge goes to tools when the reply has tool calls and another to __end__ when it has none; tools leads to __end__, so the run stops on the tool's result.</desc>
+      <defs>
+        <marker id="rva-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+        <marker id="rva-arrow-hot" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#d14d63"/></marker>
+      </defs>
+
+      <!-- the router -->
+      <rect class="rva-panel" x="6" y="6" width="338" height="306" rx="14"/>
+      <text class="sd-label" x="24" y="30">Router · lesson 11.2</text>
+
+      <g class="sd-cls">
+        <rect class="box" x="115" y="44" width="110" height="32" rx="16"/>
+        <text class="sd-t" x="170" y="65" text-anchor="middle">__start__</text>
+      </g>
+      <g class="sd-model">
+        <rect class="box" x="90" y="104" width="160" height="50" rx="10"/>
+        <text class="sd-t" x="170" y="126" text-anchor="middle">tool_calling_llm</text>
+        <text class="sd-small" x="170" y="143" text-anchor="middle">the model decides</text>
+      </g>
+      <g class="sd-tool">
+        <rect class="box" x="30" y="206" width="120" height="50" rx="10"/>
+        <text class="sd-t" x="90" y="228" text-anchor="middle">tools</text>
+        <text class="sd-small" x="90" y="245" text-anchor="middle">runs the calls</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="210" y="215" width="110" height="32" rx="16"/>
+        <text class="sd-t" x="265" y="236" text-anchor="middle">__end__</text>
+      </g>
+
+      <path class="sd-arrow" d="M170 76 V100" marker-end="url(#rva-arrow)"/>
+      <path class="sd-arrow sd-arrow--dash" d="M138 154 L102 202" marker-end="url(#rva-arrow)"/>
+      <text class="sd-small" x="52" y="186">tool calls</text>
+      <path class="sd-arrow sd-arrow--dash" d="M204 154 L250 211" marker-end="url(#rva-arrow)"/>
+      <text class="sd-small" x="236" y="186">no tool calls</text>
+      <path class="rva-hot" d="M150 231 H206" marker-end="url(#rva-arrow-hot)"/>
+      <text class="sd-small rva-note" x="175" y="290" text-anchor="middle">tools → END: the run stops on the result</text>
+
+    </svg>
+
+    <svg viewBox="0 0 350 318" role="img" aria-labelledby="rva-b-title rva-b-desc">
+      <title id="rva-b-title">The ReAct agent graph</title>
+      <desc id="rva-b-desc">The same nodes and dotted edges, but tools leads back to tool_calling_llm, so the model reads each result and decides again, until a reply without tool calls goes to __end__.</desc>
+      <g transform="translate(-370 0)">
+      <rect class="rva-panel" x="376" y="6" width="338" height="306" rx="14"/>
+      <text class="sd-label" x="394" y="30">ReAct agent · lesson 11.4</text>
+
+      <g class="sd-cls">
+        <rect class="box" x="495" y="44" width="110" height="32" rx="16"/>
+        <text class="sd-t" x="550" y="65" text-anchor="middle">__start__</text>
+      </g>
+      <g class="sd-model">
+        <rect class="box" x="470" y="104" width="160" height="50" rx="10"/>
+        <text class="sd-t" x="550" y="126" text-anchor="middle">tool_calling_llm</text>
+        <text class="sd-small" x="550" y="143" text-anchor="middle">reason</text>
+      </g>
+      <g class="sd-tool">
+        <rect class="box" x="410" y="206" width="120" height="50" rx="10"/>
+        <text class="sd-t" x="470" y="228" text-anchor="middle">tools</text>
+        <text class="sd-small" x="470" y="245" text-anchor="middle">act</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="590" y="215" width="110" height="32" rx="16"/>
+        <text class="sd-t" x="645" y="236" text-anchor="middle">__end__</text>
+      </g>
+
+      <path class="sd-arrow" d="M550 76 V100" marker-end="url(#rva-arrow)"/>
+      <path class="sd-arrow sd-arrow--dash" d="M518 154 L482 202" marker-end="url(#rva-arrow)"/>
+      <text class="sd-small" x="432" y="186">tool calls</text>
+      <path class="sd-arrow sd-arrow--dash" d="M584 154 L630 211" marker-end="url(#rva-arrow)"/>
+      <text class="sd-small" x="616" y="186">no tool calls</text>
+      <path class="rva-hot" d="M424 206 C404 176 420 138 466 130" marker-end="url(#rva-arrow-hot)"/>
+      <text class="sd-small rva-note-hot" x="388" y="118">observe</text>
+      <text class="sd-small rva-note" x="545" y="290" text-anchor="middle">tools → tool_calling_llm: the model reads the result</text>
+      </g>
+    </svg>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b>Both graphs:</b> <code>tool_calling_llm</code> calls the model with the tools bound; <code>tools_condition</code> sends a reply with tool calls to <code>tools</code> and any other reply to <code>__end__</code>.</li>
+    <li><b>Router:</b> <code>add_edge("tools", END)</code>. One decision, at most one tool round, and the run ends on a raw <code>ToolMessage</code> the model never reads.</li>
+    <li><b>Agent:</b> <code>add_edge("tools", "tool_calling_llm")</code>. Each result goes back to the model, which answers or asks for more tools; only a reply without tool calls ends the run.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> the loop gives the model control over how many steps a run takes, which is why the agent needs a <code>recursion_limit</code> and the router doesn't.</p>
+</figure>

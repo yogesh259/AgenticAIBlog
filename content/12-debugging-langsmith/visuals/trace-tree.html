@@ -1,0 +1,111 @@
+<figure class="card demo sd trt" aria-labelledby="trt-title">
+  <div class="demo-head">
+    <h3 id="trt-title">A trace of the tool-calling agent</h3>
+    <p>One run of the agent of lesson 12.2 on "What is 5 + 3?". Above, the graph; below, the trace LangSmith records: one row per run, nested under the run that started it. The numbers mark the five steps of the run.</p>
+  </div>
+
+  <div class="sd-stage trt-stage">
+    <svg class="trt-graph" viewBox="0 0 240 262" role="img" aria-labelledby="trt-g-title trt-g-desc">
+      <title id="trt-g-title">The tool-calling agent graph</title>
+      <desc id="trt-g-desc">__start__ leads to agent, where the model decides. A dotted edge goes from agent to tools when the reply has tool calls, and another to __end__ when it has none. A solid edge leads from tools back to agent.</desc>
+      <defs>
+        <marker id="trt-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <g class="sd-cls">
+        <rect class="box" x="70" y="8" width="100" height="30" rx="15"/>
+        <text class="sd-t" x="120" y="28" text-anchor="middle">__start__</text>
+      </g>
+      <g class="sd-model">
+        <rect class="box" x="62" y="70" width="116" height="48" rx="10"/>
+        <text class="sd-t" x="120" y="91" text-anchor="middle">agent</text>
+        <text class="sd-small" x="120" y="108" text-anchor="middle">the model decides</text>
+      </g>
+      <g class="sd-tool">
+        <rect class="box" x="10" y="190" width="104" height="48" rx="10"/>
+        <text class="sd-t" x="62" y="211" text-anchor="middle">tools</text>
+        <text class="sd-small" x="62" y="228" text-anchor="middle">runs add</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="146" y="199" width="86" height="30" rx="15"/>
+        <text class="sd-t" x="189" y="219" text-anchor="middle">__end__</text>
+      </g>
+
+      <path class="sd-arrow" d="M120 38 V66" marker-end="url(#trt-arrow)"/>
+      <path class="sd-arrow sd-arrow--dash" d="M104 118 L80 186" marker-end="url(#trt-arrow)"/>
+      <text class="sd-small" x="84" y="158" text-anchor="end">tool calls</text>
+      <path class="sd-arrow sd-arrow--dash" d="M142 118 L176 195" marker-end="url(#trt-arrow)"/>
+      <text class="sd-small" x="166" y="150">no tool</text>
+      <text class="sd-small" x="166" y="164">calls</text>
+      <path class="sd-arrow" d="M26 190 C 10 150, 18 108, 58 96" marker-end="url(#trt-arrow)"/>
+    </svg>
+
+    <div class="trt-trace">
+      <p class="trt-cap">Trace</p>
+      <ul class="trt-tree" aria-label="The runs of the trace, each nested under the run that started it">
+        <li>
+          <div class="trt-row">
+            <span class="trt-name">LangGraph</span><span class="trt-type">chain</span>
+            <span class="trt-out trt-o-data">in: "What is 5 + 3?" · out: 4 messages</span>
+          </div>
+          <ul>
+            <li>
+              <div class="trt-row"><span class="trt-name">agent</span><span class="trt-type">chain</span></div>
+              <ul>
+                <li>
+                  <div class="trt-row">
+                    <b class="trt-step" aria-label="Step 1">1</b><span class="trt-name">ChatOpenAI</span><span class="trt-type trt-llm">llm</span>
+                    <span class="trt-out trt-o-model">tool call: add(a=5, b=3)</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="trt-row">
+                    <b class="trt-step" aria-label="Step 2">2</b><span class="trt-name">should_continue</span><span class="trt-type">chain</span>
+                    <span class="trt-out trt-o-ctrl">"tools"</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <div class="trt-row"><span class="trt-name">tools</span><span class="trt-type">chain</span></div>
+              <ul>
+                <li>
+                  <div class="trt-row">
+                    <b class="trt-step" aria-label="Step 3">3</b><span class="trt-name">add</span><span class="trt-type trt-tool">tool</span>
+                    <span class="trt-out trt-o-tool">a=5, b=3 → 8.0</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <div class="trt-row"><span class="trt-name">agent</span><span class="trt-type">chain</span></div>
+              <ul>
+                <li>
+                  <div class="trt-row">
+                    <b class="trt-step" aria-label="Step 4">4</b><span class="trt-name">ChatOpenAI</span><span class="trt-type trt-llm">llm</span>
+                    <span class="trt-out trt-o-answer">"The answer is 8."</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="trt-row">
+                    <b class="trt-step" aria-label="Step 5">5</b><span class="trt-name">should_continue</span><span class="trt-type">chain</span>
+                    <span class="trt-out trt-o-ctrl">"__end__"</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b>A request, not a result.</b> The first model call returns a tool call, <code>add(a=5, b=3)</code>; no tool has run yet.</li>
+    <li><b>Route.</b> <code>should_continue</code> finds the tool call and returns <code>"tools"</code>. A routing function's run sits inside the node it follows.</li>
+    <li><b>Act.</b> <code>ToolNode</code> runs <code>add(5, 3)</code> and stores <code>8.0</code> as a tool message. The <code>add</code> run belongs to <code>tools</code>, not to the model.</li>
+    <li><b>Read the result.</b> The model runs again with the question, its own request and <code>8.0</code>, and writes the answer.</li>
+    <li><b>Stop.</b> No tool calls this time, so <code>should_continue</code> returns <code>"__end__"</code>.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> every row also stores its inputs, start and end times and any error, and the two <code>llm</code> rows add the messages sent, the tool schema, tokens and cost. The trace is the graph's run unrolled: each pass through <code>agent</code> becomes its own row.</p>
+</figure>

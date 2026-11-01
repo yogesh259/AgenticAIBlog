@@ -1,0 +1,43 @@
+/* Slice explorer (lesson 1.7). Colours: amber = the list's items (data), gray = cursor and stop (control), rose = the result. */
+.sx-presets { flex-wrap: wrap; }
+.sx-presets button { font-family: var(--font-mono); font-size: 13px; }
+.sx-inputs { display: flex; gap: 10px; }
+.sx-inputs label { display: flex; align-items: center; gap: 6px; font: 500 12.5px var(--font-mono); color: var(--muted); }
+.sx-inputs input {
+  width: 60px; height: 34px; padding: 0 8px; border: 1px solid var(--line-strong); border-radius: 9px;
+  background: #fff; font: 500 14px var(--font-mono); color: var(--ink);
+}
+.sx-expr { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 2px 0 12px; }
+.sx-expr code { padding: 4px 10px; font-size: 14px; }
+.sx-eq { color: var(--faint); }
+.sx-result { border-color: var(--out-line); background: var(--out-tint); color: var(--out-ink); }
+
+.sx-strip {
+  display: grid; grid-template-columns: repeat(12, minmax(34px, 1fr)); gap: 6px; margin-bottom: 14px; padding: 14px 12px 12px;
+  overflow-x: auto; border: 1px solid var(--line); border-radius: 12px;
+  background-color: var(--soft); background-image: radial-gradient(#dfe3e8 1px, transparent 1px); background-size: 16px 16px;
+}
+.sx-col { position: relative; display: flex; flex-direction: column; align-items: center; gap: 5px; padding-bottom: 14px; }
+.sx-i, .sx-n { min-height: 16px; font: 500 11.5px/16px var(--font-mono); color: var(--muted); }
+.sx-n { color: var(--faint); }
+.sx-cell {
+  position: relative; display: grid; place-items: center; width: 100%; height: 42px;
+  border: 1.5px solid var(--data-line); border-radius: 9px; background: #fff;
+  font: 600 15px var(--font-mono); color: var(--data-ink);
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.sx-col.is-end .sx-cell { border-color: transparent; background: transparent; }
+.sx-col.is-picked .sx-cell { border-color: var(--data); background: var(--data-tint); box-shadow: 0 0 0 4px var(--data-tint), 0 0 12px var(--data-line); }
+.sx-col.is-stop .sx-cell { border: 1.5px dashed var(--ink-2); background: transparent; box-shadow: none; }
+.sx-col.is-stop::after {
+  content: "stop"; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%);
+  font: 600 10.5px/1.4 var(--font-mono); color: var(--ink-2);
+}
+.sx-col.is-cursor .sx-cell { outline: 2px solid var(--ink-2); outline-offset: 3px; }
+
+@media (max-width: 760px) {
+  .sx-inputs input { width: 52px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sx-cell { transition: none; }
+}

@@ -1,0 +1,48 @@
+/* Fan out, fan in (lesson 13.2). Built on the style board's graph player (theme.css: .graph-box, .g-node,
+   .g-edge, .packet, .state-box). Colours: gray = the nodes (plain functions here) and the edges, amber = the
+   state, rose = END. A lit node glows; nothing changes hue. */
+.ps-code { margin: 0 0 14px; }
+.ps-code .code-head { flex-wrap: wrap; }
+.ps .controls .seg, .ps .btns { flex-wrap: wrap; }
+.ps-stage { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: start; }
+
+/* Nodes that are plain Python functions: gray, like control flow */
+.ps .role-func .box { fill: #fff; stroke: var(--line-strong); }
+.ps .role-func .t-main { font: 600 13.5px var(--font-mono); fill: var(--ink); }
+.ps .role-func .t-sub { fill: var(--muted); }
+.ps .role-func .ring { stroke: var(--ink-2); }
+.ps .role-func.is-active .box { stroke: var(--ink-2); filter: drop-shadow(0 0 8px rgba(55, 65, 81, .28)); }
+.ps .g-edge.is-wait { stroke: var(--ink-2); stroke-dasharray: 2 5; }
+
+/* The run panel */
+.ps-body { display: grid; gap: 10px; padding: 12px; }
+.ps-title { display: block; margin-bottom: 4px; font: 600 10.5px var(--font-sans); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.ps-steps ol { display: grid; gap: 4px; min-height: 1.6em; margin: 0; padding: 0; list-style: none; }
+.ps-steps li {
+  display: flex; align-items: baseline; gap: 8px; padding: 4px 8px;
+  border: 1px solid var(--line); border-radius: 8px; background: #fff;
+  font: 500 12.5px/1.5 var(--font-mono); color: var(--ink-2);
+}
+.ps-steps li b { flex: none; min-width: 1.4em; font-weight: 700; color: var(--ink); }
+.ps-steps li em { margin-left: auto; font: 500 11px var(--font-sans); font-style: normal; color: var(--muted); }
+.ps-steps li.is-next { border-style: dashed; background: transparent; }
+.ps-kv {
+  display: grid; gap: 4px; padding: 8px 10px;
+  border: 1.5px solid var(--data-line); border-radius: 10px; background: #fff;
+  transition: box-shadow var(--dur) var(--ease);
+}
+.ps-key { justify-self: start; padding: 0; border: 0; background: none; font: 600 12px var(--font-mono); color: var(--data-ink); }
+.ps-val { overflow-wrap: anywhere; font: 500 12.5px/1.5 var(--font-mono); color: var(--ink); }
+.ps-kv:has(.ps-val.is-new) { box-shadow: 0 0 0 4px var(--data-tint), 0 0 0 5px var(--data-line); }
+.ps-printed pre {
+  min-height: 3.4em; margin: 0; padding: 8px 10px; overflow-x: auto;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--soft);
+  font: 500 12px/1.6 var(--font-mono); white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ps-kv { transition: none; }
+}
+@media (max-width: 760px) {
+  .ps-stage { grid-template-columns: minmax(0, 1fr); }
+}

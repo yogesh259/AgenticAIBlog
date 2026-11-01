@@ -1,0 +1,113 @@
+<section class="card demo gr" data-graph-run aria-labelledby="gr-title">
+  <div class="demo-head">
+    <h3 id="gr-title">A state through a graph</h3>
+    <p>Pick the coin's result, then press <b>Play</b> or step with <b>Next</b>. Each replays a real run of the graph above.</p>
+  </div>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Coin toss">
+      <button type="button" data-preset="cricket" aria-pressed="true">Cricket</button>
+      <button type="button" data-preset="badminton" aria-pressed="false">Badminton</button>
+    </div>
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <figure class="code-cell gr-code">
+    <figcaption class="code-head"><span>The nodes, the router and the call</span><span class="sync">&middot; the highlighted lines are running</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre class="is-compact" data-code><code><span class="line"><span class="k">def</span> <span class="f">start_play</span>(state: State):</span>
+<span class="line">    <span class="b">print</span>(<span class="s">"Start_Play node has been called"</span>)</span>
+<span class="line">    <span class="k">return</span> {<span class="s">"graph_info"</span>: state[<span class="s">"graph_info"</span>] + <span class="s">" I am planning to play"</span>}</span>
+<span class="line"></span>
+<span class="line"><span class="k">def</span> <span class="f">cricket</span>(state: State):</span>
+<span class="line">    <span class="b">print</span>(<span class="s">"My Cricket node has been called"</span>)</span>
+<span class="line">    <span class="k">return</span> {<span class="s">"graph_info"</span>: state[<span class="s">"graph_info"</span>] + <span class="s">" Cricket"</span>}</span>
+<span class="line"></span>
+<span class="line"><span class="k">def</span> <span class="f">badminton</span>(state: State):</span>
+<span class="line">    <span class="b">print</span>(<span class="s">"My badminton node has been called"</span>)</span>
+<span class="line">    <span class="k">return</span> {<span class="s">"graph_info"</span>: state[<span class="s">"graph_info"</span>] + <span class="s">" Badminton"</span>}</span>
+<span class="line"></span>
+<span class="line"><span class="k">def</span> <span class="f">random_play</span>(state: State) -&gt; Literal[<span class="s">"cricket"</span>, <span class="s">"badminton"</span>]:</span>
+<span class="line">    graph_info = state[<span class="s">"graph_info"</span>]</span>
+<span class="line">    <span class="k">if</span> random.random() &gt; <span class="n">0.5</span>:</span>
+<span class="line">        <span class="k">return</span> <span class="s">"cricket"</span></span>
+<span class="line">    <span class="k">else</span>:</span>
+<span class="line">        <span class="k">return</span> <span class="s">"badminton"</span></span>
+<span class="line"></span>
+<span class="line">graph.invoke({<span class="s">"graph_info"</span>: <span class="s">"Hey My name is Alice"</span>})</span></code></pre>
+  </figure>
+
+  <div class="stage gr-stage">
+    <div class="graph-box">
+      <svg viewBox="0 0 440 330" role="img" aria-labelledby="gr-svg-title gr-svg-desc">
+        <title id="gr-svg-title">The game graph</title>
+        <desc id="gr-svg-desc">START leads to the start_play node. From start_play, a conditional edge chosen by random_play leads to cricket or to badminton. Both lead to END.</desc>
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#b6bcc6"/></marker>
+          <marker id="arrow-on" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#374151"/></marker>
+        </defs>
+
+        <rect class="g-group" x="8" y="8" width="424" height="314" rx="14"/>
+        <text class="g-group-label" x="22" y="30">StateGraph(State)</text>
+
+        <path data-edge="start" class="g-edge" d="M220 70 L220 98"/>
+        <path data-edge="cricket" class="g-edge is-cond" d="M196 152 L128 194"/>
+        <path data-edge="badminton" class="g-edge is-cond" d="M244 152 L312 194"/>
+        <path data-edge="cricket-end" class="g-edge" d="M105 248 C105 274 140 292 173 296"/>
+        <path data-edge="badminton-end" class="g-edge" d="M335 248 C335 274 300 292 267 296"/>
+        <text class="g-label" x="220" y="182" text-anchor="middle">random_play()</text>
+
+        <g data-node="start" class="g-node role-ctrl">
+          <rect class="box" x="177" y="42" width="86" height="28" rx="14"/>
+          <text class="t-main" x="220" y="60" text-anchor="middle">START</text>
+        </g>
+        <g data-node="start_play" class="g-node role-func">
+          <rect class="ring" x="146" y="98" width="148" height="58" rx="14"/>
+          <rect class="box" x="150" y="102" width="140" height="50" rx="11"/>
+          <text class="t-main" x="220" y="124" text-anchor="middle">start_play</text>
+          <text class="t-sub" x="220" y="141" text-anchor="middle">a node</text>
+        </g>
+        <g data-node="cricket" class="g-node role-func">
+          <rect class="ring" x="36" y="194" width="138" height="58" rx="14"/>
+          <rect class="box" x="40" y="198" width="130" height="50" rx="11"/>
+          <text class="t-main" x="105" y="220" text-anchor="middle">cricket</text>
+          <text class="t-sub" x="105" y="237" text-anchor="middle">a node</text>
+        </g>
+        <g data-node="badminton" class="g-node role-func">
+          <rect class="ring" x="266" y="194" width="138" height="58" rx="14"/>
+          <rect class="box" x="270" y="198" width="130" height="50" rx="11"/>
+          <text class="t-main" x="335" y="220" text-anchor="middle">badminton</text>
+          <text class="t-sub" x="335" y="237" text-anchor="middle">a node</text>
+        </g>
+        <g data-node="end" class="g-node role-end">
+          <rect class="box" x="177" y="282" width="86" height="28" rx="14"/>
+          <text class="t-main" x="220" y="300" text-anchor="middle">END</text>
+        </g>
+
+        <circle class="packet" r="6" cx="220" cy="70"/>
+      </svg>
+    </div>
+    <div class="state-box gr-state">
+      <div class="state-head"><span>state</span><span class="tag">Data</span></div>
+      <div class="gr-body">
+        <div class="gr-kv"><code class="gr-key">graph_info</code><span class="gr-val" data-el="value"></span></div>
+        <div class="gr-update" data-el="update">
+          <span class="gr-title" data-el="utitle"></span>
+          <code class="gr-utext" data-el="utext"></code>
+        </div>
+        <div class="gr-printed">
+          <span class="gr-title">Printed</span>
+          <pre data-el="printed"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> every node received the whole state and sent back only what it changed; the router picked the next node without writing anything. In the notebook the coin decides, so running the cell again may take the other branch.</p>
+</section>

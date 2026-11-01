@@ -1,0 +1,141 @@
+<figure class="card demo sd fs" aria-labelledby="fs-title">
+  <div class="demo-head">
+    <h3 id="fs-title">Five workflow shapes</h3>
+    <p>Each pattern drawn as the graph its lesson builds, with the edge that makes it.</p>
+  </div>
+
+  <div class="sd-stage fs-stage">
+    <svg viewBox="0 0 300 360" role="img" aria-labelledby="fs-a-title fs-a-desc">
+      <title id="fs-a-title">Prompt chaining</title>
+      <desc id="fs-a-desc">The input goes to generate, a model call. A gate in code follows: pass leads to improve and then polish, two more model calls, and then to the output; fail leads back to generate.</desc>
+      <defs>
+        <marker id="fs-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+      <rect class="fs-panel" x="6" y="6" width="288" height="348" rx="14"/>
+      <text class="sd-label" x="22" y="30">Prompt chaining · 13.1</text>
+      <text class="sd-small" x="22" y="48">fixed steps, a gate between them</text>
+
+      <g class="sd-cls"><rect class="box" x="120" y="60" width="60" height="24" rx="12"/><text x="150" y="77" text-anchor="middle">in</text></g>
+      <g class="sd-model"><rect class="box" x="90" y="100" width="120" height="34" rx="9"/><text class="sd-t" x="150" y="122" text-anchor="middle">generate</text></g>
+      <g class="sd-cls"><path class="box" d="M150 152 L168 170 L150 188 L132 170 Z"/></g>
+      <text class="sd-small" x="176" y="174">gate</text>
+      <g class="sd-model"><rect class="box" x="90" y="206" width="120" height="34" rx="9"/><text class="sd-t" x="150" y="228" text-anchor="middle">improve</text></g>
+      <g class="sd-model"><rect class="box" x="90" y="256" width="120" height="34" rx="9"/><text class="sd-t" x="150" y="278" text-anchor="middle">polish</text></g>
+      <g class="sd-answer"><rect class="box" x="120" y="306" width="60" height="24" rx="12"/><text x="150" y="323" text-anchor="middle">out</text></g>
+
+      <path class="sd-arrow" d="M150 84 V96" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow" d="M150 134 V148" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow sd-arrow--dash" d="M150 188 V202" marker-end="url(#fs-arrow)"/>
+      <text class="sd-small" x="160" y="201">pass</text>
+      <path class="sd-arrow" d="M150 240 V252" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow" d="M150 290 V302" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow sd-arrow--dash" d="M132 170 C100 170 66 160 66 140 C66 124 74 117 86 117" marker-end="url(#fs-arrow)"/>
+      <text class="sd-small" x="30" y="150">fail</text>
+    </svg>
+
+    <svg viewBox="0 0 300 360" role="img" aria-labelledby="fs-b-title fs-b-desc">
+      <title id="fs-b-title">Parallelization</title>
+      <desc id="fs-b-desc">The input fans out to three model calls, character, setting and premise, which run in the same super-step; all three lead to combine, which produces the output.</desc>
+      <rect class="fs-panel" x="6" y="6" width="288" height="348" rx="14"/>
+      <text class="sd-label" x="22" y="30">Parallelization · 13.2</text>
+      <text class="sd-small" x="22" y="48">independent calls at once, then a merge</text>
+
+      <g class="sd-cls"><rect class="box" x="120" y="60" width="60" height="24" rx="12"/><text x="150" y="77" text-anchor="middle">in</text></g>
+      <g class="sd-model"><rect class="box" x="18" y="118" width="84" height="34" rx="9"/><text class="sd-t" x="60" y="140" text-anchor="middle">character</text></g>
+      <g class="sd-model"><rect class="box" x="108" y="118" width="84" height="34" rx="9"/><text class="sd-t" x="150" y="140" text-anchor="middle">setting</text></g>
+      <g class="sd-model"><rect class="box" x="198" y="118" width="84" height="34" rx="9"/><text class="sd-t" x="240" y="140" text-anchor="middle">premise</text></g>
+      <g class="sd-model"><rect class="box" x="95" y="200" width="110" height="34" rx="9"/><text class="sd-t" x="150" y="222" text-anchor="middle">combine</text></g>
+      <g class="sd-answer"><rect class="box" x="120" y="270" width="60" height="24" rx="12"/><text x="150" y="287" text-anchor="middle">out</text></g>
+
+      <path class="sd-arrow" d="M138 84 L68 114" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow" d="M150 84 V114" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow" d="M162 84 L232 114" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow" d="M66 152 L124 196" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow" d="M150 152 V196" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow" d="M234 152 L176 196" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow" d="M150 234 V266" marker-end="url(#fs-arrow)"/>
+      <text class="sd-small" x="150" y="322" text-anchor="middle">three calls in one super-step</text>
+    </svg>
+
+    <svg viewBox="0 0 300 360" role="img" aria-labelledby="fs-c-title fs-c-desc">
+      <title id="fs-c-title">Routing</title>
+      <desc id="fs-c-desc">The input goes to router, a model call that classifies it. Dashed conditional edges lead to three handlers, story, joke and poem, of which one runs; each leads to the output.</desc>
+      <rect class="fs-panel" x="6" y="6" width="288" height="348" rx="14"/>
+      <text class="sd-label" x="22" y="30">Routing · 13.3</text>
+      <text class="sd-small" x="22" y="48">classify first, then one handler</text>
+
+      <g class="sd-cls"><rect class="box" x="120" y="60" width="60" height="24" rx="12"/><text x="150" y="77" text-anchor="middle">in</text></g>
+      <g class="sd-model"><rect class="box" x="95" y="100" width="110" height="34" rx="9"/><text class="sd-t" x="150" y="122" text-anchor="middle">router</text></g>
+      <g class="sd-model"><rect class="box" x="18" y="196" width="84" height="34" rx="9"/><text class="sd-t" x="60" y="218" text-anchor="middle">story</text></g>
+      <g class="sd-model"><rect class="box" x="108" y="196" width="84" height="34" rx="9"/><text class="sd-t" x="150" y="218" text-anchor="middle">joke</text></g>
+      <g class="sd-model"><rect class="box" x="198" y="196" width="84" height="34" rx="9"/><text class="sd-t" x="240" y="218" text-anchor="middle">poem</text></g>
+      <g class="sd-answer"><rect class="box" x="120" y="276" width="60" height="24" rx="12"/><text x="150" y="293" text-anchor="middle">out</text></g>
+
+      <path class="sd-arrow" d="M150 84 V96" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow sd-arrow--dash" d="M126 134 L70 192" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow sd-arrow--dash" d="M150 134 V192" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow sd-arrow--dash" d="M174 134 L230 192" marker-end="url(#fs-arrow)"/>
+      <text class="sd-small" x="282" y="160" text-anchor="end">one runs</text>
+      <path class="sd-arrow" d="M66 230 L134 272" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow" d="M150 230 V272" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow" d="M234 230 L166 272" marker-end="url(#fs-arrow)"/>
+      <text class="sd-small" x="150" y="328" text-anchor="middle">a conditional edge picks the node</text>
+    </svg>
+
+    <svg viewBox="0 0 300 360" role="img" aria-labelledby="fs-d-title fs-d-desc">
+      <title id="fs-d-title">Orchestrator-worker</title>
+      <desc id="fs-d-desc">The input goes to orchestrator, a model call that plans the subtasks. A dashed edge labelled Send times n starts one run of llm_call per subtask, drawn as a stack of cards. All runs lead to synthesizer, plain code that joins the results, and then to the output.</desc>
+      <rect class="fs-panel" x="6" y="6" width="288" height="348" rx="14"/>
+      <text class="sd-label" x="22" y="30">Orchestrator-worker · 13.4</text>
+      <text class="sd-small" x="22" y="48">a plan made at run time, a worker each</text>
+
+      <g class="sd-cls"><rect class="box" x="120" y="60" width="60" height="24" rx="12"/><text x="150" y="77" text-anchor="middle">in</text></g>
+      <g class="sd-model"><rect class="box" x="85" y="100" width="130" height="34" rx="9"/><text class="sd-t" x="150" y="122" text-anchor="middle">orchestrator</text></g>
+      <g class="sd-model fs-stack">
+        <rect class="box" x="112" y="184" width="100" height="34" rx="9"/>
+        <rect class="box" x="106" y="190" width="100" height="34" rx="9"/>
+        <rect class="box" x="100" y="196" width="100" height="34" rx="9"/>
+        <text class="sd-t" x="150" y="218" text-anchor="middle">llm_call</text>
+      </g>
+      <text class="sd-small" x="220" y="212">× n</text>
+      <g class="sd-cls"><rect class="box" x="90" y="252" width="120" height="34" rx="9"/><text class="sd-t" x="150" y="274" text-anchor="middle">synthesizer</text></g>
+      <g class="sd-answer"><rect class="box" x="120" y="306" width="60" height="24" rx="12"/><text x="150" y="323" text-anchor="middle">out</text></g>
+
+      <path class="sd-arrow" d="M150 84 V96" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow sd-arrow--dash" d="M150 134 V178" marker-end="url(#fs-arrow)"/>
+      <text class="sd-small" x="158" y="160">Send × n</text>
+      <path class="sd-arrow" d="M150 230 V248" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow" d="M150 286 V302" marker-end="url(#fs-arrow)"/>
+    </svg>
+
+    <svg viewBox="0 0 300 360" role="img" aria-labelledby="fs-e-title fs-e-desc">
+      <title id="fs-e-title">Evaluator-optimizer</title>
+      <desc id="fs-e-desc">The input goes to generator, a model call, then to evaluator, a second model call. A dashed edge marked rejected plus feedback loops back to generator; another, marked accepted, leads to the output.</desc>
+      <rect class="fs-panel" x="6" y="6" width="288" height="348" rx="14"/>
+      <text class="sd-label" x="22" y="30">Evaluator-optimizer · 13.5</text>
+      <text class="sd-small" x="22" y="48">write, grade, revise until accepted</text>
+
+      <g class="sd-cls"><rect class="box" x="100" y="60" width="60" height="24" rx="12"/><text x="130" y="77" text-anchor="middle">in</text></g>
+      <g class="sd-model"><rect class="box" x="74" y="100" width="112" height="34" rx="9"/><text class="sd-t" x="130" y="122" text-anchor="middle">generator</text></g>
+      <g class="sd-model"><rect class="box" x="74" y="180" width="112" height="34" rx="9"/><text class="sd-t" x="130" y="202" text-anchor="middle">evaluator</text></g>
+      <g class="sd-answer"><rect class="box" x="100" y="266" width="60" height="24" rx="12"/><text x="130" y="283" text-anchor="middle">out</text></g>
+
+      <path class="sd-arrow" d="M130 84 V96" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow" d="M130 134 V176" marker-end="url(#fs-arrow)"/>
+      <path class="sd-arrow sd-arrow--dash" d="M186 197 C212 197 222 184 222 157 C222 130 212 117 190 117" marker-end="url(#fs-arrow)"/>
+      <text class="sd-small" x="230" y="152">rejected +</text>
+      <text class="sd-small" x="230" y="166">feedback</text>
+      <path class="sd-arrow sd-arrow--dash" d="M130 214 V262" marker-end="url(#fs-arrow)"/>
+      <text class="sd-small" x="138" y="243">accepted</text>
+      <text class="sd-small" x="150" y="322" text-anchor="middle">a loop: cap the rounds</text>
+    </svg>
+  </div>
+
+  <div class="legend" aria-hidden="true">
+    <span style="--c: var(--model)"><i></i>model call</span>
+    <span style="--c: var(--ink-2)"><i></i>code: gate, input, join</span>
+    <span style="--c: var(--out)"><i></i>output</span>
+    <span>dashed: a conditional edge or <code>Send</code></span>
+  </div>
+  <p class="observe"><b>Observe:</b> all five are ordinary nodes and edges. What differs is how many paths leave a node and what chooses them: fixed edges (chaining, parallelization), a function that picks one (routing), a function that creates as many as the plan needs (orchestrator-worker), or a function that can lead back (evaluator-optimizer).</p>
+</figure>

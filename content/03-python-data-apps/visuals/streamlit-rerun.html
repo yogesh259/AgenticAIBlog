@@ -1,0 +1,58 @@
+<section class="card demo sr" data-st-rerun aria-labelledby="sr-title">
+  <div class="demo-head">
+    <h3 id="sr-title">Streamlit reruns your script</h3>
+    <p>Press <b>Play</b> or step with <b>Next</b>. The script is on top; below it, the page it draws in the browser.</p>
+  </div>
+
+  <div class="controls">
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <div class="readouts">
+    <div class="stat"><span class="label">Step</span><output data-out="step">0 / 3</output><small>of the demo</small></div>
+    <div class="stat" data-out-card="run"><span class="label">Runs</span><output data-out="run">0</output><small>of the whole script</small></div>
+    <div class="stat stat--data" data-out-card="name"><span class="label sr-mono">name</span><output data-out="name">-</output><small>returned by text_input</small></div>
+    <div class="stat stat--data" data-out-card="age"><span class="label sr-mono">age</span><output data-out="age">-</output><small>returned by slider</small></div>
+  </div>
+
+  <div class="sr-stage">
+    <figure class="code-cell sr-code">
+      <figcaption class="code-head"><span>widgets.py, shortened</span><span class="sync">· the highlighted line is running</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre data-code><code><span class="line"><span class="k">import</span> streamlit <span class="k">as</span> st</span>
+<span class="line"></span>
+<span class="line">st.title(<span class="s">"Streamlit Text Input"</span>)</span>
+<span class="line">name = st.text_input(<span class="s">"Enter your name:"</span>)</span>
+<span class="line">age = st.slider(<span class="s">"Select your age:"</span>, <span class="n">0</span>, <span class="n">100</span>, <span class="n">25</span>)</span>
+<span class="line">st.write(<span class="s">f"Your age is </span>{age}<span class="s">."</span>)</span>
+<span class="line"><span class="k">if</span> name:</span>
+<span class="line">    st.write(<span class="s">f"Hello, </span>{name}<span class="s">"</span>)</span></code></pre>
+    </figure>
+
+    <div class="sr-app" aria-hidden="true">
+      <div class="sr-bar"><span class="sr-dots"><i></i><i></i><i></i></span><span class="sr-url">localhost:8501</span><span class="sr-event" data-el="event"></span></div>
+      <div class="sr-page">
+        <p class="sr-empty" data-el="empty">The page is empty until the script runs.</p>
+        <div class="sr-el sr-title" data-el="title">Streamlit Text Input</div>
+        <div class="sr-el sr-field" data-el="input">
+          <span class="sr-label">Enter your name:</span>
+          <span class="sr-box"><span class="sr-value" data-el="typed"></span></span>
+        </div>
+        <div class="sr-el sr-field" data-el="slider">
+          <span class="sr-label">Select your age:</span>
+          <span class="sr-track"><span class="sr-fill" data-el="fill"></span><span class="sr-thumb" data-el="thumb"><b data-el="thumb-value">25</b></span></span>
+        </div>
+        <div class="sr-el sr-line" data-el="ageline">Your age is <span data-el="age-shown">25</span>.</div>
+        <div class="sr-el sr-line" data-el="hello">Hello, Alice</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> nothing in the script waits for input. Every change runs all of it again, top to bottom, and the widgets hand back their current values; that is why a model call placed after <code>if name:</code> would run on every change too.</p>
+</section>

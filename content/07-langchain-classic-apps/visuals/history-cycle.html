@@ -1,0 +1,74 @@
+<figure class="card demo sd" aria-labelledby="hc-title">
+  <div class="demo-head">
+    <h3 id="hc-title">What the history wrapper does on each call</h3>
+    <p><code>with_message_history.invoke(new_messages, config=config)</code>, step by step.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 720 262" role="img" aria-labelledby="hc-svg-title hc-svg-desc">
+      <title id="hc-svg-title">RunnableWithMessageHistory around one call</title>
+      <desc id="hc-svg-desc">Step 1: invoke receives the new messages and a config holding the session ID. Step 2: the wrapper calls get_session_history with that ID, which returns the session's history from the store; the store holds chat1 with 4 messages and chat2 with 6. Step 3: the stored history and the new messages go to the chain, a prompt and a model, which writes a reply. Step 4: the new messages and the reply are appended to the session's history in the store.</desc>
+      <defs>
+        <marker id="hc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <g class="sd-cls">
+        <rect class="box" x="16" y="24" width="150" height="60" rx="10"/>
+        <text class="sd-t" x="91" y="50" text-anchor="middle">invoke(...)</text>
+        <text class="sd-small" x="91" y="70" text-anchor="middle">new messages + config</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="214" y="24" width="190" height="60" rx="10"/>
+        <text class="sd-t" x="309" y="50" text-anchor="middle">get_session_history</text>
+        <text class="sd-small" x="309" y="70" text-anchor="middle">session_id from the config</text>
+      </g>
+      <g class="sd-model">
+        <rect class="box" x="458" y="24" width="124" height="60" rx="10"/>
+        <text class="sd-t" x="520" y="50" text-anchor="middle">chain</text>
+        <text class="sd-small" x="520" y="70" text-anchor="middle">prompt | model</text>
+      </g>
+      <g class="sd-answer">
+        <rect class="box" x="620" y="24" width="84" height="60" rx="10"/>
+        <text x="662" y="59" text-anchor="middle">reply</text>
+      </g>
+
+      <!-- the store -->
+      <g class="sd-obj">
+        <rect class="sd-ring" x="214" y="138" width="190" height="104" rx="10"/>
+        <rect class="box" x="214" y="138" width="190" height="104" rx="10"/>
+        <text class="sd-t" x="230" y="162">store</text>
+        <line class="rule" x1="214" y1="174" x2="404" y2="174"/>
+        <text x="230" y="198">"chat1"</text>
+        <text x="388" y="198" text-anchor="end">4 messages</text>
+        <text x="230" y="224">"chat2"</text>
+        <text x="388" y="224" text-anchor="end">6 messages</text>
+      </g>
+
+      <!-- 1: find the session -->
+      <path class="sd-arrow" d="M166 54 H210" marker-end="url(#hc-arrow)"/>
+      <!-- 2: read its history -->
+      <path class="sd-arrow" d="M309 84 V134" marker-end="url(#hc-arrow)"/>
+      <!-- 3: history + new messages to the chain -->
+      <path class="sd-arrow sd-arrow--on" d="M404 162 H520 V88" marker-end="url(#hc-arrow)"/>
+      <text class="sd-small" x="426" y="128">history +</text>
+      <text class="sd-small" x="426" y="143">new messages</text>
+      <path class="sd-arrow" d="M582 54 H616" marker-end="url(#hc-arrow)"/>
+      <!-- 4: save -->
+      <path class="sd-arrow sd-arrow--dash" d="M662 84 V224 H408" marker-end="url(#hc-arrow)"/>
+      <text class="sd-small" x="532" y="216" text-anchor="middle">append the new messages and the reply</text>
+
+      <g class="sd-badge"><circle cx="188" cy="38" r="10"/><text x="188" y="42" text-anchor="middle">1</text></g>
+      <g class="sd-badge"><circle cx="325" cy="110" r="10"/><text x="325" y="114" text-anchor="middle">2</text></g>
+      <g class="sd-badge"><circle cx="536" cy="112" r="10"/><text x="536" y="116" text-anchor="middle">3</text></g>
+      <g class="sd-badge"><circle cx="678" cy="150" r="10"/><text x="678" y="154" text-anchor="middle">4</text></g>
+    </svg>
+  </div>
+
+  <ol class="sd-keys">
+    <li><code>invoke</code> receives only the new messages; <code>config</code> carries <code>{"configurable": {"session_id": ...}}</code>.</li>
+    <li>The wrapper calls <code>get_session_history(session_id)</code>, which returns that session's history from the store, or a new empty one for a new ID.</li>
+    <li>It puts the stored messages before the new ones and runs the chain, so the model sees the whole conversation.</li>
+    <li>It appends the new messages and the reply to the history, ready for the next call.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> every session shares the same chain and model; only the history differs. A new session ID finds an empty history, which is why <code>chat2</code> knew nothing of <code>chat1</code>.</p>
+</figure>

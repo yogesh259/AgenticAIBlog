@@ -1,0 +1,77 @@
+<figure class="card demo sd ld" aria-labelledby="ld-title">
+  <div class="demo-head">
+    <h3 id="ld-title">Who decides the next step</h3>
+    <p>Six levels of autonomy and, at each, who makes three decisions: the output of a step, which step runs next, and which steps exist at all. Adapted from LangChain's levels of autonomy.</p>
+  </div>
+
+  <div class="sd-stage ld-stage">
+    <div class="ld-scroll">
+      <table class="ld-table">
+        <thead>
+          <tr>
+            <td class="ld-gap"></td>
+            <th scope="col">Level</th>
+            <th scope="col">A step's output</th>
+            <th scope="col">The next step</th>
+            <th scope="col">The steps that exist</th>
+            <th scope="col">Modules</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ld-gap"></td>
+            <th scope="row"><b>Code</b><small>rules and scripts, no model</small></th>
+            <td class="ld-cell">code</td>
+            <td class="ld-cell">code</td>
+            <td class="ld-cell">code</td>
+            <td class="ld-mod">-</td>
+          </tr>
+          <tr>
+            <th scope="rowgroup" rowspan="3" class="ld-band"><span>Workflows</span></th>
+            <th scope="row"><b>One model call</b><small>summarise a support ticket</small></th>
+            <td class="ld-cell ld-cell--model">model</td>
+            <td class="ld-cell">code</td>
+            <td class="ld-cell">code</td>
+            <td class="ld-mod">06</td>
+          </tr>
+          <tr>
+            <th scope="row"><b>Chain</b><small>retrieve, then answer</small></th>
+            <td class="ld-cell ld-cell--model">model<small>at every step</small></td>
+            <td class="ld-cell">code</td>
+            <td class="ld-cell">code</td>
+            <td class="ld-mod">06, 07</td>
+          </tr>
+          <tr>
+            <th scope="row"><b>Router</b><small>billing or technical support?</small></th>
+            <td class="ld-cell ld-cell--model">model</td>
+            <td class="ld-cell ld-cell--model">model<small>once, no loops</small></td>
+            <td class="ld-cell">code</td>
+            <td class="ld-mod">11, 13</td>
+          </tr>
+          <tr>
+            <th scope="rowgroup" rowspan="2" class="ld-band"><span>Agents</span></th>
+            <th scope="row"><b>Agent</b><small>the order agent: tools in a loop</small></th>
+            <td class="ld-cell ld-cell--model">model</td>
+            <td class="ld-cell ld-cell--model">model<small>in a loop, until it answers</small></td>
+            <td class="ld-cell">code<small>the developer's tools</small></td>
+            <td class="ld-mod">09, 11</td>
+          </tr>
+          <tr>
+            <th scope="row"><b>Autonomous agent</b><small>writes and keeps its own tools</small></th>
+            <td class="ld-cell ld-cell--model">model</td>
+            <td class="ld-cell ld-cell--model">model</td>
+            <td class="ld-cell ld-cell--model">model<small>new tools as it goes</small></td>
+            <td class="ld-mod">-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b>Workflows:</b> code fixes the path. The model writes each step's output and, in a router, picks one branch.</li>
+    <li><b>Agents:</b> the model picks the next step again and again, including when to stop. LangChain calls this level a state machine; the developer still decides which tools exist. Agents that write their own tools are mostly research, such as the Voyager paper's agent that learned skills in Minecraft.</li>
+    <li><b>Several agents</b> can sit on any row: a team of model calls that always runs in the same order is still a workflow.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> down the table, each decision passes from code to the model. Each row buys flexibility with latency, cost and behaviour that is harder to test, and most production systems sit in the middle rows.</p>
+</figure>

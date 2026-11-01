@@ -1,0 +1,21 @@
+/* Set operations (lesson 1.10). Colours: amber = the sets and the region kept (data), rose = the result. */
+.so-ops { flex-wrap: wrap; }
+.so-stage {
+  margin-bottom: 12px; border: 1px solid var(--line); border-radius: 12px;
+  background-color: var(--soft); background-image: radial-gradient(#dfe3e8 1px, transparent 1px); background-size: 16px 16px;
+}
+.so-stage svg { display: block; width: 100%; max-width: 520px; height: auto; margin: 0 auto; }
+.so-reg { fill: var(--data-line); fill-opacity: 0; transition: fill-opacity var(--dur) var(--ease); }
+.so-reg.is-on { fill-opacity: .55; }
+.so-ring { fill: none; stroke: var(--data); stroke-width: 2; }
+.so-label { font: 600 14px var(--font-mono); fill: var(--data-ink); }
+.so-num { font: 600 17px var(--font-mono); fill: var(--faint); transition: fill var(--dur) var(--ease); }
+.so-num.is-on { fill: var(--data-ink); }
+.so-expr { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.so-expr code { padding: 4px 10px; font-size: 14px; }
+.so-eq { color: var(--faint); }
+.so-result { border-color: var(--out-line); background: var(--out-tint); color: var(--out-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .so-reg, .so-num { transition: none; }
+}

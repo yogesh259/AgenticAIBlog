@@ -1,0 +1,63 @@
+<figure class="card demo sd rp" aria-labelledby="rp-title">
+  <div class="demo-head">
+    <h3 id="rp-title">How a Router picks a deployment</h3>
+    <p>One alias with three deployments, the deployment each routing strategy would pick from the same numbers, and where fallbacks take over.</p>
+  </div>
+
+  <div class="sd-stage rp-stage">
+    <svg viewBox="0 0 320 440" role="img" aria-labelledby="rp-svg-title rp-svg-desc">
+      <title id="rp-svg-title">A Router choosing among three deployments of the alias chat</title>
+      <desc id="rp-svg-desc">A call to router.completion with model chat reaches the alias chat, which has three deployments. gpt-4o has no request in flight, answers in 1.6 seconds and costs 2.50 and 10 dollars per million input and output tokens. gpt-4o-mini has three requests in flight, answers in 0.9 seconds and costs 0.15 and 0.60 dollars. gemini-3.5-flash-lite has one request in flight, answers in 0.4 seconds and costs 0.30 and 2.50 dollars. Badge 1, simple-shuffle, sits on the alias: any of its deployments. Badge 2, least-busy, is on gpt-4o. Badge 3, latency-based routing, is on Gemini Flash-Lite. Badge 4, cost-based routing, is on gpt-4o-mini. A dashed line leads from the group to fallbacks to the alias backup, taken when retries are spent; a deployment that keeps failing cools down and is skipped for a while.</desc>
+      <defs>
+        <marker id="rp-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <g class="sd-cls"><rect class="box" x="20" y="10" width="280" height="28" rx="14"/><text class="sd-t" x="160" y="29" text-anchor="middle">router.completion(model="chat")</text></g>
+      <path class="sd-arrow" d="M160 38 V52" marker-end="url(#rp-arrow)"/>
+      <g class="sd-cls"><rect class="box" x="70" y="56" width="180" height="30" rx="8"/><text x="160" y="76" text-anchor="middle">model_name "chat"</text></g>
+      <g class="sd-badge"><circle cx="272" cy="71" r="10"/><text x="272" y="75" text-anchor="middle">1</text></g>
+
+      <path class="sd-arrow" d="M160 86 V98 H14 V283"/>
+      <path class="sd-arrow" d="M14 139 H24" marker-end="url(#rp-arrow)"/>
+      <path class="sd-arrow" d="M14 211 H24" marker-end="url(#rp-arrow)"/>
+      <path class="sd-arrow" d="M14 283 H24" marker-end="url(#rp-arrow)"/>
+
+      <g class="sd-model">
+        <rect class="box" x="28" y="108" width="236" height="62" rx="10"/>
+        <text class="sd-t" x="40" y="128">gpt-4o</text>
+        <text class="sd-small" x="40" y="146">in flight 0 · 1.6 s</text>
+        <text class="sd-small" x="40" y="162">$2.50 / $10.00 per 1M tokens</text>
+      </g>
+      <g class="sd-model">
+        <rect class="box" x="28" y="180" width="236" height="62" rx="10"/>
+        <text class="sd-t" x="40" y="200">gpt-4o-mini</text>
+        <text class="sd-small" x="40" y="218">in flight 3 · 0.9 s</text>
+        <text class="sd-small" x="40" y="234">$0.15 / $0.60 per 1M tokens</text>
+      </g>
+      <g class="sd-model">
+        <rect class="box" x="28" y="252" width="236" height="62" rx="10"/>
+        <text class="sd-t" x="40" y="272">gemini/gemini-3.5-flash-lite</text>
+        <text class="sd-small" x="40" y="290">in flight 1 · 0.4 s</text>
+        <text class="sd-small" x="40" y="306">$0.30 / $2.50 per 1M tokens</text>
+      </g>
+
+      <g class="sd-badge"><circle cx="286" cy="139" r="10"/><text x="286" y="143" text-anchor="middle">2</text></g>
+      <g class="sd-badge"><circle cx="286" cy="211" r="10"/><text x="286" y="215" text-anchor="middle">4</text></g>
+      <g class="sd-badge"><circle cx="286" cy="283" r="10"/><text x="286" y="287" text-anchor="middle">3</text></g>
+
+      <path class="sd-arrow sd-arrow--dash" d="M14 283 V351 H24" marker-end="url(#rp-arrow)"/>
+      <g class="sd-alert"><rect x="28" y="334" width="236" height="34" rx="10"/><text x="40" y="356">fallbacks: "chat" → "backup"</text></g>
+      <text class="sd-small" x="28" y="390">after the retries, when the whole group fails</text>
+      <text class="sd-small" x="28" y="412">a deployment that keeps failing cools down:</text>
+      <text class="sd-small" x="28" y="428">the Router skips it for a while</text>
+    </svg>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b><code>simple-shuffle</code></b>, the default: any deployment of the alias, at random, in proportion to its <code>weight</code>.</li>
+    <li><b><code>least-busy</code></b>: the fewest requests in flight, <code>gpt-4o</code> here; a tie goes to the deployment listed first.</li>
+    <li><b><code>latency-based-routing</code></b>: the fastest recent responses, Gemini Flash-Lite here.</li>
+    <li><b><code>cost-based-routing</code></b>: the lowest price per token, <code>gpt-4o-mini</code> here; in LiteLLM 1.105 with async calls only.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> from the same numbers, the strategies pick three different deployments. Choose the strategy for what matters most, and pool deployments that answer alike.</p>
+</figure>

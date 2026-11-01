@@ -1,0 +1,108 @@
+<figure class="card demo sd" aria-labelledby="ls-title">
+  <div class="demo-head">
+    <h3 id="ls-title">Three ways to join runnables</h3>
+    <p>The same text through each shape, with <code>upper</code> and <code>count</code> as two small functions: <code>"hi there"</code> becomes <code>"HI THERE"</code> and <code>2</code>.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 760 290" role="img" aria-labelledby="ls-svg-title ls-svg-desc">
+      <title id="ls-svg-title">Sequence, parallel and assign</title>
+      <desc id="ls-svg-desc">Sequence, written a | b: the text "hi there" goes through upper, giving "HI THERE", then through count, giving 2. Parallel, written as a dict of runnables: the same text goes to upper and to count at the same time, and the results form the dict upper "HI THERE", words 2. Assign: the dict text "hi there" passes through unchanged while a side branch picks the text with itemgetter and counts its words; the output is the same dict plus words 2.</desc>
+      <defs>
+        <marker id="ls-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <line class="sd-divider" x1="242" y1="12" x2="242" y2="282"/>
+      <line class="sd-divider" x1="522" y1="12" x2="522" y2="282"/>
+
+      <!-- sequence -->
+      <text class="sd-label" x="120" y="24" text-anchor="middle">sequence</text>
+      <text class="sd-t" x="120" y="44" text-anchor="middle">a | b</text>
+      <g class="sd-obj">
+        <rect class="box" x="70" y="56" width="100" height="26" rx="13"/>
+        <text x="120" y="73" text-anchor="middle">"hi there"</text>
+      </g>
+      <path class="sd-arrow" d="M120 82 V102" marker-end="url(#ls-arrow)"/>
+      <g class="sd-cls">
+        <rect class="box" x="75" y="106" width="90" height="30" rx="8"/>
+        <text class="sd-t" x="120" y="126" text-anchor="middle">upper</text>
+      </g>
+      <path class="sd-arrow" d="M120 136 V170" marker-end="url(#ls-arrow)"/>
+      <text class="sd-small" x="128" y="157">"HI THERE"</text>
+      <g class="sd-cls">
+        <rect class="box" x="75" y="174" width="90" height="30" rx="8"/>
+        <text class="sd-t" x="120" y="194" text-anchor="middle">count</text>
+      </g>
+      <path class="sd-arrow" d="M120 204 V224" marker-end="url(#ls-arrow)"/>
+      <g class="sd-obj">
+        <rect class="sd-ring" x="95" y="228" width="50" height="26" rx="13"/>
+        <rect class="box" x="95" y="228" width="50" height="26" rx="13"/>
+        <text x="120" y="245" text-anchor="middle">2</text>
+      </g>
+      <text class="sd-small" x="120" y="276" text-anchor="middle">b runs on a's output</text>
+
+      <!-- parallel -->
+      <text class="sd-label" x="382" y="24" text-anchor="middle">parallel</text>
+      <text class="sd-t" x="382" y="44" text-anchor="middle">{"x": a, "y": b}</text>
+      <g class="sd-obj">
+        <rect class="box" x="332" y="56" width="100" height="26" rx="13"/>
+        <text x="382" y="73" text-anchor="middle">"hi there"</text>
+      </g>
+      <path class="sd-arrow" d="M382 82 C382 96, 327 92, 327 106" marker-end="url(#ls-arrow)"/>
+      <path class="sd-arrow" d="M382 82 C382 96, 437 92, 437 106" marker-end="url(#ls-arrow)"/>
+      <g class="sd-cls">
+        <rect class="box" x="282" y="110" width="90" height="30" rx="8"/>
+        <text class="sd-t" x="327" y="130" text-anchor="middle">upper</text>
+        <rect class="box" x="392" y="110" width="90" height="30" rx="8"/>
+        <text class="sd-t" x="437" y="130" text-anchor="middle">count</text>
+      </g>
+      <path class="sd-arrow" d="M327 140 V214" marker-end="url(#ls-arrow)"/>
+      <path class="sd-arrow" d="M437 140 V214" marker-end="url(#ls-arrow)"/>
+      <text class="sd-small" x="321" y="180" text-anchor="end">"upper"</text>
+      <text class="sd-small" x="443" y="180">"words"</text>
+      <g class="sd-obj">
+        <rect class="sd-ring" x="269" y="218" width="226" height="42" rx="12"/>
+        <rect class="box" x="269" y="218" width="226" height="42" rx="12"/>
+        <text x="382" y="235" text-anchor="middle">{"upper": "HI THERE",</text>
+        <text x="382" y="252" text-anchor="middle">"words": 2}</text>
+      </g>
+      <text class="sd-small" x="382" y="280" text-anchor="middle">same input to every branch, at once</text>
+
+      <!-- assign -->
+      <text class="sd-label" x="640" y="24" text-anchor="middle">assign</text>
+      <text class="sd-t" x="640" y="44" text-anchor="middle">.assign(z=c)</text>
+      <g class="sd-obj">
+        <rect class="box" x="555" y="56" width="170" height="26" rx="13"/>
+        <text x="640" y="73" text-anchor="middle">{"text": "hi there"}</text>
+      </g>
+      <path class="sd-arrow sd-arrow--dash" d="M582 82 V214" marker-end="url(#ls-arrow)"/>
+      <text class="sd-small" x="576" y="150" text-anchor="end">unchanged</text>
+      <path class="sd-arrow" d="M686 82 V102" marker-end="url(#ls-arrow)"/>
+      <g class="sd-cls">
+        <rect class="box" x="612" y="106" width="140" height="28" rx="8"/>
+        <text class="sd-t" x="682" y="125" text-anchor="middle">itemgetter("text")</text>
+      </g>
+      <path class="sd-arrow" d="M682 134 V156" marker-end="url(#ls-arrow)"/>
+      <g class="sd-cls">
+        <rect class="box" x="637" y="160" width="90" height="28" rx="8"/>
+        <text class="sd-t" x="682" y="179" text-anchor="middle">count</text>
+      </g>
+      <path class="sd-arrow" d="M682 188 V214" marker-end="url(#ls-arrow)"/>
+      <text class="sd-small" x="690" y="205">"words"</text>
+      <g class="sd-obj">
+        <rect class="sd-ring" x="545" y="218" width="190" height="42" rx="12"/>
+        <rect class="box" x="545" y="218" width="190" height="42" rx="12"/>
+        <text x="640" y="235" text-anchor="middle">{"text": "hi there",</text>
+        <text x="640" y="252" text-anchor="middle">"words": 2}</text>
+      </g>
+      <text class="sd-small" x="640" y="280" text-anchor="middle">the same dict, plus one key</text>
+    </svg>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b>Sequence</b>, <code>a | b</code>, a <code>RunnableSequence</code>: <code>b</code> runs on <code>a</code>'s output. A plain function next to a runnable is wrapped in a <code>RunnableLambda</code>.</li>
+    <li><b>Parallel</b>, a dict of runnables inside a chain or <code>RunnableParallel(...)</code>: every branch gets the same input, at the same time, and the results come back under the same keys.</li>
+    <li><b>Assign</b>, <code>RunnablePassthrough.assign(words=...)</code>: the input dict passes through and gains one key computed from it; <code>itemgetter("text")</code> picks the text out first.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> each shape is itself a runnable, so shapes nest. The RAG chain later in this lesson is a parallel step followed by a sequence, and <code>create_retrieval_chain</code> is two assigns in a row.</p>
+</figure>

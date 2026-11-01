@@ -1,0 +1,12 @@
+/* Three RAG graphs (lesson 15.1). A static figure on the shared .sd-* classes. Colours: blue = nodes that call a
+   model, and the labels of edges a model chooses; green = retrieval and web search; gray = START, code-chosen
+   labels and the edges; rose = END and the warning under each graph. Dashed edges are conditional edges. */
+.rg-stage { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 10px; }
+.rg-stage svg { flex: 0 1 320px; min-width: 0; }
+.rg-panel { fill: var(--soft); stroke: var(--line); stroke-width: 1; }
+.rg .sd-stage .rg-m { fill: var(--model-ink); font-weight: 600; }
+.rg-legend { margin-top: 12px; }
+.rg-legend i { border-radius: 3px; border: 1.5px solid; }
+.rg-legend i.rg-dot--model { background: var(--model-tint); border-color: var(--model-line); }
+.rg-legend i.rg-dot--tool { background: var(--tool-tint); border-color: var(--tool-line); }
+.rg-legend i.rg-dot--out { background: var(--out-tint); border-color: var(--out-line); }

@@ -1,0 +1,37 @@
+﻿<section class="card demo gs" data-guardrail-stack aria-labelledby="gs-title">
+  <div class="demo-head">
+    <h3 id="gs-title">The guardrail stack, in run order</h3>
+    <p>The nodes <code>create_agent</code> built for the healthcare assistant, from <code>get_graph()</code>. Pick a request to see which nodes it passes, in what order, and what each guardrail does.</p>
+  </div>
+
+  <div class="controls">
+    <div class="seg gs-presets" role="group" aria-label="Request">
+      <button type="button" data-preset="answer" aria-pressed="true">Answered</button>
+      <button type="button" data-preset="tool" aria-pressed="false">With a tool</button>
+      <button type="button" data-preset="blocked" aria-pressed="false">Blocked</button>
+      <button type="button" data-preset="paused" aria-pressed="false">Paused</button>
+    </div>
+  </div>
+
+  <p class="gs-request"><span class="gs-label">Request</span><code data-request></code></p>
+
+  <div class="gs-stage">
+    <ol class="gs-flow" aria-label="Nodes in the order a run first meets them">
+      <li class="gs-node gs-ctrl" data-node="start"><span class="gs-badge" data-badge></span><div><code>__start__</code><span class="gs-tag" data-tag hidden></span><p class="gs-note" data-note></p><small>then HealthcareSafetyFilter.before_agent</small></div></li>
+      <li class="gs-node" data-node="filter"><span class="gs-badge" data-badge></span><div><code>HealthcareSafetyFilter.before_agent</code><span class="gs-tag" data-tag hidden></span><span class="gs-role">input check</span><p class="gs-note" data-note></p><small>then PIIMiddleware[email].before_model, or MedicalOutputValidator.after_agent on a jump to the end</small></div></li>
+      <li class="gs-node" data-node="pii_email_in"><span class="gs-badge" data-badge></span><div><code>PIIMiddleware[email].before_model</code><span class="gs-tag" data-tag hidden></span><span class="gs-role">context check</span><p class="gs-note" data-note></p><small>then PIIMiddleware[credit_card].before_model</small></div></li>
+      <li class="gs-node" data-node="pii_card_in"><span class="gs-badge" data-badge></span><div><code>PIIMiddleware[credit_card].before_model</code><span class="gs-tag" data-tag hidden></span><span class="gs-role">context check</span><p class="gs-note" data-note></p><small>then model</small></div></li>
+      <li class="gs-node gs-model" data-node="model"><span class="gs-badge" data-badge></span><div><code>model</code><span class="gs-tag" data-tag hidden></span><p class="gs-note" data-note></p><small>then HumanInTheLoopMiddleware.after_model</small></div></li>
+      <li class="gs-node" data-node="hitl"><span class="gs-badge" data-badge></span><div><code>HumanInTheLoopMiddleware.after_model</code><span class="gs-tag" data-tag hidden></span><span class="gs-role">action check</span><p class="gs-note" data-note></p><small>then PIIMiddleware[credit_card].after_model</small></div></li>
+      <li class="gs-node" data-node="pii_card_out"><span class="gs-badge" data-badge></span><div><code>PIIMiddleware[credit_card].after_model</code><span class="gs-tag" data-tag hidden></span><span class="gs-role">output check, switched off</span><p class="gs-note" data-note></p><small>then PIIMiddleware[email].after_model</small></div></li>
+      <li class="gs-node" data-node="pii_email_out"><span class="gs-badge" data-badge></span><div><code>PIIMiddleware[email].after_model</code><span class="gs-tag" data-tag hidden></span><span class="gs-role">output check, switched off</span><p class="gs-note" data-note></p><small>then tools if the reply has tool calls, else MedicalOutputValidator.after_agent</small></div></li>
+      <li class="gs-node gs-tool" data-node="tools"><span class="gs-badge" data-badge></span><div><code>tools</code><span class="gs-tag" data-tag hidden></span><p class="gs-note" data-note></p><small>then back to PIIMiddleware[email].before_model</small></div></li>
+      <li class="gs-node" data-node="validator"><span class="gs-badge" data-badge></span><div><code>MedicalOutputValidator.after_agent</code><span class="gs-tag" data-tag hidden></span><span class="gs-role">output check</span><p class="gs-note" data-note></p><small>then __end__</small></div></li>
+      <li class="gs-node gs-ctrl" data-node="end"><span class="gs-badge" data-badge></span><div><code>__end__</code><span class="gs-tag" data-tag hidden></span><p class="gs-note" data-note></p></div></li>
+    </ol>
+  </div>
+
+  <p class="caption" aria-live="polite"><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> on the way in the hooks run in list order, on the way out in reverse: the approval check, listed after both PII middleware, is the first <code>after_model</code> node. A jump to the end skips the model but not <code>after_agent</code>.</p>
+</section>

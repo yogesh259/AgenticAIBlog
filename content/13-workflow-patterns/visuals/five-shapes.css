@@ -1,0 +1,8 @@
+/* Five workflow shapes (lesson 13.6). A static figure on the shared .sd-* classes. Colours: blue = model calls,
+   gray = code (input pills, the gate, the synthesizer) and the edges, rose = the output. Dashed edges are
+   conditional edges or sends. */
+.fs-stage { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 10px; padding: 10px; }
+.fs-panel { fill: var(--soft); stroke: var(--line); stroke-width: 1; }
+.fs .sd-cls path.box { fill: #fff; stroke: var(--line-strong); stroke-width: 1.5; }
+.fs .fs-stack .box + .box { filter: drop-shadow(0 1px 0 rgba(0, 0, 0, .04)); }
+.fs .legend code { font-size: 12px; }

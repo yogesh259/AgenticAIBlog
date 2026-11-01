@@ -1,0 +1,74 @@
+<figure class="card demo sd ckh" aria-labelledby="ckh-title">
+  <div class="demo-head">
+    <h3 id="ckh-title">One thread, three branches</h3>
+    <p>The thread of the lesson's agent after one run, one replay and one fork, every checkpoint labelled with its step and source.</p>
+  </div>
+
+  <div class="sd-stage ckh-stage">
+    <svg viewBox="0 0 362 358" role="img" aria-labelledby="ckh-svg-title ckh-svg-desc">
+      <title id="ckh-svg-title">A thread's checkpoints as a tree</title>
+      <desc id="ckh-svg-desc">The original run is a column of checkpoints: step -1 input, then steps 0 to 3, ending with the result 6. From step 1, named before_tools, two branches leave: a replay, which starts with a fork checkpoint at step 2 and ends at step 4 with the result 6, and a fork, which starts with an update checkpoint at step 2 and ends at step 4 with the result 60. The fork's last checkpoint is the thread's latest, which get_state returns.</desc>
+      <defs>
+        <marker id="ckh-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+        <marker id="ckh-arrow-hot" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#d14d63"/></marker>
+      </defs>
+
+      <g class="sd-badge"><circle cx="12" cy="18" r="9"/><text x="12" y="22" text-anchor="middle">1</text></g>
+      <text class="sd-label" x="26" y="22">Original</text>
+      <text class="ckh-call" x="4" y="40">invoke(input)</text>
+      <g class="sd-badge"><circle cx="146" cy="18" r="9"/><text x="146" y="22" text-anchor="middle">2</text></g>
+      <text class="sd-label" x="160" y="22">Replay</text>
+      <text class="ckh-call" x="138" y="40">invoke(None, …)</text>
+      <g class="sd-badge"><circle cx="268" cy="18" r="9"/><text x="268" y="22" text-anchor="middle">3</text></g>
+      <text class="sd-label" x="282" y="22">Fork</text>
+      <text class="ckh-call" x="260" y="40">update_state(…)</text>
+
+      <!-- original run -->
+      <g class="sd-obj"><rect class="box" x="16" y="57" width="84" height="26" rx="13"/><text x="58" y="74" text-anchor="middle">-1 input</text></g>
+      <path class="sd-arrow" d="M58 83 V97" marker-end="url(#ckh-arrow)"/>
+      <g class="sd-obj"><rect class="box" x="16" y="101" width="84" height="26" rx="13"/><text x="58" y="118" text-anchor="middle">0 loop</text></g>
+      <path class="sd-arrow" d="M58 127 V141" marker-end="url(#ckh-arrow)"/>
+      <g class="sd-obj"><rect class="box" x="16" y="145" width="84" height="26" rx="13"/><text x="58" y="162" text-anchor="middle">1 loop</text></g>
+      <text class="sd-small" x="66" y="189">before_tools</text>
+      <path class="sd-arrow" d="M58 171 V193" marker-end="url(#ckh-arrow)"/>
+      <g class="sd-obj"><rect class="box" x="16" y="197" width="84" height="26" rx="13"/><text x="58" y="214" text-anchor="middle">2 loop</text></g>
+      <path class="sd-arrow" d="M58 223 V237" marker-end="url(#ckh-arrow)"/>
+      <g class="sd-obj"><rect class="box" x="16" y="241" width="84" height="26" rx="13"/><text x="58" y="258" text-anchor="middle">3 loop</text></g>
+      <text class="sd-small" x="58" y="286" text-anchor="middle">The result is 6.</text>
+
+      <!-- where the history splits -->
+      <path class="ckh-split" d="M100 152 H278 Q302 152 302 176 V193" marker-end="url(#ckh-arrow-hot)"/>
+      <path class="ckh-split" d="M100 164 H156 Q180 164 180 186 V193" marker-end="url(#ckh-arrow-hot)"/>
+
+      <!-- replay -->
+      <g class="sd-obj"><rect class="box" x="138" y="197" width="84" height="26" rx="13"/><text x="180" y="214" text-anchor="middle">2 fork</text></g>
+      <path class="sd-arrow" d="M180 223 V237" marker-end="url(#ckh-arrow)"/>
+      <g class="sd-obj"><rect class="box" x="138" y="241" width="84" height="26" rx="13"/><text x="180" y="258" text-anchor="middle">3 loop</text></g>
+      <path class="sd-arrow" d="M180 267 V281" marker-end="url(#ckh-arrow)"/>
+      <g class="sd-obj"><rect class="box" x="138" y="285" width="84" height="26" rx="13"/><text x="180" y="302" text-anchor="middle">4 loop</text></g>
+      <text class="sd-small" x="180" y="330" text-anchor="middle">The result is 6.</text>
+
+      <!-- fork -->
+      <g class="sd-obj"><rect class="box" x="260" y="197" width="84" height="26" rx="13"/><text x="302" y="214" text-anchor="middle">2 update</text></g>
+      <path class="sd-arrow" d="M302 223 V237" marker-end="url(#ckh-arrow)"/>
+      <g class="sd-obj"><rect class="box" x="260" y="241" width="84" height="26" rx="13"/><text x="302" y="258" text-anchor="middle">3 loop</text></g>
+      <path class="sd-arrow" d="M302 267 V281" marker-end="url(#ckh-arrow)"/>
+      <g class="sd-obj ckh-latest">
+        <rect class="sd-ring" x="257" y="282" width="90" height="32" rx="16"/>
+        <rect class="box" x="260" y="285" width="84" height="26" rx="13"/>
+        <text x="302" y="302" text-anchor="middle">4 loop</text>
+      </g>
+      <text class="sd-small" x="302" y="330" text-anchor="middle">The result is 60.</text>
+      <g class="sd-badge"><circle cx="268" cy="346" r="8"/><text x="268" y="350" text-anchor="middle">4</text></g>
+      <text class="sd-small ckh-latest-text" x="280" y="350">latest</text>
+    </svg>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b>Original run:</b> <code>graph.invoke(input, thread)</code> saves steps -1 to 3, each pointing at its parent.</li>
+    <li><b>Replay:</b> <code>graph.invoke(None, before_tools.config)</code> copies step 1 as a <code>fork</code> checkpoint and runs <code>tools</code> and the model again.</li>
+    <li><b>Fork:</b> <code>graph.update_state(before_tools.config, values)</code> writes an <code>update</code> checkpoint with the changed tool call, and <code>graph.invoke(None, fork_config)</code> runs on from it.</li>
+    <li><b>Reading:</b> <code>get_state(thread)</code> returns the newest checkpoint, the ringed one. <code>get_state_history(thread)</code> lists all eleven, newest first, whatever their branch.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> nothing is overwritten. A new branch only becomes the thread's latest checkpoint, and every older checkpoint keeps its config, so any of them can be read, replayed or forked again.</p>
+</figure>

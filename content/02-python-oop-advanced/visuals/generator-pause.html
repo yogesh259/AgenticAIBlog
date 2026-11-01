@@ -1,0 +1,89 @@
+<section class="card demo gp" data-gen-pause aria-labelledby="gp-title">
+  <div class="demo-head">
+    <h3 id="gp-title">A generator pauses at yield</h3>
+    <p>Press <b>Play</b> or step with <b>Next</b>. The caller is on the left; the generator, where it stopped and what it remembers, on the right.</p>
+  </div>
+
+  <div class="controls">
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <div class="readouts">
+    <div class="stat"><span class="label">Step</span><output data-out="step">0 / 5</output><small>of the run</small></div>
+    <div class="stat" data-out-card="state"><span class="label">Generator</span><output data-out="state">-</output><small>new, paused or done</small></div>
+    <div class="stat stat--data" data-out-card="i"><span class="label gp-mono">i</span><output data-out="i">-</output><small>kept between calls</small></div>
+    <div class="stat" data-out-card="values"><span class="label">Handed out</span><output data-out="values">-</output><small>values so far</small></div>
+  </div>
+
+  <div class="gp-stage">
+    <svg viewBox="0 0 640 200" role="img" aria-labelledby="gp-svg-title gp-svg-desc">
+      <title id="gp-svg-title">The caller and the generator</title>
+      <desc id="gp-svg-desc">On the left, the caller's current call and what it gets back. On the right, the generator object with the function's three lines, a marker on the line where it paused, and its local variables n and i.</desc>
+      <defs>
+        <marker id="gp-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+        <marker id="gp-arrow-on" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#374151"/></marker>
+        <marker id="gp-arrow-out" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#d14d63"/></marker>
+      </defs>
+
+      <!-- caller -->
+      <g class="gp-caller">
+        <rect class="box" x="16" y="30" width="176" height="140" rx="12"/>
+        <text class="gp-label" x="32" y="54">caller</text>
+        <text class="gp-call" data-el="call" x="32" y="90">-</text>
+        <text class="gp-small" x="32" y="128">gets back</text>
+        <text class="gp-got" data-el="got" x="32" y="152">-</text>
+      </g>
+
+      <!-- arrows between them -->
+      <path class="gp-arrow" data-el="arrow-call" d="M194 80 L 254 80"/>
+      <text class="gp-small" x="224" y="70" text-anchor="middle">call</text>
+      <path class="gp-arrow gp-arrow--back" data-el="arrow-back" d="M254 122 L 194 122"/>
+      <text class="gp-small" x="224" y="142" text-anchor="middle">value</text>
+
+      <!-- generator -->
+      <g class="gp-gen" data-el="gen">
+        <rect class="ring" x="253" y="11" width="374" height="178" rx="15"/>
+        <rect class="box" x="256" y="14" width="368" height="172" rx="12"/>
+        <text class="gp-title" x="272" y="40">gen</text>
+        <text class="gp-small" x="304" y="39">generator object</text>
+        <g class="gp-pill"><rect x="512" y="24" width="100" height="22" rx="11"/><text data-el="state" x="562" y="39" text-anchor="middle">-</text></g>
+
+        <g class="gp-hl" data-el="hl"><rect x="268" y="86" width="344" height="22" rx="5"/></g>
+        <text class="gp-code" x="296" y="78"><tspan class="k">def</tspan> square(n):</text>
+        <text class="gp-code" x="327" y="102"><tspan class="k">for</tspan> i <tspan class="k">in</tspan> range(n):</text>
+        <text class="gp-code" x="358" y="126"><tspan class="k">yield</tspan> i ** <tspan class="n">2</tspan></text>
+        <g class="gp-flag" data-el="flag">
+          <path d="M276 113 l 10 6 -10 6z"/>
+          <text class="gp-small" x="600" y="125" text-anchor="end">paused here</text>
+        </g>
+
+        <line class="rule" x1="256" y1="144" x2="624" y2="144"/>
+        <text class="gp-small" x="272" y="170">local variables</text>
+        <text class="gp-var" x="392" y="170">n = 3</text>
+        <text class="gp-var" data-el="local-i" x="462" y="170">i = -</text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <figure class="code-cell">
+    <figcaption class="code-head"><span>Notebook cell</span><span class="sync">· highlighted lines run at this step</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre class="is-compact" data-code><code><span class="line"><span class="k">def</span> <span class="f">square</span>(n):</span>
+<span class="line">    <span class="k">for</span> i <span class="k">in</span> <span class="b">range</span>(n):</span>
+<span class="line">        <span class="k">yield</span> i ** <span class="n">2</span></span>
+<span class="line"></span>
+<span class="line">gen = square(<span class="n">3</span>)</span>
+<span class="line"><span class="b">print</span>(<span class="b">next</span>(gen))</span>
+<span class="line"><span class="b">print</span>(<span class="b">next</span>(gen))</span>
+<span class="line"><span class="b">print</span>(<span class="b">next</span>(gen))</span>
+<span class="line"><span class="b">next</span>(gen)</span></code></pre>
+  </figure>
+
+  <p class="observe"><b>Observe:</b> the list <code>[0, 1, 4]</code> is never built. One value exists at a time, which is why a generator can stream data of any length.</p>
+</section>

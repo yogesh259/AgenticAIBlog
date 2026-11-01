@@ -1,0 +1,91 @@
+<figure class="card demo sd" aria-labelledby="lo-title">
+  <div class="demo-head">
+    <h3 id="lo-title">Where Python looks up an attribute</h3>
+    <p>Left, the classes of <code>class Dog(Animal, Pet)</code>. Right, the order Python searches them for <code>dog.speak()</code>.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 640 292" role="img" aria-labelledby="lo-svg-title lo-svg-desc">
+      <title id="lo-svg-title">The classes of Dog and the order Python searches them</title>
+      <desc id="lo-svg-desc">Dog inherits from Animal and Pet, which both inherit from object. To find dog.speak, Python looks in the object dog, then in Dog, where it finds speak and stops. Animal, Pet and object, which come next in Dog.__mro__, are never reached.</desc>
+      <defs>
+        <marker id="lo-parent" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M1 1 11 6 1 11z" fill="#fff" stroke="#9ca3af" stroke-width="1.4"/></marker>
+        <marker id="lo-next" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <!-- class diagram -->
+      <text class="sd-label" x="20" y="24">classes</text>
+      <g class="sd-cls">
+        <rect class="box" x="104" y="34" width="112" height="32" rx="8"/>
+        <text class="sd-t" x="160" y="55" text-anchor="middle">object</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="20" y="112" width="136" height="54" rx="9"/>
+        <text class="sd-t" x="34" y="133">Animal</text>
+        <text x="34" y="155">__init__, speak</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="172" y="112" width="124" height="54" rx="9"/>
+        <text class="sd-t" x="186" y="133">Pet</text>
+        <text x="186" y="155">__init__</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="74" y="206" width="172" height="54" rx="9"/>
+        <text class="sd-t" x="88" y="227">Dog(Animal, Pet)</text>
+        <text x="88" y="249">__init__, speak</text>
+      </g>
+      <path class="sd-arrow" d="M128 206 L 100 168" marker-end="url(#lo-parent)"/>
+      <path class="sd-arrow" d="M192 206 L 222 168" marker-end="url(#lo-parent)"/>
+      <path class="sd-arrow" d="M88 112 L 136 68" marker-end="url(#lo-parent)"/>
+      <path class="sd-arrow" d="M234 112 L 186 68" marker-end="url(#lo-parent)"/>
+      <text class="sd-small" x="20" y="282">Arrows point from a class to its parent.</text>
+
+      <line class="sd-divider" x1="318" y1="14" x2="318" y2="280"/>
+
+      <!-- lookup order -->
+      <text x="336" y="24"><tspan class="sd-t">dog.speak()</tspan><tspan class="sd-small" dx="8">looks here, in this order</tspan></text>
+
+      <path class="sd-arrow" d="M346 75 L 346 93" marker-end="url(#lo-next)"/>
+      <path class="sd-arrow" d="M346 121 L 346 139" marker-end="url(#lo-next)"/>
+      <path class="sd-arrow" d="M346 167 L 346 185" marker-end="url(#lo-next)"/>
+      <path class="sd-arrow" d="M346 213 L 346 231" marker-end="url(#lo-next)"/>
+
+      <g class="sd-obj">
+        <rect class="box" x="362" y="42" width="262" height="34" rx="8"/>
+        <text class="sd-t" x="376" y="64">dog</text>
+        <text class="sd-small" x="612" y="63" text-anchor="end">the object: name, owner</text>
+      </g>
+      <g class="sd-badge"><circle cx="346" cy="59" r="10"/><text x="346" y="63" text-anchor="middle">1</text></g>
+
+      <g class="sd-cls">
+        <rect class="sd-ring" x="359" y="85" width="268" height="40" rx="10"/>
+        <rect class="box" x="362" y="88" width="262" height="34" rx="8"/>
+        <text class="sd-t" x="376" y="110">Dog</text>
+        <text class="sd-small sd-hot" x="612" y="109" text-anchor="end">speak found: stop here</text>
+      </g>
+      <g class="sd-badge"><circle cx="346" cy="105" r="10"/><text x="346" y="109" text-anchor="middle">2</text></g>
+
+      <g class="sd-dim">
+        <g class="sd-cls">
+          <rect class="box" x="362" y="134" width="262" height="34" rx="8"/>
+          <text class="sd-t" x="376" y="156">Animal</text>
+          <text class="sd-small" x="612" y="155" text-anchor="end">has speak too, never reached</text>
+        </g>
+        <g class="sd-badge"><circle cx="346" cy="151" r="10"/><text x="346" y="155" text-anchor="middle">3</text></g>
+        <g class="sd-cls">
+          <rect class="box" x="362" y="180" width="262" height="34" rx="8"/>
+          <text class="sd-t" x="376" y="202">Pet</text>
+        </g>
+        <g class="sd-badge"><circle cx="346" cy="197" r="10"/><text x="346" y="201" text-anchor="middle">4</text></g>
+        <g class="sd-cls">
+          <rect class="box" x="362" y="226" width="262" height="34" rx="8"/>
+          <text class="sd-t" x="376" y="248">object</text>
+        </g>
+        <g class="sd-badge"><circle cx="346" cy="243" r="10"/><text x="346" y="247" text-anchor="middle">5</text></g>
+      </g>
+      <text class="sd-small" x="336" y="282">Steps 2 to 5 are Dog.__mro__.</text>
+    </svg>
+  </div>
+
+  <p class="observe"><b>Observe:</b> Python stops at the first class that has the name, which is why <code>Dog.speak</code> overrides <code>Animal.speak</code>. Inside <code>Dog</code>, <code>super().speak()</code> would carry on the same search from the next class, <code>Animal</code>.</p>
+</figure>

@@ -1,0 +1,54 @@
+<section class="card demo at" data-agent-team aria-labelledby="at-title">
+  <div class="demo-head">
+    <h3 id="at-title">A software team of agents</h3>
+    <p>Press <b>Play</b> or step with <b>Next</b>. One requirement passes through a planner, three developers, a tester, a code reviewer and a person; the task board is what they share.</p>
+  </div>
+
+  <div class="controls">
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <div class="at-stage" aria-hidden="true">
+    <div class="at-team">
+      <div class="at-req" data-part="req">
+        <span class="at-title">Requirement</span>
+        <p>Add password reset to the web app</p>
+      </div>
+      <span class="at-down"></span>
+      <div class="at-agent" data-part="planner"><svg class="icon"><use href="#i-spark"/></svg><b>Planner</b></div>
+      <span class="at-down"></span>
+      <div class="at-row at-row--3">
+        <div class="at-agent" data-part="dev1"><svg class="icon"><use href="#i-spark"/></svg><b>Developer 1</b><span class="at-flag" data-flag="dev1"></span></div>
+        <div class="at-agent" data-part="dev2"><svg class="icon"><use href="#i-spark"/></svg><b>Developer 2</b><span class="at-flag" data-flag="dev2"></span></div>
+        <div class="at-agent" data-part="dev3"><svg class="icon"><use href="#i-spark"/></svg><b>Developer 3</b><span class="at-flag" data-flag="dev3"></span></div>
+      </div>
+      <span class="at-down"></span>
+      <div class="at-row at-row--2">
+        <div class="at-agent" data-part="tester"><svg class="icon"><use href="#i-spark"/></svg><b>Tester</b></div>
+        <div class="at-agent" data-part="reviewer"><svg class="icon"><use href="#i-spark"/></svg><b>Code reviewer</b></div>
+      </div>
+      <span class="at-down"></span>
+      <div class="at-agent at-agent--person" data-part="person"><svg class="icon"><use href="#i-user"/></svg><b>Person</b></div>
+    </div>
+
+    <div class="at-side">
+      <div class="at-board">
+        <div class="at-head"><span class="at-title">Task board</span><span class="at-note" data-el="note"></span></div>
+        <ol class="at-tasks" data-el="tasks"></ol>
+      </div>
+      <div class="at-ship" data-el="ship">
+        <span class="at-title">Result</span>
+        <p data-el="stext"></p>
+      </div>
+    </div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> each time work went back, a check caught an error before the next step could build on it. The checks cost extra model calls; the errors they miss cost more later.</p>
+</section>

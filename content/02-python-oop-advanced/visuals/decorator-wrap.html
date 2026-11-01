@@ -1,0 +1,87 @@
+<section class="card demo dw" data-deco-wrap aria-labelledby="dw-title">
+  <div class="demo-head">
+    <h3 id="dw-title">What @my_decorator does</h3>
+    <p>Press <b>Play</b> or step with <b>Next</b>. Names are on the left; the function objects they point at on the right.</p>
+  </div>
+
+  <div class="controls">
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <div class="readouts">
+    <div class="stat"><span class="label">Step</span><output data-out="step">0 / 6</output><small>of the run</small></div>
+    <div class="stat" data-out-card="target"><span class="label dw-mono">say_hello</span><output data-out="target">-</output><small>points at</small></div>
+    <div class="stat stat--data" data-out-card="name"><span class="label dw-mono">say_hello.__name__</span><output data-out="name">-</output><small>what it reports</small></div>
+    <div class="stat" data-out-card="printed"><span class="label">Printed</span><output data-out="printed">-</output><small>lines so far</small></div>
+  </div>
+
+  <div class="dw-stage">
+    <svg viewBox="0 0 640 244" role="img" aria-labelledby="dw-svg-title dw-svg-desc">
+      <title id="dw-svg-title">Names and the functions they point at</title>
+      <desc id="dw-svg-desc">The name my_decorator points at the decorator function. The name say_hello first points at the original function; after decoration it points at wrapper, whose func slot points at the original.</desc>
+      <defs>
+        <marker id="dw-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <!-- names -->
+      <g class="dw-name" data-el="name-deco"><rect x="16" y="26" width="132" height="26" rx="13"/><text x="82" y="43" text-anchor="middle">my_decorator</text></g>
+      <g class="dw-name" data-el="name-say"><rect x="16" y="128" width="132" height="26" rx="13"/><text x="82" y="145" text-anchor="middle">say_hello</text></g>
+
+      <!-- arrows -->
+      <path class="dw-arrow" data-el="arrow-deco" d="M148 39 L 210 39" marker-end="url(#dw-arrow)"/>
+      <path class="dw-arrow" data-el="arrow-say-orig" d="M148 141 C 176 141, 176 226, 214 226 L 520 226 C 546 226, 548 206, 548 194" marker-end="url(#dw-arrow)"/>
+      <path class="dw-arrow" data-el="arrow-say-wrap" d="M148 141 L 210 141" marker-end="url(#dw-arrow)"/>
+      <path class="dw-arrow" data-el="arrow-func" d="M408 176 C 440 176, 446 160, 470 160" marker-end="url(#dw-arrow)"/>
+
+      <!-- functions -->
+      <g class="dw-fn" data-el="fn-deco">
+        <rect class="ring" x="209" y="13" width="226" height="52" rx="12"/>
+        <rect class="box" x="212" y="16" width="220" height="46" rx="9"/>
+        <text class="dw-title" x="226" y="36">function my_decorator</text>
+        <text class="dw-small" x="226" y="53">takes func, returns wrapper</text>
+      </g>
+      <g class="dw-fn" data-el="fn-wrap">
+        <rect class="ring" x="209" y="91" width="226" height="118" rx="12"/>
+        <rect class="box" x="212" y="94" width="220" height="112" rx="9"/>
+        <text class="dw-title" x="226" y="116">function wrapper</text>
+        <g class="dw-row" data-el="row-1"><rect x="220" y="130" width="204" height="20" rx="4"/><text x="230" y="144">print("…before…")</text></g>
+        <g class="dw-row" data-el="row-2"><rect x="220" y="154" width="204" height="20" rx="4"/><text x="230" y="168">func()</text><circle class="dw-slot" cx="408" cy="164" r="4"/></g>
+        <g class="dw-row" data-el="row-3"><rect x="220" y="178" width="204" height="20" rx="4"/><text x="230" y="192">print("…after…")</text></g>
+      </g>
+      <g class="dw-fn" data-el="fn-orig">
+        <rect class="ring" x="469" y="125" width="158" height="68" rx="12"/>
+        <rect class="box" x="472" y="128" width="152" height="62" rx="9"/>
+        <text class="dw-title" x="486" y="150">function say_hello</text>
+        <text class="dw-small" x="486" y="166">the original</text>
+        <text x="486" y="182">print("Hello!")</text>
+      </g>
+    </svg>
+  </div>
+
+  <pre class="dw-out" aria-live="polite" data-el="out"><span class="dw-out-empty">Output appears here when say_hello() runs.</span></pre>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <figure class="code-cell">
+    <figcaption class="code-head"><span>Notebook cell</span><span class="sync">· highlighted lines run at this step</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre class="is-compact" data-code><code><span class="line"><span class="k">def</span> <span class="f">my_decorator</span>(func):</span>
+<span class="line">    <span class="k">def</span> <span class="f">wrapper</span>():</span>
+<span class="line">        <span class="b">print</span>(<span class="s">"Something is happening before the function is called."</span>)</span>
+<span class="line">        func()</span>
+<span class="line">        <span class="b">print</span>(<span class="s">"Something is happening after the function is called."</span>)</span>
+<span class="line">    <span class="k">return</span> wrapper</span>
+<span class="line"></span>
+<span class="line">@my_decorator</span>
+<span class="line"><span class="k">def</span> <span class="f">say_hello</span>():</span>
+<span class="line">    <span class="b">print</span>(<span class="s">"Hello!"</span>)</span>
+<span class="line"></span>
+<span class="line">say_hello()</span></code></pre>
+  </figure>
+
+  <p class="observe"><b>Observe:</b> after decoration the name <code>say_hello</code> and your original function are no longer the same thing: the name reaches the original only through the wrapper's <code>func</code>.</p>
+</section>

@@ -1,0 +1,27 @@
+/* A heap is a list (lesson 5.1). Colours: amber = the items (data), gray = tree edges (structure),
+   rose outline = the two items about to swap (attention). Active items glow; they don't change colour. */
+.hp-stage {
+  border: 1px solid var(--line); border-radius: 12px;
+  background-color: var(--soft); background-image: radial-gradient(#dfe3e8 1px, transparent 1px); background-size: 16px 16px;
+}
+.hp-stage svg { display: block; width: 100%; max-width: 600px; height: auto; margin: 0 auto; }
+.hp-label { font: 600 11.5px var(--font-mono); fill: var(--muted); }
+.hp .readouts .hp-code { text-transform: none; letter-spacing: 0; font-family: var(--font-mono); }
+
+.hp-item { transition: opacity 320ms var(--ease); }
+.hp-item .box { fill: #fff; stroke: var(--data-line); stroke-width: 1.5; transition: stroke var(--dur) var(--ease); }
+.hp-item .ring { fill: none; stroke: var(--data-tint); stroke-width: 6; opacity: 0; transition: opacity var(--dur) var(--ease), stroke var(--dur) var(--ease); }
+.hp-item .v { font: 700 17px var(--font-mono); fill: var(--data-ink); }
+.hp-item .i { font: 500 11.5px var(--font-mono); fill: var(--muted); }
+.hp-item.is-glow .box { stroke: var(--data); }
+.hp-item.is-glow .ring { opacity: 1; }
+.hp-item.is-swap .box { stroke: var(--out); stroke-width: 2; }
+.hp-item.is-swap .ring { stroke: var(--out-tint); opacity: 1; }
+.hp-item.is-hidden, .hp-edge.is-hidden { opacity: 0; }
+
+.hp-edge { stroke: #9ca3af; stroke-width: 1.5; transition: opacity 320ms var(--ease), stroke var(--dur) var(--ease); }
+.hp-edge.is-active { stroke: var(--out); stroke-width: 2.5; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-item, .hp-item .box, .hp-item .ring, .hp-edge { transition: none; }
+}

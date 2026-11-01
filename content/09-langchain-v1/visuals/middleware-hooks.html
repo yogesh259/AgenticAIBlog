@@ -1,0 +1,39 @@
+<section class="card demo mh" data-middleware-hooks aria-labelledby="mh-title">
+  <div class="demo-head">
+    <h3 id="mh-title">Where middleware runs</h3>
+    <p>The agent's graph from <code>get_graph()</code>, with and without middleware. Pick a view.</p>
+  </div>
+
+  <div class="controls">
+    <div class="seg mh-presets" role="group" aria-label="Middleware">
+      <button type="button" data-preset="agent" aria-pressed="true">No middleware</button>
+      <button type="button" data-preset="hooks" aria-pressed="false">All hooks</button>
+      <button type="button" data-preset="summ" aria-pressed="false">Summarisation</button>
+      <button type="button" data-preset="hitl" aria-pressed="false">Approval</button>
+      <button type="button" data-preset="both" aria-pressed="false">Both</button>
+    </div>
+  </div>
+
+  <div class="mh-code"><code data-code></code></div>
+
+  <div class="mh-stage">
+    <ol class="mh-flow" aria-label="Nodes, in the order a run meets them">
+      <li class="mh-node mh-ctrl" data-slot="start"><code>__start__</code></li>
+      <li class="mh-slot" data-slot="before_agent"><code></code><small></small></li>
+      <li class="mh-slot" data-slot="before_model"><code></code><small></small></li>
+      <li class="mh-node mh-model" data-slot="model"><code>model</code><small data-wrap>wrap_model_call runs inside, around the call</small></li>
+      <li class="mh-slot" data-slot="after_model"><code></code><small></small></li>
+      <li class="mh-node mh-tool" data-slot="tools"><code>tools</code><small data-wrap>wrap_tool_call runs inside, around each call</small></li>
+      <li class="mh-slot" data-slot="after_agent"><code></code><small></small></li>
+      <li class="mh-node mh-ctrl" data-slot="end"><code>__end__</code></li>
+    </ol>
+    <div class="mh-edges">
+      <span class="label">Edges</span>
+      <ul data-edges></ul>
+    </div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> a <code>before_model</code> node sits on every path into the model, including the one back from the tools, so it runs before every model call, not once per question.</p>
+</section>

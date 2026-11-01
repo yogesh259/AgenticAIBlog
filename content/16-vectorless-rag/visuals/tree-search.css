@@ -1,0 +1,11 @@
+/* A tree search (lesson 16.1). Static figure on the shared .sd-* styles: the loop beside one real question through
+   the paper's tree, stacked on narrow screens. Colours: blue = the model's steps, gray = code reading pages,
+   amber = the question and the tree (the two chosen sections glow), rose = the answer; arrows gray. */
+.ts-panels { display: grid; grid-template-columns: minmax(0, 300fr) minmax(0, 360fr); gap: 12px; align-items: start; }
+.ts-panels .sd-stage { padding: 4px; }
+.ts .sd-stage .ts-page { text-anchor: end; fill: var(--muted); }
+.ts .sd-stage .ts-hit { fill: var(--data-ink); font-weight: 600; }
+@media (max-width: 720px) {
+  .ts-panels { grid-template-columns: minmax(0, 1fr); }
+  .ts-panels svg { max-width: 380px; margin: 0 auto; }
+}

@@ -1,0 +1,48 @@
+<section class="card demo so" data-set-ops aria-labelledby="so-title">
+  <div class="demo-head">
+    <h3 id="so-title">Set operations</h3>
+    <p>Pick an operation to see which part of the two sets it keeps.</p>
+  </div>
+
+  <div class="controls">
+    <div class="seg so-ops" role="group" aria-label="Operation">
+      <button type="button" data-op="union" aria-pressed="true">union</button>
+      <button type="button" data-op="intersection" aria-pressed="false">intersection</button>
+      <button type="button" data-op="diff12" aria-pressed="false">difference</button>
+      <button type="button" data-op="diff21" aria-pressed="false">difference, other way</button>
+      <button type="button" data-op="sym" aria-pressed="false">symmetric difference</button>
+    </div>
+  </div>
+
+  <div class="so-stage">
+    <svg viewBox="0 0 440 250" role="img" aria-labelledby="so-svg-title so-svg-desc">
+      <title id="so-svg-title">Two overlapping sets</title>
+      <desc id="so-svg-desc">set1 holds 1 to 6 and set2 holds 4 to 9; 4, 5 and 6 are in both.</desc>
+      <defs>
+        <clipPath id="so-clip-a"><circle cx="170" cy="135" r="95"/></clipPath>
+        <clipPath id="so-clip-b"><circle cx="270" cy="135" r="95"/></clipPath>
+        <mask id="so-not-a"><rect width="440" height="250" fill="#fff"/><circle cx="170" cy="135" r="95" fill="#000"/></mask>
+        <mask id="so-not-b"><rect width="440" height="250" fill="#fff"/><circle cx="270" cy="135" r="95" fill="#000"/></mask>
+      </defs>
+      <rect class="so-reg" data-reg="a" width="440" height="250" clip-path="url(#so-clip-a)" mask="url(#so-not-b)"/>
+      <rect class="so-reg" data-reg="b" width="440" height="250" clip-path="url(#so-clip-b)" mask="url(#so-not-a)"/>
+      <g clip-path="url(#so-clip-a)"><rect class="so-reg" data-reg="ab" width="440" height="250" clip-path="url(#so-clip-b)"/></g>
+      <circle class="so-ring" cx="170" cy="135" r="95"/>
+      <circle class="so-ring" cx="270" cy="135" r="95"/>
+      <text class="so-label" x="105" y="28" text-anchor="middle">set1</text>
+      <text class="so-label" x="335" y="28" text-anchor="middle">set2</text>
+      <text class="so-num" data-num="a" x="128" y="105" text-anchor="middle">1</text>
+      <text class="so-num" data-num="a" x="118" y="140" text-anchor="middle">2</text>
+      <text class="so-num" data-num="a" x="128" y="175" text-anchor="middle">3</text>
+      <text class="so-num" data-num="ab" x="220" y="105" text-anchor="middle">4</text>
+      <text class="so-num" data-num="ab" x="220" y="140" text-anchor="middle">5</text>
+      <text class="so-num" data-num="ab" x="220" y="175" text-anchor="middle">6</text>
+      <text class="so-num" data-num="b" x="312" y="105" text-anchor="middle">7</text>
+      <text class="so-num" data-num="b" x="322" y="140" text-anchor="middle">8</text>
+      <text class="so-num" data-num="b" x="312" y="175" text-anchor="middle">9</text>
+    </svg>
+  </div>
+
+  <div class="so-expr"><code data-expr>set1.union(set2)</code><span class="so-eq" aria-hidden="true">&rarr;</span><code class="so-result" data-result>{1, 2, 3, 4, 5, 6, 7, 8, 9}</code></div>
+  <p class="caption" aria-live="polite"><span data-caption>Union: every item that is in either set.</span></p>
+</section>

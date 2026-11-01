@@ -1,0 +1,65 @@
+<figure class="card demo cs" data-class-schema aria-labelledby="cs-title">
+  <div class="demo-head">
+    <h3 id="cs-title">From class to JSON schema</h3>
+    <p>Each field of <code>User</code> beside the part of the schema it produces.</p>
+  </div>
+
+  <div class="cs-grid">
+    <div class="cs-row">
+      <span class="cs-row-label">The class</span>
+<pre class="cs-block" data-label="Python"><code><span class="k">class</span> <span class="cs-part cs-name" data-part="name">User</span>(<span class="cs-part cs-type" data-part="type">BaseModel</span>):</code></pre>
+<pre class="cs-block cs-block--schema" data-label="JSON schema"><code><span class="cs-part cs-name" data-part="name">"title": "User"</span>,
+<span class="cs-part cs-type" data-part="type">"type": "object"</span></code></pre>
+    </div>
+
+    <div class="cs-row">
+      <span class="cs-row-label">A required field</span>
+<pre class="cs-block" data-label="Python"><code><span class="cs-part cs-name" data-part="name">username</span>: <span class="cs-part cs-type" data-part="type"><span class="b">str</span></span> = Field(
+    <span class="cs-part cs-default" data-part="default">...</span>,
+    <span class="cs-part cs-desc" data-part="desc">description=<span class="s">"Unique username for the user"</span></span>,
+)</code></pre>
+<pre class="cs-block cs-block--schema" data-label="JSON schema"><code><span class="cs-part cs-name" data-part="name">"username"</span>: {
+  <span class="cs-part cs-desc" data-part="desc">"description": "Unique username for the user"</span>,
+  <span class="cs-part cs-name" data-part="name">"title": "Username"</span>,
+  <span class="cs-part cs-type" data-part="type">"type": "string"</span>
+}
+<span class="cs-part cs-default" data-part="default">"required": ["username"]</span></code></pre>
+    </div>
+
+    <div class="cs-row">
+      <span class="cs-row-label">A field with a default</span>
+<pre class="cs-block" data-label="Python"><code><span class="cs-part cs-name" data-part="name">age</span>: <span class="cs-part cs-type" data-part="type"><span class="b">int</span></span> = Field(
+    <span class="cs-part cs-default" data-part="default">default=<span class="n">18</span></span>,
+    <span class="cs-part cs-desc" data-part="desc">description=<span class="s">"User age, defaults to 18"</span></span>,
+)</code></pre>
+<pre class="cs-block cs-block--schema" data-label="JSON schema"><code><span class="cs-part cs-name" data-part="name">"age"</span>: {
+  <span class="cs-part cs-default" data-part="default">"default": 18</span>,
+  <span class="cs-part cs-desc" data-part="desc">"description": "User age, defaults to 18"</span>,
+  <span class="cs-part cs-name" data-part="name">"title": "Age"</span>,
+  <span class="cs-part cs-type" data-part="type">"type": "integer"</span>
+}</code></pre>
+    </div>
+
+    <div class="cs-row">
+      <span class="cs-row-label">A field with a default factory</span>
+<pre class="cs-block" data-label="Python"><code><span class="cs-part cs-name" data-part="name">email</span>: <span class="cs-part cs-type" data-part="type"><span class="b">str</span></span> = Field(
+    <span class="cs-part cs-default" data-part="default">default_factory=<span class="k">lambda</span>: <span class="s">"user@example.com"</span></span>,
+    <span class="cs-part cs-desc" data-part="desc">description=<span class="s">"Default email address"</span></span>,
+)</code></pre>
+<pre class="cs-block cs-block--schema" data-label="JSON schema"><code><span class="cs-part cs-name" data-part="name">"email"</span>: {
+  <span class="cs-part cs-desc" data-part="desc">"description": "Default email address"</span>,
+  <span class="cs-part cs-name" data-part="name">"title": "Email"</span>,
+  <span class="cs-part cs-type" data-part="type">"type": "string"</span>
+}
+<span class="cs-part cs-default cs-ghost" data-part="default">no "default", and not in "required"</span></code></pre>
+    </div>
+  </div>
+
+  <figcaption class="cs-legend">
+    <button type="button" class="cs-key" data-part="name"><i class="cs-swatch cs-name"></i>Name: the property and its title</button>
+    <button type="button" class="cs-key" data-part="type"><i class="cs-swatch cs-type"></i>Hint: the JSON type</button>
+    <button type="button" class="cs-key" data-part="desc"><i class="cs-swatch cs-desc"></i>Description: copied as written</button>
+    <button type="button" class="cs-key" data-part="default"><i class="cs-swatch cs-default"></i>Default, or "required" when there is none</button>
+  </figcaption>
+  <p class="cs-note">Point at a part, or a key, to light up its twins. A docstring on the class would add a top-level <code>"description"</code>, as the <code>Movie</code> schema below shows. A language model asked to fill this schema sees only the right-hand side.</p>
+</figure>

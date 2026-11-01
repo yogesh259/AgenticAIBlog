@@ -1,0 +1,9 @@
+/* When each check and callback runs (lesson 18.5). Static figure on the shared .sd-* styles.
+   Colours: rose = the check in your code that can stop a request, blue = the provider, gray = LiteLLM's steps;
+   dashed boxes are callbacks that only watch. */
+.ct-stage { padding: 6px; }
+.ct-stage svg { max-width: 380px; margin: 0 auto; }
+.ct .ct-watch rect { fill: #fff; stroke: var(--line-strong); stroke-width: 1.25; stroke-dasharray: 4 4; }
+.sd-stage .ct-label { font: 600 12px var(--font-mono); fill: var(--ink); }
+.sd-stage .ct-label--hot { fill: var(--out-ink); }
+.sd-stage .ct-label--model { fill: var(--model-ink); }

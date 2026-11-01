@@ -1,0 +1,84 @@
+<section class="card demo tm" data-thread-memory aria-labelledby="tm-title">
+  <div class="demo-head">
+    <h3 id="tm-title">One thread, two calls</h3>
+    <p>Press <b>Play</b> or step with <b>Next</b>. The steps replay the saved run above: the same questions, tool calls and answers, in the order the graph produced them.</p>
+  </div>
+
+  <div class="controls">
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <figure class="code-cell tm-code">
+    <figcaption class="code-head"><span>Two calls on thread 1</span><span class="sync">&middot; the highlighted lines are running</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre class="is-compact" data-code><code><span class="line">config = {<span class="s">"configurable"</span>: {<span class="s">"thread_id"</span>: <span class="s">"1"</span>}}</span>
+<span class="line"></span>
+<span class="line">messages = [HumanMessage(content=<span class="s">"Add 12 and 13."</span>)]</span>
+<span class="line">messages = graph_memory.invoke({<span class="s">"messages"</span>: messages}, config=config)</span>
+<span class="line"></span>
+<span class="line">messages = [HumanMessage(content=<span class="s">"add that number to 25"</span>)]</span>
+<span class="line">messages = graph_memory.invoke({<span class="s">"messages"</span>: messages}, config=config)</span></code></pre>
+  </figure>
+
+  <div class="stage tm-stage">
+    <div class="graph-box">
+      <svg viewBox="0 0 400 330" role="img" aria-labelledby="tm-svg-title tm-svg-desc">
+        <title id="tm-svg-title">The ReAct graph with a checkpointer</title>
+        <desc id="tm-svg-desc">START leads to the tool_calling_llm node. A conditional edge leads from it to the tools node when the reply has tool calls, and another to END when it has none. The tools node leads back to tool_calling_llm.</desc>
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#b6bcc6"/></marker>
+          <marker id="arrow-on" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#374151"/></marker>
+        </defs>
+
+        <rect class="g-group" x="8" y="8" width="384" height="314" rx="14"/>
+        <text class="g-group-label" x="22" y="30">compile(checkpointer=memory)</text>
+
+        <path data-edge="start" class="g-edge" d="M200 74 L200 104"/>
+        <path data-edge="tools" class="g-edge is-cond" d="M168 160 L122 210"/>
+        <path data-edge="back" class="g-edge" d="M62 214 C38 172 66 133 114 133"/>
+        <path data-edge="end" class="g-edge is-cond" d="M232 160 L288 224"/>
+        <text class="g-label" x="150" y="196">tool calls</text>
+        <text class="g-label" x="270" y="186">no tool calls</text>
+
+        <g data-node="start" class="g-node role-ctrl">
+          <rect class="box" x="157" y="46" width="86" height="28" rx="14"/>
+          <text class="t-main" x="200" y="64" text-anchor="middle">START</text>
+        </g>
+        <g data-node="llm" class="g-node role-model">
+          <rect class="ring" x="116" y="104" width="168" height="58" rx="14"/>
+          <rect class="box" x="120" y="108" width="160" height="50" rx="11"/>
+          <text class="t-main" x="200" y="130" text-anchor="middle">tool_calling_llm</text>
+          <text class="t-sub" x="200" y="147" text-anchor="middle">the model</text>
+        </g>
+        <g data-node="tools" class="g-node role-tool">
+          <rect class="ring" x="36" y="212" width="128" height="58" rx="14"/>
+          <rect class="box" x="40" y="216" width="120" height="50" rx="11"/>
+          <text class="t-main" x="100" y="238" text-anchor="middle">tools</text>
+          <text class="t-sub" x="100" y="255" text-anchor="middle">ToolNode</text>
+        </g>
+        <g data-node="end" class="g-node role-end">
+          <rect class="box" x="262" y="228" width="86" height="28" rx="14"/>
+          <text class="t-main" x="305" y="246" text-anchor="middle">END</text>
+        </g>
+
+        <circle class="packet" r="6" cx="200" cy="74"/>
+      </svg>
+    </div>
+    <div class="state-box tm-state">
+      <div class="state-head"><span>state["messages"]</span><span class="tag">Data</span></div>
+      <ol class="tm-msgs" data-el="msgs"></ol>
+      <div class="tm-saved" data-el="saved-box">
+        <span class="tm-title">Checkpointer &middot; thread "1"</span>
+        <span class="tm-saved-text" data-el="saved"></span>
+      </div>
+    </div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> the second call sent one message, yet the model read five. The checkpointer saved the state after every step of the first call and loaded it, under the same <code>thread_id</code>, before the second call began. A third call on thread <code>"1"</code> would start from all eight.</p>
+</section>

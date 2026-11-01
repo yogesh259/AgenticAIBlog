@@ -1,0 +1,35 @@
+/* One thread, two calls (lesson 11.5). Built on the style board's graph player (theme.css: .graph-box, .g-node,
+   .g-edge, .packet, .state-box). Colours: blue = the model node, green = the tools node, gray = START and the edges,
+   amber = the state and the checkpointer's saved messages, rose = END and the finished turn. A lit node glows. */
+.tm-code { margin: 0 0 14px; }
+.tm .btns { flex-wrap: wrap; }
+.tm-stage { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; }
+
+.tm-msgs { display: grid; gap: 6px; margin: 0; padding: 12px; list-style: none; min-height: 7em; }
+.tm-msg {
+  display: grid; grid-template-columns: 4.2em minmax(0, 1fr); gap: 8px; align-items: baseline;
+  padding: 5px 8px; border: 1px solid var(--data-line); border-radius: 8px; background: #fff;
+  font: 500 12.5px/1.45 var(--font-mono); color: var(--ink); overflow-wrap: anywhere;
+}
+.tm-msg b { font: 600 10.5px var(--font-sans); letter-spacing: .06em; text-transform: uppercase; color: var(--data-ink); }
+.tm-msg.tm-ai b { color: var(--model-ink); }
+.tm-msg.tm-tool b { color: var(--tool-ink); }
+.tm-msg.is-loaded { background: var(--data-tint); }
+.tm-msg.is-new { box-shadow: 0 0 0 3px var(--data-tint), 0 0 0 4px var(--data); }
+.tm-empty { font: 500 12.5px var(--font-sans); color: var(--muted); }
+
+.tm-saved {
+  display: grid; gap: 3px; margin: 0 12px 12px; padding: 8px 10px;
+  border: 1.5px dashed var(--data-line); border-radius: 10px; background: #fff;
+}
+.tm-saved.is-final { border-style: solid; border-color: var(--out-line); background: var(--out-tint); }
+.tm-title { font: 600 10.5px var(--font-sans); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.tm-saved-text { font: 500 12.5px var(--font-mono); color: var(--data-ink); }
+.tm-saved.is-final .tm-saved-text { color: var(--out-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tm-msg { transition: none; }
+}
+@media (max-width: 760px) {
+  .tm-stage { grid-template-columns: minmax(0, 1fr); }
+}

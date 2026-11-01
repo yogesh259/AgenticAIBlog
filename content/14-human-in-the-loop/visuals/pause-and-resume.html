@@ -1,0 +1,109 @@
+<figure class="card demo sd pr" aria-labelledby="pr-title">
+  <div class="demo-head">
+    <h3 id="pr-title">Two ways to pause</h3>
+    <p>The feedback step of lessons 14.2 and 14.3, paused both ways: where the run stops, how the answer gets in, and what runs again.</p>
+  </div>
+
+  <div class="pr-stage">
+    <div class="pr-col">
+      <div class="sd-stage pr-panel">
+        <svg viewBox="0 0 320 250" role="img" aria-labelledby="pr-a-title pr-a-desc">
+          <title id="pr-a-title">A breakpoint before human_feedback</title>
+          <desc id="pr-a-desc">START leads to a pause marker and then to the human_feedback node, which only passes, and on to assistant. The run stops at the marker, before the node; the answer is written into the state from outside, credited to human_feedback; the next call continues with assistant.</desc>
+          <defs>
+            <marker id="pr-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+          </defs>
+          <text class="sd-label" x="14" y="22">Breakpoint</text>
+
+          <g class="sd-cls">
+            <rect class="box" x="110" y="12" width="100" height="28" rx="14"/>
+            <text class="sd-t" x="160" y="31" text-anchor="middle">START</text>
+          </g>
+          <path class="sd-arrow" d="M160 40 V56" marker-end="url(#pr-arrow)"/>
+          <g class="pr-pause">
+            <circle cx="160" cy="70" r="11"/>
+            <rect x="155.4" y="64.5" width="3.2" height="11" rx="1"/>
+            <rect x="161.4" y="64.5" width="3.2" height="11" rx="1"/>
+          </g>
+          <g class="sd-badge"><circle cx="190" cy="70" r="9"/><text x="190" y="74" text-anchor="middle">1</text></g>
+          <path class="sd-arrow" d="M160 81 V98" marker-end="url(#pr-arrow)"/>
+
+          <g class="sd-cls">
+            <rect class="box" x="85" y="102" width="150" height="46" rx="10"/>
+            <text class="sd-t" x="160" y="122" text-anchor="middle">human_feedback</text>
+            <text class="sd-small" x="160" y="139" text-anchor="middle">pass</text>
+          </g>
+          <g class="sd-badge"><circle cx="252" cy="125" r="9"/><text x="252" y="129" text-anchor="middle">2</text></g>
+
+          <path class="sd-arrow" d="M160 148 V184" marker-end="url(#pr-arrow)"/>
+          <g class="sd-badge"><circle cx="186" cy="166" r="9"/><text x="186" y="170" text-anchor="middle">3</text></g>
+
+          <g class="sd-model">
+            <rect class="box" x="85" y="188" width="150" height="46" rx="10"/>
+            <text class="sd-t" x="160" y="208" text-anchor="middle">assistant</text>
+            <text class="sd-small" x="160" y="225" text-anchor="middle">the model</text>
+          </g>
+        </svg>
+      </div>
+      <ol class="pr-keys">
+        <li><code>invoke(input, config)</code> stops before <code>human_feedback</code>. The result is just the state; <code>get_state(config).next</code> says where the run stopped.</li>
+        <li>The answer goes in from outside: <code>update_state(config, {"messages": answer}, as_node="human_feedback")</code>.</li>
+        <li><code>invoke(None, config)</code> continues after the node: <code>assistant</code> runs next.</li>
+      </ol>
+    </div>
+
+    <div class="pr-col">
+      <div class="sd-stage pr-panel">
+        <svg viewBox="0 0 320 250" role="img" aria-labelledby="pr-b-title pr-b-desc">
+          <title id="pr-b-title">interrupt() inside human_feedback</title>
+          <desc id="pr-b-desc">START leads straight into human_feedback, whose code has three lines: a print, answer equals interrupt of the question, and a return. The first call runs lines one and two and pauses on the interrupt line. The second call runs the node again from line one; interrupt returns the answer and the node returns it. Then assistant runs.</desc>
+          <defs>
+            <marker id="pr-arrow-b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+          </defs>
+          <text class="sd-label" x="14" y="22">interrupt()</text>
+
+          <g class="sd-cls">
+            <rect class="box" x="110" y="12" width="100" height="28" rx="14"/>
+            <text class="sd-t" x="160" y="31" text-anchor="middle">START</text>
+          </g>
+          <path class="sd-arrow" d="M160 40 V60" marker-end="url(#pr-arrow-b)"/>
+
+          <g class="sd-cls">
+            <rect class="box" x="72" y="64" width="176" height="104" rx="10"/>
+            <text class="sd-t" x="160" y="84" text-anchor="middle">human_feedback</text>
+          </g>
+          <text class="pr-line" x="86" y="108">print("starts")</text>
+          <rect class="pr-hot-bg" x="80" y="117" width="160" height="20" rx="4"/>
+          <text class="pr-line pr-hot" x="86" y="131">answer = interrupt(q)</text>
+          <text class="pr-line" x="86" y="154">return {... answer}</text>
+          <g class="pr-pause">
+            <circle cx="263" cy="127" r="11"/>
+            <rect x="258.4" y="121.5" width="3.2" height="11" rx="1"/>
+            <rect x="264.4" y="121.5" width="3.2" height="11" rx="1"/>
+          </g>
+
+          <path class="pr-bracket" d="M66 100 H60 V134 H66"/>
+          <g class="sd-badge"><circle cx="49" cy="117" r="9"/><text x="49" y="121" text-anchor="middle">1</text></g>
+          <path class="pr-bracket" d="M38 100 H32 V158 H38"/>
+          <g class="sd-badge"><circle cx="21" cy="129" r="9"/><text x="21" y="133" text-anchor="middle">2</text></g>
+
+          <path class="sd-arrow" d="M160 168 V184" marker-end="url(#pr-arrow-b)"/>
+          <g class="sd-badge"><circle cx="186" cy="176" r="9"/><text x="186" y="180" text-anchor="middle">3</text></g>
+
+          <g class="sd-model">
+            <rect class="box" x="85" y="188" width="150" height="46" rx="10"/>
+            <text class="sd-t" x="160" y="208" text-anchor="middle">assistant</text>
+            <text class="sd-small" x="160" y="225" text-anchor="middle">the model</text>
+          </g>
+        </svg>
+      </div>
+      <ol class="pr-keys">
+        <li><code>invoke(input, config)</code> runs the node down to <code>interrupt(q)</code>, which pauses it. The question comes back in <code>result["__interrupt__"]</code>.</li>
+        <li><code>invoke(Command(resume=answer), config)</code> runs the node again from its first line. This time <code>interrupt</code> returns the answer, and the node returns it as its update.</li>
+        <li><code>assistant</code> runs next.</li>
+      </ol>
+    </div>
+  </div>
+
+  <p class="observe"><b>Observe:</b> with a breakpoint the node is a placeholder and the protocol lives in the caller. With <code>interrupt</code> the node asks and receives the answer itself, and pays for it by running twice: every line above the <code>interrupt</code> call runs on both calls.</p>
+</figure>

@@ -1,0 +1,86 @@
+<figure class="card demo sd" aria-labelledby="as-title">
+  <div class="demo-head">
+    <h3 id="as-title">Four shapes</h3>
+    <p>The same kind of values with one axis or two. The shape lists the length of each axis, rows first.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 640 236" role="img" aria-labelledby="as-svg-title as-svg-desc">
+      <title id="as-svg-title">Arrays of shape (5,), (1, 5), (5, 1) and (2, 5)</title>
+      <desc id="as-svg-desc">A strip of five values with one axis, shape (5,). The same five values in a frame as one row, shape (1, 5). The values 0, 2, 4, 6, 8 as one column, shape (5, 1). A table of two rows and five columns, shape (2, 5), with axis 0 running down the rows and axis 1 across the columns.</desc>
+      <defs>
+        <marker id="as-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#374151"/></marker>
+      </defs>
+
+      <!-- (5,): one axis -->
+      <text class="sd-t" x="16" y="34">(5,)</text>
+      <text class="sd-small" x="58" y="34">ndim 1</text>
+      <g class="sd-obj">
+        <rect class="box" x="16" y="70" width="24" height="24" rx="5"/><text x="28" y="86" text-anchor="middle">1</text>
+        <rect class="box" x="44" y="70" width="24" height="24" rx="5"/><text x="56" y="86" text-anchor="middle">2</text>
+        <rect class="box" x="72" y="70" width="24" height="24" rx="5"/><text x="84" y="86" text-anchor="middle">3</text>
+        <rect class="box" x="100" y="70" width="24" height="24" rx="5"/><text x="112" y="86" text-anchor="middle">4</text>
+        <rect class="box" x="128" y="70" width="24" height="24" rx="5"/><text x="140" y="86" text-anchor="middle">5</text>
+      </g>
+      <text class="sd-small" x="16" y="120">one axis of 5 values</text>
+      <text class="sd-small" x="16" y="138">prints [1 2 3 4 5]</text>
+
+      <!-- (1, 5): one row -->
+      <text class="sd-t" x="180" y="34">(1, 5)</text>
+      <text class="sd-small" x="234" y="34">ndim 2</text>
+      <g class="sd-cls"><rect class="box" x="180" y="66" width="144" height="32" rx="8"/></g>
+      <g class="sd-obj">
+        <rect class="box" x="184" y="70" width="24" height="24" rx="5"/><text x="196" y="86" text-anchor="middle">1</text>
+        <rect class="box" x="212" y="70" width="24" height="24" rx="5"/><text x="224" y="86" text-anchor="middle">2</text>
+        <rect class="box" x="240" y="70" width="24" height="24" rx="5"/><text x="252" y="86" text-anchor="middle">3</text>
+        <rect class="box" x="268" y="70" width="24" height="24" rx="5"/><text x="280" y="86" text-anchor="middle">4</text>
+        <rect class="box" x="296" y="70" width="24" height="24" rx="5"/><text x="308" y="86" text-anchor="middle">5</text>
+      </g>
+      <text class="sd-small" x="180" y="120">1 row, 5 columns</text>
+      <text class="sd-small" x="180" y="138">prints [[1 2 3 4 5]]</text>
+
+      <!-- (5, 1): one column -->
+      <text class="sd-t" x="350" y="34">(5, 1)</text>
+      <g class="sd-cls"><rect class="box" x="350" y="66" width="32" height="144" rx="8"/></g>
+      <g class="sd-obj">
+        <rect class="box" x="354" y="70" width="24" height="24" rx="5"/><text x="366" y="86" text-anchor="middle">0</text>
+        <rect class="box" x="354" y="98" width="24" height="24" rx="5"/><text x="366" y="114" text-anchor="middle">2</text>
+        <rect class="box" x="354" y="126" width="24" height="24" rx="5"/><text x="366" y="142" text-anchor="middle">4</text>
+        <rect class="box" x="354" y="154" width="24" height="24" rx="5"/><text x="366" y="170" text-anchor="middle">6</text>
+        <rect class="box" x="354" y="182" width="24" height="24" rx="5"/><text x="366" y="198" text-anchor="middle">8</text>
+      </g>
+      <text class="sd-small" x="350" y="228">5 rows, 1 column</text>
+
+      <!-- (2, 5): a table, with its axes -->
+      <text class="sd-t" x="468" y="34">(2, 5)</text>
+      <text class="sd-small" x="522" y="34">ndim 2</text>
+      <g class="sd-cls"><rect class="box" x="468" y="66" width="144" height="60" rx="8"/></g>
+      <g class="sd-obj">
+        <rect class="box" x="472" y="70" width="24" height="24" rx="5"/><text x="484" y="86" text-anchor="middle">1</text>
+        <rect class="box" x="500" y="70" width="24" height="24" rx="5"/><text x="512" y="86" text-anchor="middle">2</text>
+        <rect class="box" x="528" y="70" width="24" height="24" rx="5"/><text x="540" y="86" text-anchor="middle">3</text>
+        <rect class="box" x="556" y="70" width="24" height="24" rx="5"/><text x="568" y="86" text-anchor="middle">4</text>
+        <rect class="box" x="584" y="70" width="24" height="24" rx="5"/><text x="596" y="86" text-anchor="middle">5</text>
+        <rect class="box" x="472" y="98" width="24" height="24" rx="5"/><text x="484" y="114" text-anchor="middle">2</text>
+        <rect class="box" x="500" y="98" width="24" height="24" rx="5"/><text x="512" y="114" text-anchor="middle">3</text>
+        <rect class="box" x="528" y="98" width="24" height="24" rx="5"/><text x="540" y="114" text-anchor="middle">4</text>
+        <rect class="box" x="556" y="98" width="24" height="24" rx="5"/><text x="568" y="114" text-anchor="middle">5</text>
+        <rect class="box" x="584" y="98" width="24" height="24" rx="5"/><text x="596" y="114" text-anchor="middle">6</text>
+      </g>
+      <path class="sd-arrow sd-arrow--on" d="M456 70 L 456 118" marker-end="url(#as-arrow)"/>
+      <text class="sd-small" x="450" y="100" text-anchor="end">axis 0</text>
+      <path class="sd-arrow sd-arrow--on" d="M472 140 L 604 140" marker-end="url(#as-arrow)"/>
+      <text class="sd-small" x="540" y="160" text-anchor="middle">axis 1</text>
+      <text class="sd-small" x="468" y="186">2 rows, 5 columns</text>
+      <text class="sd-small" x="468" y="204">down the rows: axis 0</text>
+      <text class="sd-small" x="468" y="222">across the columns: axis 1</text>
+    </svg>
+  </div>
+
+  <ol class="sd-keys">
+    <li><code>np.array([1, 2, 3, 4, 5])</code> has one axis: shape <code>(5,)</code>, the comma making it a one-item tuple.</li>
+    <li><code>reshape(1, 5)</code> and <code>reshape(5, 1)</code> keep the five values but add a second axis: one row, or one column.</li>
+    <li>In <code>(2, 5)</code>, axis 0 counts the rows and axis 1 the columns. pandas uses the same numbers: <code>drop(..., axis=1)</code> drops a column.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> the number of opening brackets in a printed array is its number of axes: <code>[1 2 3 4 5]</code> has one, <code>[[1 2 3 4 5]]</code> two.</p>
+</figure>

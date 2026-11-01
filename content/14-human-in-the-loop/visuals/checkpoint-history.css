@@ -1,0 +1,9 @@
+/* One thread, three branches (lesson 14.4). A static figure on the shared .sd-* classes. Colours: amber = the
+   checkpoints (saved state), gray = parent links and the numbered keys, rose = where the history splits. The thread's
+   latest checkpoint glows. */
+.ckh-stage { margin-top: 16px; }
+.ckh-stage svg { max-width: 420px; margin: 0 auto; }
+.ckh-split { fill: none; stroke: var(--out); stroke-width: 1.75; }
+.ckh .sd-stage .ckh-call { font: 500 10.5px var(--font-mono); fill: var(--muted); }
+.ckh .ckh-latest .sd-ring { fill: none; stroke: var(--data); stroke-width: 2; opacity: .55; filter: drop-shadow(0 0 5px rgba(224, 168, 0, .55)); }
+.ckh .sd-stage .ckh-latest-text { font-weight: 600; fill: var(--data-ink); }

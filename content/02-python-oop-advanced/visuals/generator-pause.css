@@ -1,0 +1,45 @@
+/* A generator pauses at yield (lesson 2.7). Colours: gray = the caller, the calls and the pause marker (control),
+   amber = the generator and its remembered variables (state), rose = what comes back. Active parts glow. */
+.gp-stage {
+  border: 1px solid var(--line); border-radius: 12px;
+  background-color: var(--soft); background-image: radial-gradient(#dfe3e8 1px, transparent 1px); background-size: 16px 16px;
+}
+.gp-stage svg { display: block; width: 100%; height: auto; }
+.gp-stage [data-el] { transition: opacity 320ms var(--ease), transform 320ms var(--ease); }
+.gp-stage .is-hidden { opacity: 0; }
+.gp-stage .gp-gen.is-hidden { opacity: .35; }
+
+.gp-caller .box { fill: #fff; stroke: var(--line-strong); stroke-width: 1.5; }
+.gp-label { font: 600 10.5px var(--font-sans); letter-spacing: .09em; text-transform: uppercase; fill: var(--muted); }
+.gp-small { font: 500 11.5px var(--font-sans); fill: var(--muted); }
+.gp-call { font: 600 14px var(--font-mono); fill: var(--ink); }
+.gp-got { font: 600 14px var(--font-mono); fill: var(--out-ink); }
+.gp-got.is-error { font-size: 13px; }
+
+.gp-arrow { fill: none; stroke: #9ca3af; stroke-width: 1.5; transition: stroke var(--dur) var(--ease); }
+.gp-arrow.is-active { stroke: var(--ink-2); stroke-width: 2; }
+.gp-arrow--back.is-error { stroke: var(--out); }
+
+.gp-gen .box { fill: #fff; stroke: var(--data-line); stroke-width: 1.5; transition: stroke var(--dur) var(--ease); }
+.gp-gen .ring { fill: none; stroke: var(--data-tint); stroke-width: 6; opacity: 0; transition: opacity var(--dur) var(--ease); }
+.gp-gen.is-active .box { stroke: var(--data); }
+.gp-gen.is-active .ring { opacity: 1; }
+.gp-gen .rule { stroke: var(--data-line); }
+.gp-title { font: 600 13px var(--font-mono); fill: var(--data-ink); }
+.gp-pill rect { fill: var(--data-tint); stroke: var(--data-line); }
+.gp-pill text { font: 600 12px var(--font-mono); fill: var(--data-ink); }
+.gp-code { font: 500 13px var(--font-mono); fill: var(--ink); }
+.gp-code .k { fill: var(--model-ink); font-weight: 600; }
+.gp-code .n { fill: var(--data-ink); }
+.gp-hl rect { fill: var(--hl); }
+.gp-flag path { fill: var(--ink-2); }
+.gp-var { font: 600 13px var(--font-mono); fill: var(--data-ink); }
+
+.gp .readouts .label.gp-mono { text-transform: none; letter-spacing: 0; font-family: var(--font-mono); }
+
+@media (max-width: 760px) {
+  .gp .readouts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gp-stage [data-el], .gp-arrow, .gp-gen .box, .gp-gen .ring { transition: none; }
+}

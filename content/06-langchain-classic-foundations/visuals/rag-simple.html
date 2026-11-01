@@ -1,0 +1,61 @@
+<figure class="card demo sd" aria-labelledby="rs-title">
+  <div class="demo-head">
+    <h3 id="rs-title">RAG in one picture</h3>
+    <p>What happens to one question.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 720 220" role="img" aria-labelledby="rs-svg-title rs-svg-desc">
+      <title id="rs-svg-title">RAG in one picture</title>
+      <desc id="rs-svg-desc">The question goes to a retriever, which searches a vector store holding your documents as chunks. The relevant chunks come back as context. The prompt carries the context and the question to the LLM, which writes the answer.</desc>
+      <defs>
+        <marker id="rs-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <g class="sd-obj">
+        <rect class="box" x="16" y="34" width="110" height="60" rx="10"/>
+        <text class="sd-t" x="71" y="69" text-anchor="middle">question</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="156" y="34" width="120" height="60" rx="10"/>
+        <text class="sd-t" x="216" y="60" text-anchor="middle">retriever</text>
+        <text class="sd-small" x="216" y="80" text-anchor="middle">finds related chunks</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="316" y="34" width="150" height="60" rx="10"/>
+        <text class="sd-t" x="391" y="60" text-anchor="middle">prompt</text>
+        <text class="sd-small" x="391" y="80" text-anchor="middle">context + question</text>
+      </g>
+      <g class="sd-model">
+        <rect class="box" x="506" y="34" width="86" height="60" rx="10"/>
+        <text class="sd-t" x="549" y="69" text-anchor="middle">LLM</text>
+      </g>
+      <g class="sd-answer">
+        <rect class="box" x="622" y="34" width="82" height="60" rx="10"/>
+        <text x="663" y="69" text-anchor="middle">answer</text>
+      </g>
+      <path class="sd-arrow" d="M126 64 H152" marker-end="url(#rs-arrow)"/>
+      <path class="sd-arrow" d="M466 64 H502" marker-end="url(#rs-arrow)"/>
+      <path class="sd-arrow" d="M592 64 H618" marker-end="url(#rs-arrow)"/>
+
+      <!-- the store below the retriever -->
+      <g class="sd-obj">
+        <rect class="box" x="146" y="148" width="140" height="56" rx="10"/>
+        <text class="sd-t" x="216" y="171" text-anchor="middle">vector store</text>
+        <text x="216" y="190" text-anchor="middle">your documents, in chunks</text>
+      </g>
+      <path class="sd-arrow" d="M204 94 V144" marker-end="url(#rs-arrow)"/>
+      <text class="sd-small" x="196" y="124" text-anchor="end">search</text>
+      <path class="sd-arrow sd-arrow--on" d="M286 176 H391 V98" marker-end="url(#rs-arrow)"/>
+      <text class="sd-small" x="400" y="140">the relevant chunks:</text>
+      <text class="sd-small" x="400" y="156">the context</text>
+    </svg>
+  </div>
+
+  <ol class="sd-keys">
+    <li>The <b>retriever</b> searches the <b>vector store</b>, which holds your documents cut into chunks, for the chunks most related to the question.</li>
+    <li>Those chunks become the <b>context</b>, and the prompt carries the context and the question together.</li>
+    <li>The <b>LLM</b> answers from the context instead of from memory.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> compared with a plain model call, RAG adds one search before the call; the model itself is unchanged. Filling the vector store beforehand is a separate step, shown in the animation below.</p>
+</figure>

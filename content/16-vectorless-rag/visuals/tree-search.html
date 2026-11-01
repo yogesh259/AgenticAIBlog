@@ -1,0 +1,128 @@
+<figure class="card demo sd ts" aria-labelledby="ts-title">
+  <div class="demo-head">
+    <h3 id="ts-title">A tree search</h3>
+    <p>The retrieval loop, and one question about "Attention Is All You Need" that takes two rounds. The tree is the paper's own, with its "(intro)" nodes left out.</p>
+  </div>
+
+  <div class="ts-panels">
+    <div class="sd-stage">
+      <svg viewBox="0 0 300 470" role="img" aria-labelledby="ts-a-title ts-a-desc">
+        <title id="ts-a-title">The loop</title>
+        <desc id="ts-a-desc">A question goes to step 1, the model reads the tree's titles, pages and summaries. Step 2, it picks sections, writing its reasoning and node IDs. Step 3, code reads the pages of those sections. Step 4, the model judges whether that is enough to answer. If not, it follows a reference or picks more sections, back to step 2. If yes, step 5 writes the answer, citing pages.</desc>
+        <defs>
+          <marker id="ts-arrow-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+        </defs>
+        <text class="sd-label" x="40" y="22">the loop</text>
+
+        <g class="sd-obj">
+          <rect class="box" x="90" y="34" width="120" height="32" rx="16"/>
+          <text class="sd-t" x="150" y="55" text-anchor="middle">question</text>
+        </g>
+        <g class="sd-model">
+          <rect class="box" x="40" y="94" width="220" height="46" rx="10"/>
+          <text class="sd-t" x="150" y="114" text-anchor="middle">1 · read the tree</text>
+          <text class="sd-small" x="150" y="131" text-anchor="middle">titles, pages, summaries</text>
+        </g>
+        <g class="sd-model">
+          <rect class="box" x="40" y="166" width="220" height="46" rx="10"/>
+          <text class="sd-t" x="150" y="186" text-anchor="middle">2 · pick sections</text>
+          <text class="sd-small" x="150" y="203" text-anchor="middle">reasoning, then node IDs</text>
+        </g>
+        <g class="sd-cls">
+          <rect class="box" x="40" y="238" width="220" height="46" rx="10"/>
+          <text class="sd-t" x="150" y="258" text-anchor="middle">3 · read their pages</text>
+          <text class="sd-small" x="150" y="275" text-anchor="middle">code fetches the text</text>
+        </g>
+        <g class="sd-model">
+          <rect class="box" x="40" y="310" width="220" height="46" rx="10"/>
+          <text class="sd-t" x="150" y="330" text-anchor="middle">4 · enough to answer?</text>
+          <text class="sd-small" x="150" y="347" text-anchor="middle">the model judges</text>
+        </g>
+        <g class="sd-answer">
+          <rect class="box" x="40" y="400" width="220" height="40" rx="20"/>
+          <text x="150" y="425" text-anchor="middle">5 · answer, citing pages</text>
+        </g>
+
+        <path class="sd-arrow" d="M150 66 V90" marker-end="url(#ts-arrow-a)"/>
+        <path class="sd-arrow" d="M150 140 V162" marker-end="url(#ts-arrow-a)"/>
+        <path class="sd-arrow" d="M150 212 V234" marker-end="url(#ts-arrow-a)"/>
+        <path class="sd-arrow" d="M150 284 V306" marker-end="url(#ts-arrow-a)"/>
+        <path class="sd-arrow" d="M150 356 V396" marker-end="url(#ts-arrow-a)"/>
+        <text class="sd-small" x="158" y="381">yes</text>
+        <path class="sd-arrow sd-arrow--dash" d="M40 333 H26 V189 H36" marker-end="url(#ts-arrow-a)"/>
+        <text class="sd-small" x="22" y="349">no</text>
+        <text class="sd-small" x="16" y="261" text-anchor="middle" transform="rotate(-90 16 261)">follow a reference</text>
+      </svg>
+    </div>
+
+    <div class="sd-stage">
+      <svg viewBox="0 0 360 544" role="img" aria-labelledby="ts-b-title ts-b-desc">
+        <title id="ts-b-title">One question, two rounds</title>
+        <desc id="ts-b-desc">The question: how do more or fewer attention heads change quality, and how is the cost kept the same? The paper's tree lists Abstract, 1 Introduction, 2 Background, 3 Model Architecture with 3.1, 3.2 Attention with 3.2.1, 3.2.2 and 3.2.3, then 3.3 to 3.5, 4 Why Self-Attention, 5 Training, 6 Results with 6.1, 6.2 and 6.3, 7 Conclusion and References, each with its pages. Round 1 picks 6.2 Model Variations, pages 8 to 9, where the paper varies the number of heads. Its text refers to Section 3.2.2, so round 2 picks 3.2.2 Multi-Head Attention, pages 4 to 5. The answer: one head scores 0.9 BLEU below the best and too many heads hurt too, citing 6.2 on page 8; eight heads of 64 dimensions cost about as much as one full-size head, citing 3.2.2 on page 4.</desc>
+        <defs>
+          <marker id="ts-arrow-b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#374151"/></marker>
+        </defs>
+        <text class="sd-label" x="10" y="20">one question, two rounds</text>
+
+        <g class="sd-obj">
+          <rect class="box" x="10" y="30" width="340" height="48" rx="10"/>
+          <text class="sd-small" x="22" y="50">How do more or fewer attention heads</text>
+          <text class="sd-small" x="22" y="67">change quality, and how is the cost kept the same?</text>
+        </g>
+
+        <!-- the two chosen rows glow; everything else is the tree as the model reads it -->
+        <g class="sd-obj">
+          <rect class="sd-ring" x="32" y="217" width="294" height="18" rx="5"/>
+          <rect class="box" x="32" y="217" width="294" height="18" rx="5"/>
+        </g>
+        <g class="sd-obj">
+          <rect class="sd-ring" x="20" y="350" width="306" height="18" rx="5"/>
+          <rect class="box" x="20" y="350" width="306" height="18" rx="5"/>
+        </g>
+
+        <g class="ts-tree">
+          <text x="14" y="98">Abstract</text><text class="ts-page" x="322" y="98">p.1</text>
+          <text x="14" y="117">1 Introduction</text><text class="ts-page" x="322" y="117">p.2</text>
+          <text x="14" y="136">2 Background</text><text class="ts-page" x="322" y="136">p.2</text>
+          <text x="14" y="155">3 Model Architecture</text><text class="ts-page" x="322" y="155">p.2-6</text>
+          <text x="26" y="174">3.1 Encoder and Decoder Stacks</text><text class="ts-page" x="322" y="174">p.3</text>
+          <text x="26" y="193">3.2 Attention</text><text class="ts-page" x="322" y="193">p.3-5</text>
+          <text x="38" y="212">3.2.1 Scaled Dot-Product Attention</text><text class="ts-page" x="322" y="212">p.4</text>
+          <text class="ts-hit" x="38" y="231">3.2.2 Multi-Head Attention</text><text class="ts-page ts-hit" x="322" y="231">p.4-5</text>
+          <text x="38" y="250">3.2.3 Applications of Attention…</text><text class="ts-page" x="322" y="250">p.5</text>
+          <text class="sd-dim" x="26" y="269">3.3 to 3.5</text><text class="ts-page sd-dim" x="322" y="269">p.5-6</text>
+          <text x="14" y="288">4 Why Self-Attention</text><text class="ts-page" x="322" y="288">p.6-7</text>
+          <text x="14" y="307">5 Training</text><text class="ts-page" x="322" y="307">p.7-8</text>
+          <text x="14" y="326">6 Results</text><text class="ts-page" x="322" y="326">p.8-10</text>
+          <text x="26" y="345">6.1 Machine Translation</text><text class="ts-page" x="322" y="345">p.8</text>
+          <text class="ts-hit" x="26" y="364">6.2 Model Variations</text><text class="ts-page ts-hit" x="322" y="364">p.8-9</text>
+          <text x="26" y="383">6.3 English Constituency Parsing</text><text class="ts-page" x="322" y="383">p.9-10</text>
+          <text x="14" y="402">7 Conclusion</text><text class="ts-page" x="322" y="402">p.10</text>
+          <text x="14" y="421">References</text><text class="ts-page" x="322" y="421">p.10-15</text>
+        </g>
+        <text class="sd-small" x="190" y="364">round 1</text>
+        <text class="sd-small" x="236" y="231">round 2</text>
+
+        <path class="sd-arrow sd-arrow--on sd-arrow--dash" d="M330 359 H344 V226 H332" marker-end="url(#ts-arrow-b)"/>
+        <text class="sd-small" x="355" y="292" text-anchor="middle" transform="rotate(-90 355 292)">see Section 3.2.2</text>
+
+        <g class="sd-answer">
+          <rect class="box" x="10" y="440" width="340" height="92" rx="12"/>
+          <text class="sd-small" x="22" y="461">One head scores 0.9 BLEU below the best, and</text>
+          <text class="sd-small" x="22" y="478">too many heads hurt too (6.2, p.8). Eight heads</text>
+          <text class="sd-small" x="22" y="495">of 64 dimensions cost about as much as one</text>
+          <text class="sd-small" x="22" y="512">full-size head (3.2.2, p.4).</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b>Read the tree:</b> the question and the tree's titles, pages and summaries go to the model in one prompt.</li>
+    <li><b>Pick sections:</b> the model writes its reasoning, then the node IDs it wants. Round 1 here: 6.2 Model Variations, where the paper tries different numbers of heads.</li>
+    <li><b>Read their pages:</b> code fetches the text of pages 8 and 9: "single-head attention is 0.9 BLEU worse than the best setting, quality also drops off with too many heads", measured "keeping the amount of computation constant, as described in Section 3.2.2".</li>
+    <li><b>Enough?</b> Not yet: how the cost stays constant is in Section 3.2.2, so round 2 picks 3.2.2 Multi-Head Attention and reads pages 4 and 5: "h = 8 parallel attention layers, or heads", each with "d<sub>k</sub> = d<sub>v</sub> = d<sub>model</sub>/h = 64", so that "the total computational cost is similar to that of single-head attention with full dimensionality".</li>
+    <li><b>Answer:</b> from both sections, citing each one's title and page.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> round 2 was chosen by what round 1 read, not by the question's words. A reference such as "Section 3.2.2" is something a similarity search can't follow.</p>
+</figure>

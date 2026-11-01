@@ -1,0 +1,39 @@
+# API keys and secrets
+.env
+.env.*
+*.key
+*.pem
+*.secret
+
+# Built site and artifacts
+dist/
+dist-*/
+
+# Dependencies and modules
+node_modules/
+.venv/
+lab/
+env/
+venv/
+ENV/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local planning, digests, AI prompts, and authoring tools (local only)
+course/
+.github/
+source/
+audit/
+SETUP.md
+.env.example
+tools/digest_course.py
+tools/run_outputs.py
+tools/requirements.txt
+requirements-site.txt
+
+# OS and deployment CLI
+.DS_Store
+.vercel/

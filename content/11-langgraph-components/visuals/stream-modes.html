@@ -1,0 +1,62 @@
+<figure class="card demo sd smf" aria-labelledby="smf-title">
+  <div class="demo-head">
+    <h3 id="smf-title">What each mode yields</h3>
+    <p>One run of the chatbot of lesson 11.5 on a new thread: "Hi, my name is Alice" goes in, <code>SuperBot</code> calls the model once, and the run ends. Each row is one way to stream that run, its chunks in the order they arrive.</p>
+  </div>
+
+  <div class="sd-stage smf-stage">
+    <div class="smf-run" aria-hidden="true">
+      <span class="smf-node smf-ctrl">START</span>
+      <span class="smf-arrow">&rarr;</span>
+      <span class="smf-node smf-model">SuperBot<small>the model writes its reply</small></span>
+      <span class="smf-arrow">&rarr;</span>
+      <span class="smf-node smf-ctrl">END</span>
+    </div>
+
+    <div class="smf-row">
+      <div class="smf-mode"><code>stream_mode="values"</code><small>the whole state after each step</small></div>
+      <div class="smf-chips">
+        <span class="smf-chip smf-data"><i>input applied</i>{'messages': [Human]}</span>
+        <span class="smf-chip smf-data"><i>after SuperBot</i>{'messages': [Human, AI]}</span>
+      </div>
+    </div>
+
+    <div class="smf-row">
+      <div class="smf-mode"><code>stream_mode="updates"</code><small>what each node returned; the default</small></div>
+      <div class="smf-chips">
+        <span class="smf-chip smf-data"><i>after SuperBot</i>{'SuperBot': {'messages': [AI]}}</span>
+      </div>
+    </div>
+
+    <div class="smf-row">
+      <div class="smf-mode"><code>stream_mode="messages"</code><small>the model's tokens, with metadata</small></div>
+      <div class="smf-chips">
+        <span class="smf-chip smf-tok"><i>while SuperBot runs</i>(AIMessageChunk('Hello'), {'langgraph_node': 'SuperBot', ...})</span>
+        <span class="smf-chip smf-tok">(' Alice', ...)</span>
+        <span class="smf-chip smf-tok">('!', ...)</span>
+        <span class="smf-chip smf-more">one per token</span>
+      </div>
+    </div>
+
+    <div class="smf-row">
+      <div class="smf-mode"><code>astream_events(version="v2")</code><small>every start, chunk and end, nested runs included</small></div>
+      <div class="smf-chips">
+        <span class="smf-chip smf-ev">on_chain_start <b>LangGraph</b></span>
+        <span class="smf-chip smf-ev">on_chain_start <b>SuperBot</b></span>
+        <span class="smf-chip smf-ev smf-ev-model">on_chat_model_start</span>
+        <span class="smf-chip smf-ev smf-ev-model">on_chat_model_stream &times; tokens</span>
+        <span class="smf-chip smf-ev smf-ev-model">on_chat_model_end</span>
+        <span class="smf-chip smf-ev">on_chain_end <b>SuperBot</b></span>
+        <span class="smf-chip smf-ev">on_chain_end <b>LangGraph</b></span>
+      </div>
+    </div>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b>values</b> repeats everything, including the messages saved on the thread, so its chunks grow with the conversation; the first chunk comes before any node runs.</li>
+    <li><b>updates</b> sends only what changed, keyed by the node that changed it: one chunk per node run.</li>
+    <li><b>messages</b> arrives while the node is still running, which is what makes an answer appear word by word.</li>
+    <li><b>astream_events</b> wraps all of it in start, stream and end events, plus LangGraph's internal steps: 73 events for one short reply in the lesson's run.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> the state modes only speak when a step finishes; for a run that is one long model call, only <code>messages</code> or the events show anything before the end.</p>
+</figure>

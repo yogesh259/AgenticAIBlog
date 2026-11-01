@@ -1,0 +1,112 @@
+<section class="card demo nc" data-names-copies aria-labelledby="nc-title">
+  <div class="demo-head">
+    <h3 id="nc-title">Two names, one dictionary</h3>
+    <p>Press <b>Play</b> or step with <b>Next</b>. Names are on the left, the dictionaries they point at on the right.</p>
+  </div>
+
+  <div class="controls">
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <div class="readouts">
+    <div class="stat"><span class="label">Step</span><output data-out="step">0 / 8</output><small>of the run</small></div>
+    <div class="stat" data-out-card="same"><span class="label">student is student_copy</span><output data-out="same">-</output><small>same dict?</small></div>
+    <div class="stat" data-out-card="copy"><span class="label">student is student_copy1</span><output data-out="copy">-</output><small>same dict?</small></div>
+    <div class="stat stat--data" data-out-card="lead"><span class="label">lead name: shallow / deep</span><output data-out="lead">-</output><small>inside each copy</small></div>
+  </div>
+
+  <div class="nc-stage">
+    <svg viewBox="0 0 640 320" role="img" aria-labelledby="nc-svg-title nc-svg-desc">
+      <title id="nc-svg-title">Names and the dictionaries they point at</title>
+      <desc id="nc-svg-desc">Each name is a label with an arrow to a dictionary. Two names can point at the same dictionary; a copy is a second dictionary.</desc>
+      <defs>
+        <marker id="nc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+        <marker id="nc-arrow-on" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#374151"/></marker>
+      </defs>
+
+      <line class="nc-divider" x1="16" y1="178" x2="624" y2="178"/>
+
+      <!-- names -->
+      <g class="nc-name" data-el="name-student"><rect x="16" y="34" width="132" height="26" rx="13"/><text x="82" y="51" text-anchor="middle">student</text></g>
+      <g class="nc-name" data-el="name-student_copy"><rect x="16" y="72" width="132" height="26" rx="13"/><text x="82" y="89" text-anchor="middle">student_copy</text></g>
+      <g class="nc-name" data-el="name-student_copy1"><rect x="16" y="126" width="132" height="26" rx="13"/><text x="82" y="143" text-anchor="middle">student_copy1</text></g>
+      <g class="nc-name" data-el="name-team"><rect x="16" y="196" width="132" height="26" rx="13"/><text x="82" y="213" text-anchor="middle">team</text></g>
+      <g class="nc-name" data-el="name-shallow"><rect x="16" y="236" width="132" height="26" rx="13"/><text x="82" y="253" text-anchor="middle">shallow</text></g>
+      <g class="nc-name" data-el="name-deep"><rect x="16" y="276" width="132" height="26" rx="13"/><text x="82" y="293" text-anchor="middle">deep</text></g>
+
+      <!-- arrows -->
+      <path class="nc-arrow" data-el="arrow-student" d="M148 47 C 220 47, 230 48, 298 50"/>
+      <path class="nc-arrow" data-el="arrow-student_copy" d="M148 85 C 220 85, 230 64, 298 62"/>
+      <path class="nc-arrow" data-el="arrow-student_copy1" d="M148 139 C 220 139, 230 139, 298 139"/>
+      <path class="nc-arrow" data-el="arrow-team" d="M148 209 L 228 209"/>
+      <path class="nc-arrow" data-el="arrow-shallow" d="M148 249 L 228 249"/>
+      <path class="nc-arrow" data-el="arrow-deep" d="M148 289 L 228 289"/>
+      <path class="nc-arrow" data-el="arrow-T-I" d="M352 209 C 400 209, 410 220, 448 222"/>
+      <path class="nc-arrow" data-el="arrow-S-I" d="M352 249 C 400 249, 410 236, 448 232"/>
+      <path class="nc-arrow" data-el="arrow-D-I2" d="M352 289 C 400 289, 410 289, 448 289"/>
+
+      <!-- dictionaries -->
+      <g class="nc-box" data-el="box-A">
+        <rect class="ring" x="296" y="22" width="244" height="68" rx="13"/>
+        <rect class="box" x="300" y="26" width="236" height="60" rx="10"/>
+        <text x="316" y="51">"name": <tspan class="nc-val" data-el="val-A">"Alice"</tspan></text>
+        <text x="316" y="73">"age": 33</text>
+      </g>
+      <g class="nc-box" data-el="box-B">
+        <rect class="ring" x="296" y="106" width="244" height="68" rx="13"/>
+        <rect class="box" x="300" y="110" width="236" height="60" rx="10"/>
+        <text x="316" y="135">"name": <tspan class="nc-val" data-el="val-B">"Bob"</tspan></text>
+        <text x="316" y="157">"age": 33</text>
+      </g>
+      <g class="nc-box" data-el="box-T">
+        <rect class="ring" x="226" y="192" width="132" height="34" rx="11"/>
+        <rect class="box" x="230" y="196" width="124" height="26" rx="8"/>
+        <text x="242" y="214">"lead":</text><circle class="nc-slot" cx="340" cy="209" r="4"/>
+      </g>
+      <g class="nc-box" data-el="box-S">
+        <rect class="ring" x="226" y="232" width="132" height="34" rx="11"/>
+        <rect class="box" x="230" y="236" width="124" height="26" rx="8"/>
+        <text x="242" y="254">"lead":</text><circle class="nc-slot" cx="340" cy="249" r="4"/>
+      </g>
+      <g class="nc-box" data-el="box-D">
+        <rect class="ring" x="226" y="272" width="132" height="34" rx="11"/>
+        <rect class="box" x="230" y="276" width="124" height="26" rx="8"/>
+        <text x="242" y="294">"lead":</text><circle class="nc-slot" cx="340" cy="289" r="4"/>
+      </g>
+      <g class="nc-box" data-el="box-I">
+        <rect class="ring" x="446" y="206" width="180" height="40" rx="12"/>
+        <rect class="box" x="450" y="210" width="172" height="32" rx="9"/>
+        <text x="464" y="231">"name": <tspan class="nc-val" data-el="val-I">"Alice"</tspan></text>
+      </g>
+      <g class="nc-box" data-el="box-I2">
+        <rect class="ring" x="446" y="269" width="180" height="40" rx="12"/>
+        <rect class="box" x="450" y="273" width="172" height="32" rx="9"/>
+        <text x="464" y="294">"name": <tspan class="nc-val" data-el="val-I2">"Alice"</tspan></text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <figure class="code-cell">
+    <figcaption class="code-head"><span>Notebook cells</span><span class="sync">· highlighted lines run at this step</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre class="is-compact" data-code><code><span class="line">student = {<span class="s">"name"</span>: <span class="s">"Alice"</span>, <span class="s">"age"</span>: <span class="n">33</span>}</span>
+<span class="line">student_copy = student</span>
+<span class="line">student[<span class="s">"name"</span>] = <span class="s">"Bob"</span></span>
+<span class="line">student_copy1 = student.copy()</span>
+<span class="line">student[<span class="s">"name"</span>] = <span class="s">"Carol"</span></span>
+<span class="line"></span>
+<span class="line"><span class="k">import</span> copy</span>
+<span class="line">team = {<span class="s">"lead"</span>: {<span class="s">"name"</span>: <span class="s">"Alice"</span>}}</span>
+<span class="line">shallow = team.copy()</span>
+<span class="line">deep = copy.deepcopy(team)</span>
+<span class="line">team[<span class="s">"lead"</span>][<span class="s">"name"</span>] = <span class="s">"Zoe"</span></span></code></pre>
+  </figure>
+
+  <p class="observe"><b>Observe:</b> count the boxes, not the names. A change shows through every name whose arrow ends at the changed box.</p>
+</section>

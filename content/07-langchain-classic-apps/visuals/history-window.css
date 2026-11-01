@@ -1,0 +1,45 @@
+/* What the model sees (lesson 7.4). Colours: amber = messages (the trimmer's input and the store), gray = the window
+   and the budget bar, rose = the answer and a budget overrun. Kept rows glow; cut rows fade; no row changes hue. */
+.hw-code { margin: 0 0 14px; }
+.hw-stage {
+  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; align-items: start; padding: 16px 18px;
+  border: 1px solid var(--line); border-radius: 12px;
+  background-color: var(--soft); background-image: radial-gradient(#dfe3e8 1px, transparent 1px); background-size: 16px 16px;
+}
+.hw-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px; margin-bottom: 8px; }
+.hw-title, .hw-label { font: 600 11px var(--font-sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.hw-store { font: 500 12px var(--font-mono); color: var(--data-ink); }
+
+.hw-rows { display: grid; gap: 5px; margin: 0; padding: 0; list-style: none; }
+.hw-row {
+  display: grid; grid-template-columns: 58px minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 5px 8px;
+  border: 1.5px solid var(--data-line); border-radius: 8px; background: #fff;
+  transition: opacity var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.hw-role { font: 600 10.5px var(--font-sans); letter-spacing: .05em; text-transform: uppercase; color: var(--data-ink); }
+.hw-text { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font: 500 12.5px var(--font-mono); color: var(--ink); }
+.hw-tok { font: 600 12px var(--font-mono); color: var(--ink-2); }
+.hw-new { margin-right: 6px; padding: 0 6px; border: 1px solid var(--line-strong); border-radius: 999px; font: 600 10px/1.6 var(--font-sans); letter-spacing: .04em; color: var(--muted); }
+.hw-row[data-state="kept"] { box-shadow: 0 0 0 3px var(--data-tint), 0 0 0 4px var(--data-line); }
+.hw-row[data-state="cut"] { opacity: .42; }
+.hw-row[data-state="cut"] .hw-text { text-decoration: line-through; }
+.hw-sep { margin-top: 4px; font: 600 10.5px var(--font-sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.hw-sep:first-child { margin-top: 0; }
+
+.hw-side { display: grid; gap: 14px; }
+.hw-budget { display: grid; gap: 6px; padding: 10px 12px; border: 1.5px solid var(--line-strong); border-radius: 10px; background: #fff; }
+.hw-bar { height: 10px; border-radius: 999px; background: var(--sunk); overflow: hidden; }
+.hw-bar span { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--ink-2); transition: width var(--dur) var(--ease); }
+.hw-budget.is-over .hw-bar span { background: var(--out); }
+.hw-count { font: 500 12.5px var(--font-mono); color: var(--ink-2); }
+.hw-answer { padding: 10px 12px; border: 1.5px solid var(--out-line); border-radius: 10px; background: var(--out-tint); transition: opacity var(--dur) var(--ease); }
+.hw-answer.is-empty { opacity: .55; }
+.hw-answer p { margin: 4px 0 0; font: 500 13px/1.5 var(--font-mono); color: var(--out-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hw-row, .hw-bar span, .hw-answer { transition: none; }
+}
+@media (max-width: 640px) {
+  .hw-stage { grid-template-columns: 1fr; }
+  .hw-row { grid-template-columns: 50px minmax(0, 1fr) auto; }
+}

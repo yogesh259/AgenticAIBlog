@@ -1,0 +1,181 @@
+/* ==========================================================================
+   Site-only components. Everything else comes from design/theme.css.
+   Colours: only the tokens defined in theme.css.
+   ========================================================================== */
+
+/* ---------- Layout ---------- */
+.shell--no-toc { grid-template-columns: 288px minmax(0, 1fr); }
+@media (max-width: 1240px) { .shell--no-toc { grid-template-columns: 272px minmax(0, 1fr); } }
+@media (max-width: 880px) { .shell--no-toc { grid-template-columns: minmax(0, 1fr); } }
+
+/* Markdown prose keeps the style board's .prose measure */
+:is(.lesson, .module-page, .home) > :is(p, ul, ol, blockquote, h3, h4, dl) { max-width: 70ch; }
+:is(.lesson, .module-page, .home) > :is(ul, ol) { margin: 0 0 16px; padding-left: 1.3em; }
+:is(.lesson, .module-page, .home) > :is(ul, ol) li + li { margin-top: 6px; }
+.lede code { font-size: .8em; }
+a.btn { text-decoration: none; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 24px; }
+.empty-note { color: var(--muted); }
+
+/* ---------- Tables ---------- */
+.table-wrap { margin: 20px 0 24px; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-md); }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.55; }
+.table-wrap th, .table-wrap td { padding: 9px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.table-wrap thead th { background: var(--soft); font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.table-wrap tbody tr:last-child td { border-bottom: 0; }
+.table-wrap td code { white-space: nowrap; }
+.dot { display: inline-block; width: 10px; height: 10px; margin-right: 8px; border-radius: 50%; background: var(--c); vertical-align: 0; }
+
+/* ---------- Callouts with block content ---------- */
+.callout-body { min-width: 0; }
+.callout-body > p + p, .callout-body > p + :is(ul, ol), .callout-body > :is(ul, ol) + p { margin-top: 8px; }
+.callout-body > :is(ul, ol) { margin: 6px 0 0; padding-left: 1.2em; }
+
+/* ---------- Code cells ---------- */
+.out pre { font-variant-ligatures: none; } /* theme.css's `font` shorthand turns ligatures back on here */
+.out-img { padding: 14px 16px; border-top: 1px dashed var(--line); background: #fff; }
+.out-img img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.code-head .spacer { margin-left: auto; }
+.annots li > div { min-width: 0; }
+.annots li > div > p { margin: 0; }
+.check-answer > :last-child { margin-bottom: 0; }
+.check .out summary { flex-direction: row; gap: 10px; padding: 8px 14px; } /* outputs inside a check or practice card keep their own bar */
+
+/* ---------- Badges and pills ---------- */
+.badge--verify { color: var(--out-ink); background: var(--out-tint); border-color: var(--out-line); letter-spacing: .06em; vertical-align: 1px; }
+.type--muted { color: var(--muted); background: var(--sunk); border-color: var(--line); }
+
+/* ---------- Windows line under a macOS command ---------- */
+.os-note { display: flex; align-items: baseline; gap: 10px; margin: -10px 0 24px; padding: 0 2px; font-size: 14px; color: var(--ink-2); }
+.os-tag { flex: none; padding: 1px 8px; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--soft); font: 600 10.5px/1.6 var(--font-sans); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.os-body { min-width: 0; }
+.os-body > p { margin: 0; }
+
+/* ---------- Visual placeholder (storyboard not yet approved) ---------- */
+.visual-pending { margin: 28px 0; padding: 18px 20px 16px; border-style: dashed; border-color: var(--line-strong); background: var(--soft); box-shadow: none; }
+.vp-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; }
+.vp-title { display: block; margin-bottom: 6px; font-size: 16px; }
+.vp-body { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
+.vp-body > :last-child { margin-bottom: 0; }
+.vp-body > :is(ul, ol) { margin: 0 0 8px; padding-left: 1.2em; }
+
+/* ---------- Static diagrams: SVG figures without script (.sd-*) ----------
+   Colours by role: amber = objects and data, blue = models, gray = names, classes, functions and arrows,
+   rose = attention and outputs (errors, unreachable objects, the GIL, a model's answer).
+   Emphasis is a glow ring, never a new colour. */
+.sd-stage {
+  border: 1px solid var(--line); border-radius: 12px;
+  background-color: var(--soft); background-image: radial-gradient(#dfe3e8 1px, transparent 1px); background-size: 16px 16px;
+}
+.sd-stage svg { display: block; width: 100%; height: auto; }
+.sd-stage text { font: 500 12.5px var(--font-mono); fill: var(--ink-2); }
+.sd-stage .sd-t { font-weight: 600; fill: var(--ink); }
+.sd-stage .sd-small { font: 500 11.5px var(--font-sans); fill: var(--muted); }
+.sd-stage .sd-label { font: 600 10.5px var(--font-sans); letter-spacing: .09em; text-transform: uppercase; fill: var(--muted); }
+.sd-stage .sd-hot { fill: var(--out-ink); font-weight: 600; }
+.sd-name rect { fill: #fff; stroke: var(--line-strong); stroke-width: 1.25; }
+.sd-name text { font-weight: 600; }
+.sd-name--gone rect { fill: none; stroke-dasharray: 4 4; }
+.sd-stage .sd-name--gone text { fill: var(--faint); }
+.sd-obj .box { fill: #fff; stroke: var(--data-line); stroke-width: 1.5; }
+.sd-obj .rule { stroke: var(--data-line); }
+.sd-stage .sd-obj text { fill: var(--data-ink); }
+.sd-cls .box { fill: #fff; stroke: var(--line-strong); stroke-width: 1.5; }
+.sd-cls .rule { stroke: var(--line); }
+.sd-ring { fill: none; stroke-width: 6; }
+.sd-obj .sd-ring { stroke: var(--data-tint); }
+.sd-cls .sd-ring { stroke: var(--line); }
+.sd-model .box { fill: #fff; stroke: var(--model-line); stroke-width: 1.5; }
+.sd-stage .sd-model text { fill: var(--model-ink); }
+.sd-model .sd-ring { stroke: var(--model-tint); }
+.sd-tool .box { fill: #fff; stroke: var(--tool-line); stroke-width: 1.5; }
+.sd-stage .sd-tool text { fill: var(--tool-ink); }
+.sd-tool .sd-ring { stroke: var(--tool-tint); }
+.sd-answer .box { fill: var(--out-tint); stroke: var(--out-line); stroke-width: 1.5; }
+.sd-stage .sd-answer text { fill: var(--out-ink); font-weight: 600; }
+.sd-dim { opacity: .5; }
+.sd-arrow { fill: none; stroke: #9ca3af; stroke-width: 1.5; }
+.sd-arrow--dash { stroke-dasharray: 5 4; }
+.sd-arrow--on { stroke: var(--ink-2); stroke-width: 2; }
+.sd-divider { stroke: var(--line-strong); stroke-dasharray: 4 5; }
+.sd-badge circle { fill: #fff; stroke: var(--ink-2); stroke-width: 1.25; }
+.sd-stage .sd-badge text { font: 600 11px var(--font-mono); fill: var(--ink-2); }
+.sd-alert rect { fill: var(--out-tint); stroke: var(--out-line); stroke-width: 1.25; }
+.sd-stage .sd-alert text { font-weight: 600; fill: var(--out-ink); }
+.sd-island { fill: none; stroke: var(--out); stroke-width: 1.5; stroke-dasharray: 6 5; }
+.sd-group { fill: none; stroke: var(--data); stroke-width: 1.5; stroke-dasharray: 5 4; } /* a set of data values: a column, a group */
+.sd-run { fill: var(--ink-2); }
+.sd-stage .sd-run-text { font: 600 12px var(--font-sans); fill: #fff; }
+.sd-idle { fill: #fff; stroke: var(--line-strong); stroke-width: 1.25; stroke-dasharray: 4 4; }
+.sd-stage .sd-idle-text { font: 500 12px var(--font-sans); fill: var(--ink-2); }
+.sd-keys { margin: 14px 0 0; padding-left: 1.4em; font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
+.sd-keys li + li { margin-top: 4px; }
+
+/* ---------- Explain: a script's step-by-step view inside its own code cell ---------- */
+.explain-toggle {
+  display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; padding: 3px 10px;
+  border: 1px solid var(--model-line); border-radius: 7px; background: var(--model-tint);
+  font: 600 12.5px var(--font-sans); color: var(--model-ink); cursor: pointer;
+}
+.explain-toggle .icon { width: 14px; height: 14px; }
+.explain-toggle[aria-pressed="true"] { background: #fff; }
+.explain-toggle:focus-visible { outline: 2px solid var(--model); outline-offset: 2px; }
+.code-cell.is-explaining > pre { display: none; }
+.walkthrough { padding: 4px 16px 16px; background: #fff; }
+.wt-intro { padding: 12px 0 6px; font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
+.wt-intro > :last-child, .wt-note > :last-child { margin-bottom: 0; }
+.wt-step { padding: 14px 0 8px; border-top: 1px solid var(--line); }
+.wt-intro + .wt-step { margin-top: 6px; }
+.wt-step > .code-cell { margin: 0 0 10px; }
+.wt-note { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
+.wt-note > :first-child { margin-top: 0; }
+
+/* ---------- Tabs: one panel per alternative (providers, loaders, stores) ----------
+   A bordered box, so the end of a tab's content is visible when scrolling. */
+.tabs { margin: 22px 0; border: 1px solid var(--line-strong); border-radius: 12px; background: #fff; }
+.tab-list { display: flex; flex-wrap: wrap; gap: 2px; padding: 0 10px; border-bottom: 1px solid var(--line); border-radius: 12px 12px 0 0; background: var(--soft); }
+.tab-list button {
+  margin-bottom: -1px; padding: 8px 14px; border: 0; border-bottom: 2px solid transparent; background: none;
+  font: 500 14px var(--font-sans); color: var(--muted); cursor: pointer; transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.tab-list button:hover { color: var(--ink); }
+.tab-list button[aria-selected="true"] { border-bottom-color: var(--model); background: #fff; color: var(--model-ink); font-weight: 600; }
+.tab-list button:focus-visible { outline: 2px solid var(--model); outline-offset: 2px; border-radius: 6px; }
+.tab-panel { padding: 16px 18px 18px; }
+.tab-panel > :first-child { margin-top: 0; }
+.tab-panel > :last-child { margin-bottom: 0; }
+
+/* ---------- Planned lessons ---------- */
+.side-part { display: block; margin: 18px 12px 6px; }
+.side-title + .side-part { margin-top: 4px; }
+.part-title { margin: 28px 0 4px; font-size: 13px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.side-lessons .is-planned { display: flex; gap: 10px; align-items: center; padding: 6px 10px; font-size: 14px; line-height: 1.4; color: var(--faint); cursor: default; }
+.lesson-card.is-planned { border-style: dashed; background: var(--soft); color: var(--ink-2); }
+.lesson-card.is-planned:hover { border-color: var(--line); box-shadow: none; }
+.lesson-card.is-planned .go { visibility: hidden; }
+.module-list .num { font-size: 11px; }
+
+/* ---------- Sidebar: the open module's header collapses and expands its lessons ---------- */
+.mod[aria-controls] .mod-name { padding-right: 22px; }
+.mod .mod-chev { position: absolute; top: 12px; right: 10px; width: 16px; height: 16px; margin: 0; transition: transform .15s ease; }
+.mod[aria-expanded="true"] .mod-chev { transform: rotate(90deg); }
+
+/* ---------- Search (Pagefind) ---------- */
+.search-wrap { position: relative; margin-left: auto; }
+.search-wrap .search { margin-left: 0; }
+.search-results {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 40;
+  width: min(460px, 92vw); max-height: min(70vh, 560px); overflow-y: auto; padding: 6px;
+  border: 1px solid var(--line); border-radius: var(--r-lg); background: #fff; box-shadow: var(--shadow-2);
+}
+.sr-item { display: block; padding: 10px 12px; border-radius: var(--r-md); color: var(--ink); text-decoration: none; }
+.sr-item:hover, .sr-item:focus-visible { background: var(--model-tint); outline: none; }
+.sr-item b { display: block; font-size: 14.5px; line-height: 1.35; }
+.sr-item span { display: block; margin-top: 3px; font-size: 13px; line-height: 1.5; color: var(--muted); }
+.sr-item mark { color: var(--ink); }
+.sr-empty { margin: 0; padding: 12px; font-size: 13.5px; color: var(--muted); }
+@media (max-width: 880px) {
+  .search-wrap { flex: 1; min-width: 0; }
+  .search-wrap .search { width: auto; }
+  .search kbd { display: none; }
+}

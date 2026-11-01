@@ -1,0 +1,1 @@
+Python is the language almost every agentic AI tool is written in, and the one you will glue them together with. This module covers its core: values and types, text, decisions and loops, the four built-in collections, functions, modules, files and errors. Each lesson is a handful of small cells to run in a notebook, in order. Try each practice task before you open its solution.

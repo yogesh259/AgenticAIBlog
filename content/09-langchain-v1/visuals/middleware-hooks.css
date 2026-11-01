@@ -1,0 +1,37 @@
+/* Where middleware runs (lesson 9.6). Colours: blue = the model node, green = the tools node,
+   gray = control flow, hooks and middleware nodes. A middleware node glows; it never changes hue. */
+.mh-presets { flex-wrap: wrap; }
+.mh-code { margin: 0 0 12px; }
+.mh-code code { display: inline-block; max-width: 100%; overflow-wrap: anywhere; white-space: normal; font: 500 13px var(--font-mono); color: var(--ink-2); background: var(--sunk); padding: 4px 8px; border-radius: 7px; }
+
+.mh-stage {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; align-items: start; margin-bottom: 10px;
+  padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px;
+  background-color: var(--soft); background-image: radial-gradient(#dfe3e8 1px, transparent 1px); background-size: 16px 16px;
+}
+.mh-flow { display: grid; gap: 22px; margin: 0; padding: 0; list-style: none; }
+.mh-flow li {
+  position: relative; display: grid; gap: 2px; justify-items: center; padding: 8px 12px;
+  border: 1.5px solid var(--line-strong); border-radius: 10px; background: #fff; text-align: center;
+}
+.mh-flow li + li::before {
+  content: ""; position: absolute; left: 50%; top: -20px; height: 16px; border-left: 1.5px solid #9ca3af;
+}
+.mh-flow li[hidden] { display: none; }
+.mh-flow code { padding: 0; border: 0; background: none; font: 600 13px var(--font-mono); color: var(--ink); }
+.mh-flow small { font-size: 11.5px; color: var(--muted); }
+.mh-ctrl { justify-self: center; min-width: 120px; border-radius: 999px !important; }
+.mh-model { border-color: var(--model-line) !important; }
+.mh-model code { color: var(--model-ink); }
+.mh-tool { border-color: var(--tool-line) !important; }
+.mh-tool code { color: var(--tool-ink); }
+.mh-flow .is-wrapped { outline: 1.5px dashed var(--line-strong); outline-offset: 5px; }
+.mh-slot.is-hook { border-style: dashed; background: transparent; }
+.mh-slot.is-hook code { color: var(--ink-2); }
+.mh-slot.is-node { border-color: var(--ink-2); box-shadow: 0 0 0 4px var(--sunk), 0 0 0 5px var(--line-strong); }
+
+.mh-edges { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+.mh-edges .label { display: block; margin-bottom: 6px; font: 600 10.5px var(--font-sans); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.mh-edges ul { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; font-size: 12.5px; color: var(--ink-2); }
+.mh-edges code { font-size: 12px; }
+.mh-flow { max-width: 420px; width: 100%; justify-self: center; }

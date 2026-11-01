@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block main %}
+    <article class="module-page" data-pagefind-body>
+
+      <nav class="crumbs" aria-label="Breadcrumb" data-pagefind-ignore>
+        <a href="{{ root }}index.html">Modules</a>
+        <svg class="icon"><use href="#i-chev"/></svg>
+        <span>Module {{ module.number }}</span>
+      </nav>
+      <h1>{{ module.title }}</h1>
+      <p class="lede">{{ lede }}</p>
+{% include "chips.html" %}
+
+{{ body }}
+
+      <h2 id="lessons">Lessons</h2>
+{% if lessons %}
+      <ol class="lesson-list" data-pagefind-ignore>
+{% for l in lessons %}
+{% if l.planned %}
+        <li class="lesson-row"><span class="num">{{ loop.index }}</span><div class="lesson-card is-planned"><span class="txt"><b>{{ l.title }}</b><small>{{ l.summary }}</small></span><span class="type type--muted">Planned</span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></div></li>
+{% else %}
+        <li class="lesson-row"><span class="num">{{ loop.index }}</span><a class="lesson-card" href="{{ root }}{{ l.url }}"><span class="txt"><b>{{ l.title }}</b><small>{{ l.summary }}</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a></li>
+{% endif %}
+{% endfor %}
+      </ol>
+{% else %}
+      <p class="empty-note">No lessons yet.</p>
+{% endif %}
+
+{% include "pager.html" %}
+
+    </article>
+{% endblock %}

@@ -1,0 +1,63 @@
+/* Pause, decide, resume (lesson 9.7). Colours: blue = the model, green = the tools, amber = the messages and the
+   checkpointer, gray = the middleware and the reviewer, rose = the interrupt, errors and the printed answer.
+   Lit parts glow; none changes hue. */
+.hr .controls .seg, .hr .btns { flex-wrap: wrap; }
+.hr-code { margin: 0 0 14px; }
+.hr-stage {
+  display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.4fr); gap: 16px; align-items: start; padding: 16px 18px;
+  border: 1px solid var(--line); border-radius: 12px;
+  background-color: var(--soft); background-image: radial-gradient(#dfe3e8 1px, transparent 1px); background-size: 16px 16px;
+}
+.hr-parts { display: grid; gap: 8px; }
+.hr-part {
+  display: flex; gap: 10px; align-items: center; min-width: 0; padding: 8px 10px;
+  border: 1.5px solid var(--line-strong); border-radius: 10px; background: #fff;
+  transition: box-shadow var(--dur) var(--ease);
+}
+.hr-part > div { min-width: 0; }
+.hr-part .icon { flex: none; color: var(--muted); }
+.hr-part b { display: block; overflow-wrap: anywhere; font: 600 13px var(--font-sans); color: var(--ink); }
+.hr-part span { display: block; font-size: 11.5px; line-height: 1.35; color: var(--muted); }
+.hr-part--model { border-color: var(--model-line); }
+.hr-part--model .icon, .hr-part--model b { color: var(--model-ink); }
+.hr-part--tool { border-color: var(--tool-line); }
+.hr-part--tool .icon, .hr-part--tool b { color: var(--tool-ink); }
+.hr-part--memory { border-color: var(--data-line); }
+.hr-part--memory .icon, .hr-part--memory b { color: var(--data-ink); }
+.hr-part.is-hot { box-shadow: 0 0 0 4px var(--sunk), 0 0 0 5px var(--line-strong); }
+.hr-part--model.is-hot { box-shadow: 0 0 0 4px var(--model-tint), 0 0 0 5px var(--model-line); }
+.hr-part--tool.is-hot { box-shadow: 0 0 0 4px var(--tool-tint), 0 0 0 5px var(--tool-line); }
+.hr-part--memory.is-hot { box-shadow: 0 0 0 4px var(--data-tint), 0 0 0 5px var(--data-line); }
+
+.hr-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px; margin-bottom: 8px; }
+.hr-title { font: 600 11px var(--font-sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.hr-count { font: 500 12px var(--font-mono); color: var(--data-ink); }
+.hr-rows { display: grid; gap: 5px; margin: 0 0 12px; padding: 0; list-style: none; }
+.hr-row {
+  display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: baseline; gap: 8px; padding: 5px 8px;
+  border: 1.5px solid var(--data-line); border-radius: 8px; background: #fff;
+  transition: box-shadow var(--dur) var(--ease);
+}
+.hr-row.is-new { box-shadow: 0 0 0 3px var(--data-tint), 0 0 0 4px var(--data-line); }
+.hr-row.is-error { border-color: var(--out-line); }
+.hr-role { font: 600 10.5px var(--font-sans); letter-spacing: .05em; text-transform: uppercase; color: var(--data-ink); }
+.hr-row.is-error .hr-role { color: var(--out-ink); }
+.hr-text { overflow-wrap: anywhere; font: 500 12.5px/1.45 var(--font-mono); color: var(--ink); }
+.hr-empty { font-size: 13px; color: var(--muted); }
+.hr-box {
+  margin-bottom: 10px; padding: 10px 12px; border: 1.5px solid var(--out-line); border-radius: 10px; background: var(--out-tint);
+  transition: opacity var(--dur) var(--ease);
+}
+.hr-box p { margin: 4px 0 0; overflow-wrap: anywhere; font: 500 12.5px/1.5 var(--font-mono); color: var(--out-ink); }
+.hr-box.is-empty { opacity: .55; background: #fff; }
+.hr-box.is-empty p { font-family: var(--font-sans); color: var(--muted); }
+.hr-answer { margin-bottom: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hr-part, .hr-row, .hr-box { transition: none; }
+}
+@media (max-width: 640px) {
+  .hr-stage { grid-template-columns: 1fr; }
+  .hr-parts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hr-row { grid-template-columns: 1fr; gap: 0; }
+}

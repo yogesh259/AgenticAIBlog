@@ -1,0 +1,73 @@
+<figure class="card demo sd ct" aria-labelledby="ct-title">
+  <div class="demo-head">
+    <h3 id="ct-title">When each check and callback runs</h3>
+    <p>The steps of one <code>completion()</code> call in LiteLLM 1.105, from a check in your own code to the success callback on its background thread.</p>
+  </div>
+
+  <div class="sd-stage ct-stage">
+    <svg viewBox="0 0 320 356" role="img" aria-labelledby="ct-svg-title ct-svg-desc">
+      <title id="ct-svg-title">The steps of one completion call</title>
+      <desc id="ct-svg-desc">Seven steps from top to bottom. 1, a check on the messages in your own code: raising stops the call before anything is sent, and an edit is what gets sent. 2, completion is called. 3, LiteLLM builds the provider request from a copy of the messages. 4, input callbacks run: an exception is only logged and an edit is never sent. 5, the provider receives exactly the body built in step 3. 6, completion returns the response to your code. 7, success callbacks run on a background thread, often after step 6. Steps 2 to 6 happen inside completion.</desc>
+      <defs>
+        <marker id="ct-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <path class="sd-arrow" d="M19 64 H16 V294 H19"/>
+      <text class="sd-small" x="12" y="179" transform="rotate(-90 12 179)" text-anchor="middle">inside completion()</text>
+
+      <g class="sd-alert"><rect x="20" y="12" width="156" height="32" rx="8"/></g>
+      <g class="sd-badge"><circle cx="36" cy="28" r="10"/><text x="36" y="32" text-anchor="middle">1</text></g>
+      <text class="ct-label ct-label--hot" x="52" y="32">check(messages)</text>
+      <text class="sd-small" x="186" y="25">raise: nothing is sent</text>
+      <text class="sd-small" x="186" y="40">edit: what gets sent</text>
+      <path class="sd-arrow" d="M98 44 V58" marker-end="url(#ct-arrow)"/>
+
+      <g class="sd-cls"><rect class="box" x="20" y="62" width="156" height="32" rx="8"/></g>
+      <g class="sd-badge"><circle cx="36" cy="78" r="10"/><text x="36" y="82" text-anchor="middle">2</text></g>
+      <text class="ct-label" x="52" y="82">completion(...)</text>
+      <text class="sd-small" x="186" y="82">enters LiteLLM</text>
+      <path class="sd-arrow" d="M98 94 V108" marker-end="url(#ct-arrow)"/>
+
+      <g class="sd-cls"><rect class="box" x="20" y="112" width="156" height="32" rx="8"/></g>
+      <g class="sd-badge"><circle cx="36" cy="128" r="10"/><text x="36" y="132" text-anchor="middle">3</text></g>
+      <text class="ct-label" x="52" y="132">build request</text>
+      <text class="sd-small" x="186" y="125">the body is fixed here,</text>
+      <text class="sd-small" x="186" y="140">from a copy</text>
+      <path class="sd-arrow" d="M98 144 V158" marker-end="url(#ct-arrow)"/>
+
+      <g class="ct-watch"><rect x="20" y="162" width="156" height="32" rx="8"/></g>
+      <g class="sd-badge"><circle cx="36" cy="178" r="10"/><text x="36" y="182" text-anchor="middle">4</text></g>
+      <text class="ct-label" x="52" y="182">input_callback</text>
+      <text class="sd-small" x="186" y="175">errors: only logged</text>
+      <text class="sd-small" x="186" y="190">edits: never sent</text>
+      <path class="sd-arrow" d="M98 194 V208" marker-end="url(#ct-arrow)"/>
+
+      <g class="sd-model"><rect class="box" x="20" y="212" width="156" height="32" rx="8"/></g>
+      <g class="sd-badge"><circle cx="36" cy="228" r="10"/><text x="36" y="232" text-anchor="middle">5</text></g>
+      <text class="ct-label ct-label--model" x="52" y="232">provider</text>
+      <text class="sd-small" x="186" y="225">receives exactly</text>
+      <text class="sd-small" x="186" y="240">the body from step 3</text>
+      <path class="sd-arrow" d="M98 244 V258" marker-end="url(#ct-arrow)"/>
+
+      <g class="sd-cls"><rect class="box" x="20" y="262" width="156" height="32" rx="8"/></g>
+      <g class="sd-badge"><circle cx="36" cy="278" r="10"/><text x="36" y="282" text-anchor="middle">6</text></g>
+      <text class="ct-label" x="52" y="282">return response</text>
+      <text class="sd-small" x="186" y="275">completion() returns</text>
+      <text class="sd-small" x="186" y="290">to your code</text>
+      <path class="sd-arrow sd-arrow--dash" d="M98 294 V308" marker-end="url(#ct-arrow)"/>
+
+      <g class="ct-watch"><rect x="20" y="312" width="156" height="32" rx="8"/></g>
+      <g class="sd-badge"><circle cx="36" cy="328" r="10"/><text x="36" y="332" text-anchor="middle">7</text></g>
+      <text class="ct-label" x="52" y="332">success_callback</text>
+      <text class="sd-small" x="186" y="325">on another thread,</text>
+      <text class="sd-small" x="186" y="340">often after step 6</text>
+    </svg>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b>Step 1</b> is the only place that can stop a request or change what is sent: a check in your own code, before <code>completion()</code>.</li>
+    <li><b>Step 4</b>, <code>input_callback</code>, runs inside LiteLLM's logging after the request is built: it can watch, but what it raises is logged and what it edits arrives too late.</li>
+    <li><b>Step 7</b>, <code>success_callback</code>, runs on a background thread once the answer is back, so code that reads its results right after the call can find nothing yet.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> dashed boxes only watch. Callbacks observe; checks before the call enforce.</p>
+</figure>

@@ -1,0 +1,60 @@
+<section class="card demo lr" data-lcel-rag aria-labelledby="lr-title">
+  <div class="demo-head">
+    <h3 id="lr-title">One question through an LCEL chain</h3>
+    <p>Press <b>Play</b> or step with <b>Next</b>. The dict step sends the question down two branches; the documents and the answer are shortened.</p>
+  </div>
+
+  <div class="controls">
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <figure class="code-cell lr-code">
+    <figcaption class="code-head"><span>The chain</span><span class="sync">&middot; the highlighted line is running</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre data-code><code><span class="line">rag_chain = (</span>
+<span class="line">    {<span class="s">"context"</span>: retriever | format_docs, <span class="s">"input"</span>: RunnablePassthrough()}</span>
+<span class="line">    | rag_prompt</span>
+<span class="line">    | model</span>
+<span class="line">    | StrOutputParser()</span>
+<span class="line">)</span>
+<span class="line">rag_chain.invoke(<span class="s">"What is multi-head attention?"</span>)</span></code></pre>
+  </figure>
+
+  <div class="lr-flow" aria-hidden="true">
+    <div class="lr-node lr-node--data" data-node="question"><b>question</b><span>str</span></div>
+    <span class="lr-down"></span>
+    <div class="lr-fork" data-node="fork">
+      <span class="lr-fork-label">dict &rarr; RunnableParallel</span>
+      <div class="lr-branch">
+        <span class="lr-key">"context"</span>
+        <div class="lr-node" data-node="retriever"><b>retriever</b><span>FAISS, 4 nearest</span></div>
+        <span class="lr-down lr-down--short"></span>
+        <div class="lr-node" data-node="format"><b>format_docs</b><span>function</span></div>
+      </div>
+      <div class="lr-branch">
+        <span class="lr-key">"input"</span>
+        <div class="lr-node" data-node="pass"><b>RunnablePassthrough()</b><span>returns its input</span></div>
+      </div>
+    </div>
+    <span class="lr-down"></span>
+    <div class="lr-tail">
+      <div class="lr-node" data-node="prompt"><b>rag_prompt</b><span>ChatPromptTemplate</span></div>
+      <span class="lr-arrow"></span>
+      <div class="lr-node lr-node--model" data-node="model"><b>model</b><span>chat model</span></div>
+      <span class="lr-arrow"></span>
+      <div class="lr-node" data-node="parser"><b>parser</b><span>StrOutputParser</span></div>
+    </div>
+    <div class="lr-value" data-el="value">
+      <span class="lr-type" data-el="vtype">waiting for invoke</span>
+      <pre data-el="vbody"></pre>
+    </div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> the question is used twice: as the search query in the context branch, and as itself through <code>RunnablePassthrough</code>. A dict step is how one input reaches several places in a chain.</p>
+</section>

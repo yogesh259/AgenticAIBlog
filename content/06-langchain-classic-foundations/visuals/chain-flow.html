@@ -1,0 +1,44 @@
+<section class="card demo cf" data-chain-flow aria-labelledby="cf-title">
+  <div class="demo-head">
+    <h3 id="cf-title">One call through a chain</h3>
+    <p>Press <b>Play</b> or step with <b>Next</b>. The value passed along the chain changes type at every block; the model's answer is shortened.</p>
+  </div>
+
+  <div class="controls">
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+
+  <figure class="code-cell cf-code">
+    <figcaption class="code-head"><span>The chain</span><span class="sync">&middot; the highlighted line is running</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre data-code><code><span class="line">prompt = ChatPromptTemplate.from_messages([</span>
+<span class="line">    (<span class="s">"system"</span>, <span class="s">"You are an expert AI Engineer."</span>),</span>
+<span class="line">    (<span class="s">"user"</span>, <span class="s">"{input}"</span>),</span>
+<span class="line">])</span>
+<span class="line">chain = prompt | llm | StrOutputParser()</span>
+<span class="line">chain.invoke({<span class="s">"input"</span>: <span class="s">"What is LangSmith?"</span>})</span></code></pre>
+  </figure>
+
+  <div class="cf-flow" aria-hidden="true">
+    <div class="cf-blocks">
+      <div class="cf-block" data-block="prompt"><b>prompt</b><span>ChatPromptTemplate</span></div>
+      <span class="cf-arrow"></span>
+      <div class="cf-block cf-block--model" data-block="llm"><b>llm</b><span>chat model</span></div>
+      <span class="cf-arrow"></span>
+      <div class="cf-block" data-block="parser"><b>parser</b><span>StrOutputParser</span></div>
+    </div>
+    <div class="cf-value" data-el="value">
+      <span class="cf-type" data-el="vtype">waiting for invoke</span>
+      <pre data-el="vbody"></pre>
+    </div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> only the middle block talks to a provider. The prompt and the parser run in your Python process, instantly and for free, which is why <code>prompt.invoke(...)</code> can be tested without a key.</p>
+</section>

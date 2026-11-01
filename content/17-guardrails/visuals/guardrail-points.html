@@ -1,0 +1,87 @@
+<figure class="card demo sd gp" aria-labelledby="gp-title">
+  <div class="demo-head">
+    <h3 id="gp-title">Where guardrails run</h3>
+    <p>Four checkpoints on the way through an agent, and the hooks that run them in LangChain.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 460 556" role="img" aria-labelledby="gp-svg-title gp-svg-desc">
+      <title id="gp-svg-title">The four guardrail checkpoints of an agent run</title>
+      <desc id="gp-svg-desc">A request passes check 1, the input check (before_agent), then check 2, the context check (before_model), then the model. Check 3, the action check (after_model and wrap_tool_call), comes after the model: tool calls go to the tools, whose results go back to check 2 before the next model call. When the model answers, check 4, the output check (after_model and after_agent), runs before the answer is returned. A dashed path leads from check 1 straight to check 4: a blocked request skips the model.</desc>
+      <defs>
+        <marker id="gp-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+        <marker id="gp-arrow-out" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#d14d63"/></marker>
+      </defs>
+
+      <g class="sd-obj">
+        <rect class="box" x="110" y="12" width="120" height="32" rx="16"/>
+        <text class="sd-t" x="170" y="33" text-anchor="middle">request</text>
+      </g>
+
+      <g class="sd-cls">
+        <rect class="box" x="50" y="68" width="240" height="68" rx="10"/>
+        <text class="sd-t" x="92" y="92">Input check</text>
+        <text class="gp-hook" x="92" y="110">before_agent</text>
+        <text class="sd-small" x="92" y="126">topics, length, who is asking</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="50" y="160" width="240" height="68" rx="10"/>
+        <text class="sd-t" x="92" y="184">Context check</text>
+        <text class="gp-hook" x="92" y="202">before_model</text>
+        <text class="sd-small" x="92" y="218">redact PII, trim the history</text>
+      </g>
+      <g class="sd-model">
+        <rect class="box" x="110" y="252" width="120" height="44" rx="10"/>
+        <text class="sd-t" x="170" y="279" text-anchor="middle">model</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="50" y="320" width="240" height="68" rx="10"/>
+        <text class="sd-t" x="92" y="344">Action check</text>
+        <text class="gp-hook" x="92" y="362">after_model, wrap_tool_call</text>
+        <text class="sd-small" x="92" y="378">approval, argument checks</text>
+      </g>
+      <g class="sd-tool">
+        <rect class="box" x="350" y="330" width="90" height="48" rx="10"/>
+        <text class="sd-t" x="395" y="359" text-anchor="middle">tools</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="50" y="420" width="240" height="68" rx="10"/>
+        <text class="sd-t" x="92" y="444">Output check</text>
+        <text class="gp-hook" x="92" y="462">after_model, after_agent</text>
+        <text class="sd-small" x="92" y="478">PII, safety judge, notices</text>
+      </g>
+      <g class="sd-answer">
+        <rect class="box" x="110" y="512" width="120" height="32" rx="16"/>
+        <text x="170" y="533" text-anchor="middle">answer</text>
+      </g>
+
+      <g class="sd-badge"><circle cx="70" cy="88" r="10"/><text x="70" y="92" text-anchor="middle">1</text></g>
+      <g class="sd-badge"><circle cx="70" cy="180" r="10"/><text x="70" y="184" text-anchor="middle">2</text></g>
+      <g class="sd-badge"><circle cx="70" cy="340" r="10"/><text x="70" y="344" text-anchor="middle">3</text></g>
+      <g class="sd-badge"><circle cx="70" cy="440" r="10"/><text x="70" y="444" text-anchor="middle">4</text></g>
+
+      <path class="sd-arrow" d="M170 44 V64" marker-end="url(#gp-arrow)"/>
+      <path class="sd-arrow" d="M170 136 V156" marker-end="url(#gp-arrow)"/>
+      <path class="sd-arrow" d="M170 228 V248" marker-end="url(#gp-arrow)"/>
+      <path class="sd-arrow" d="M170 296 V316" marker-end="url(#gp-arrow)"/>
+      <path class="sd-arrow" d="M290 354 H346" marker-end="url(#gp-arrow)"/>
+      <text class="sd-small" x="320" y="346" text-anchor="middle">tool calls</text>
+      <path class="sd-arrow" d="M410 330 V194 H294" marker-end="url(#gp-arrow)"/>
+      <text class="sd-small" x="402" y="266" text-anchor="end">results</text>
+      <path class="sd-arrow" d="M170 388 V416" marker-end="url(#gp-arrow)"/>
+      <text class="sd-small" x="180" y="407">no tool calls</text>
+      <path class="sd-arrow" d="M170 488 V508" marker-end="url(#gp-arrow)"/>
+
+      <path class="gp-block" d="M50 102 H26 V454 H46" marker-end="url(#gp-arrow-out)"/>
+      <text class="sd-small gp-block-label" x="18" y="278" text-anchor="middle" transform="rotate(-90 18 278)">blocked: the model never runs</text>
+    </svg>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b>Input check</b>, once per request: refuse banned topics, oversized inputs or unauthorised users before anything is spent.</li>
+    <li><b>Context check</b>, before every model call: change what the model will see, such as personal data in the user's message or in tool results.</li>
+    <li><b>Action check</b>, after every model reply and around every tool call: approve, reject or correct a tool call before it runs.</li>
+    <li><b>Output check</b>, on the answer: redact, judge, or add a required notice before it is returned.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> checks 2 and 3 sit inside the loop, so they run on every round of tool calls; checks 1 and 4 run once. A request blocked at check 1 still passes check 4 on its way out.</p>
+</figure>

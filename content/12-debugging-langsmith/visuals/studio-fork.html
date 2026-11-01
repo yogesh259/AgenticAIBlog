@@ -1,0 +1,64 @@
+<figure class="card demo sd stf" aria-labelledby="stf-title">
+  <div class="demo-head">
+    <h3 id="stf-title">Edit a step and fork</h3>
+    <p>The agent of lesson 12.2 in Studio, run on "What is 5 + 3?" with an interrupt before <code>tools</code>. Each card is a checkpoint: the state saved after a step.</p>
+  </div>
+
+  <div class="sd-stage stf-stage">
+    <ol class="stf-lane" aria-label="Checkpoints before the fork">
+      <li class="stf-cp">
+        <span class="stf-after">input</span>
+        <span class="stf-msg stf-human">Human: What is 5 + 3?</span>
+      </li>
+      <li class="stf-cp">
+        <span class="stf-after">after agent</span>
+        <span class="stf-msg stf-call">AI: tool call add(a=5, b=3)</span>
+        <span class="stf-note">paused, next: tools</span>
+      </li>
+    </ol>
+
+    <p class="stf-from">From the paused checkpoint, two ways on</p>
+
+    <div class="stf-split">
+      <section class="stf-branch" aria-labelledby="stf-a">
+        <h4 id="stf-a">Continue</h4>
+        <ol class="stf-lane">
+          <li class="stf-cp">
+            <span class="stf-after">after tools</span>
+            <span class="stf-msg stf-tool">Tool: 8.0</span>
+          </li>
+          <li class="stf-cp">
+            <span class="stf-after">after agent</span>
+            <span class="stf-msg stf-answer">AI: The answer is 8.</span>
+          </li>
+        </ol>
+      </section>
+
+      <section class="stf-branch" aria-labelledby="stf-b">
+        <h4 id="stf-b">Edit node state, then Fork</h4>
+        <ol class="stf-lane">
+          <li class="stf-cp stf-edited">
+            <span class="stf-after">agent, edited</span>
+            <span class="stf-msg stf-call">AI: tool call add(a=50, b=3)</span>
+          </li>
+          <li class="stf-cp">
+            <span class="stf-after">after tools</span>
+            <span class="stf-msg stf-tool">Tool: 53.0</span>
+          </li>
+          <li class="stf-cp">
+            <span class="stf-after">after agent</span>
+            <span class="stf-msg stf-answer">AI: The answer is 53.</span>
+          </li>
+        </ol>
+      </section>
+    </div>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b>Interrupt before tools.</b> The run stops after <code>agent</code>: the tool call is in the state, and nothing has run.</li>
+    <li><b>Continue</b> runs on as the model decided: <code>add(5, 3)</code>, then the answer.</li>
+    <li><b>Edit node state</b> changes what <code>agent</code> returned, and <b>Fork</b> saves it as a new checkpoint after the paused one and runs on from there.</li>
+    <li>Both branches stay in the thread. <b>Re-run from here</b> forks in the same way without an edit.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> a fork never rewrites history. The original checkpoints are kept, so you can try several edits from the same point and compare where each one leads.</p>
+</figure>

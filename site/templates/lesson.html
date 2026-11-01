@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block main %}
+    <article class="lesson" data-pagefind-body>
+
+      <nav class="crumbs" aria-label="Breadcrumb" data-pagefind-ignore>
+        <a href="{{ root }}{{ module.url }}">Module {{ module.number }} · {{ module.title }}</a>
+        <svg class="icon"><use href="#i-chev"/></svg>
+        <span>Lesson {{ lesson.number }}</span>
+      </nav>
+      <h1>{{ lesson.title }}</h1>
+      <p class="lede">{{ lede }}</p>
+{% include "chips.html" %}
+
+{{ body }}
+
+{% include "pager.html" %}
+
+    </article>
+{% endblock %}

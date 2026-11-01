@@ -1,0 +1,54 @@
+<section class="card demo al" data-agent-loop aria-labelledby="al-title">
+  <div class="demo-head">
+    <h3 id="al-title">One request through an agent</h3>
+    <p>Press <b>Play</b> or step with <b>Next</b>. A support agent with two tools answers one customer. The messages are the ones the first practice task below prints, where a script plays the model.</p>
+  </div>
+
+  <div class="controls">
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <figure class="code-cell al-code">
+    <figcaption class="code-head"><span>The loop, sketched</span><span class="sync">&middot; the highlighted lines are running</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre data-code><code><span class="line">messages = [system_message, user_message]            <span class="c"># perceive</span></span>
+<span class="line"><span class="k">for</span> step <span class="k">in</span> <span class="b">range</span>(max_steps):</span>
+<span class="line">    reply = model.invoke(messages)                   <span class="c"># reason</span></span>
+<span class="line">    messages.append(reply)</span>
+<span class="line">    <span class="k">if not</span> reply.tool_calls:                         <span class="c"># an answer: stop</span></span>
+<span class="line">        <span class="k">break</span></span>
+<span class="line">    <span class="k">for</span> call <span class="k">in</span> reply.tool_calls:                    <span class="c"># act</span></span>
+<span class="line">        result = tools[call[<span class="s">"name"</span>]](**call[<span class="s">"args"</span>])</span>
+<span class="line">        messages.append(tool_message(call, result))  <span class="c"># observe</span></span>
+<span class="line">memory.save(messages)                                <span class="c"># learn</span></span></code></pre>
+  </figure>
+
+  <div class="al-stage" aria-hidden="true">
+    <div class="al-parts">
+      <div class="al-part" data-part="user"><svg class="icon"><use href="#i-user"/></svg><div><b>Customer</b><span>asks one question</span></div></div>
+      <div class="al-part" data-part="app"><svg class="icon"><use href="#i-code"/></svg><div><b>Application</b><span>runs the loop and the tools</span></div></div>
+      <div class="al-part al-part--model" data-part="model"><svg class="icon"><use href="#i-spark"/></svg><div><b>Model</b><span>decides the next step</span></div></div>
+      <div class="al-tools">
+        <div class="al-part al-part--tool" data-part="get_order"><svg class="icon"><use href="#i-wrench"/></svg><div><b>get_order</b><span>orders database</span></div></div>
+        <div class="al-part al-part--tool" data-part="search_policy"><svg class="icon"><use href="#i-wrench"/></svg><div><b>search_policy</b><span>policy pages</span></div></div>
+      </div>
+      <div class="al-part al-part--memory" data-part="memory"><svg class="icon"><use href="#i-msg"/></svg><div><b>Memory</b><span>the conversation, the rating</span></div></div>
+    </div>
+    <div class="al-msgs">
+      <div class="al-head"><span class="al-title">Messages</span><span class="al-count" data-el="count"></span></div>
+      <ol class="al-rows" data-el="rows"></ol>
+      <div class="al-answer" data-el="answer">
+        <span class="al-title">Answer</span>
+        <p data-el="atext"></p>
+      </div>
+    </div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> the model chose both tools and when to stop; the application only ran what it asked for, inside a step limit. A workflow would fix those steps in code.</p>
+</section>

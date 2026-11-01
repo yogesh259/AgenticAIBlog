@@ -1,0 +1,7 @@
+/* Router or agent (lesson 11.4). A static figure on the shared .sd-* classes. Colours: blue = the model node,
+   green = the tools node, gray = START, END and the edges, rose = the one edge that differs. */
+.rva-stage { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+.rva-panel { fill: var(--soft); stroke: var(--line); stroke-width: 1; }
+.rva-hot { fill: none; stroke: var(--out); stroke-width: 2.25; }
+.rva .sd-stage .rva-note { font-size: 12px; fill: var(--ink-2); }
+.rva .sd-stage .rva-note-hot { font-weight: 600; fill: var(--out-ink); }

@@ -1,0 +1,62 @@
+<section class="card demo hp" data-heap-tree aria-labelledby="hp-title">
+  <div class="demo-head">
+    <h3 id="hp-title">A heap is a list</h3>
+    <p>Press <b>Play</b> or step with <b>Next</b>. The list on top and the tree below are the same data: the item at index <code>i</code> has its children at <code>2i + 1</code> and <code>2i + 2</code>.</p>
+  </div>
+
+  <div class="controls">
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <div class="readouts">
+    <div class="stat"><span class="label">Step</span><output data-out="step">0 / 8</output><small>of the run</small></div>
+    <div class="stat stat--data" data-out-card="top"><span class="label hp-code">heap[0]</span><output data-out="top">-</output><small>the smallest item</small></div>
+    <div class="stat"><span class="label">Call</span><output data-out="call">-</output><small>running now</small></div>
+    <div class="stat" data-out-card="swaps"><span class="label">Swaps</span><output data-out="swaps">-</output><small>in this step</small></div>
+  </div>
+
+  <div class="hp-stage">
+    <svg viewBox="0 0 600 330" role="img" aria-labelledby="hp-svg-title hp-svg-desc">
+      <title id="hp-svg-title">The heap as a list and as a tree</title>
+      <desc id="hp-svg-desc">Four list cells with indexes 0 to 3 on top. Below, the same items as a binary tree: index 0 at the top, 1 and 2 under it, 3 under 1.</desc>
+      <text class="hp-label" x="24" y="52">list</text>
+      <text class="hp-label" x="24" y="200">tree</text>
+
+      <line class="hp-edge" data-edge="1" x1="300" y1="160" x2="200" y2="226"/>
+      <line class="hp-edge" data-edge="2" x1="300" y1="160" x2="400" y2="226"/>
+      <line class="hp-edge" data-edge="3" x1="200" y1="226" x2="140" y2="292"/>
+
+      <g class="hp-item" data-cell="0"><rect class="ring" x="152" y="22" width="62" height="54" rx="12"/><rect class="box" x="156" y="26" width="54" height="46" rx="9"/><text class="v" x="183" y="56" text-anchor="middle"></text><text class="i" x="183" y="96" text-anchor="middle">0</text></g>
+      <g class="hp-item" data-cell="1"><rect class="ring" x="224" y="22" width="62" height="54" rx="12"/><rect class="box" x="228" y="26" width="54" height="46" rx="9"/><text class="v" x="255" y="56" text-anchor="middle"></text><text class="i" x="255" y="96" text-anchor="middle">1</text></g>
+      <g class="hp-item" data-cell="2"><rect class="ring" x="296" y="22" width="62" height="54" rx="12"/><rect class="box" x="300" y="26" width="54" height="46" rx="9"/><text class="v" x="327" y="56" text-anchor="middle"></text><text class="i" x="327" y="96" text-anchor="middle">2</text></g>
+      <g class="hp-item" data-cell="3"><rect class="ring" x="368" y="22" width="62" height="54" rx="12"/><rect class="box" x="372" y="26" width="54" height="46" rx="9"/><text class="v" x="399" y="56" text-anchor="middle"></text><text class="i" x="399" y="96" text-anchor="middle">3</text></g>
+
+      <g class="hp-item" data-node="0"><circle class="ring" cx="300" cy="160" r="29"/><circle class="box" cx="300" cy="160" r="24"/><text class="v" x="300" y="166" text-anchor="middle"></text><text class="i" x="338" y="148">0</text></g>
+      <g class="hp-item" data-node="1"><circle class="ring" cx="200" cy="226" r="29"/><circle class="box" cx="200" cy="226" r="24"/><text class="v" x="200" y="232" text-anchor="middle"></text><text class="i" x="238" y="214">1</text></g>
+      <g class="hp-item" data-node="2"><circle class="ring" cx="400" cy="226" r="29"/><circle class="box" cx="400" cy="226" r="24"/><text class="v" x="400" y="232" text-anchor="middle"></text><text class="i" x="438" y="214">2</text></g>
+      <g class="hp-item" data-node="3"><circle class="ring" cx="140" cy="292" r="29"/><circle class="box" cx="140" cy="292" r="24"/><text class="v" x="140" y="298" text-anchor="middle"></text><text class="i" x="178" y="280">3</text></g>
+    </svg>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <figure class="code-cell">
+    <figcaption class="code-head"><span>Notebook cell</span><span class="sync">· highlighted lines run at this step</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre class="is-compact" data-code><code><span class="line"><span class="k">import</span> heapq</span>
+<span class="line"></span>
+<span class="line">heap = []</span>
+<span class="line">heapq.heappush(heap, <span class="n">5</span>)</span>
+<span class="line">heapq.heappush(heap, <span class="n">1</span>)</span>
+<span class="line">heapq.heappush(heap, <span class="n">8</span>)</span>
+<span class="line">heapq.heappush(heap, <span class="n">3</span>)</span>
+<span class="line"><span class="b">print</span>(heap[<span class="n">0</span>], heap)</span>
+<span class="line"><span class="b">print</span>(heapq.heappop(heap), heap)</span></code></pre>
+  </figure>
+
+  <p class="observe"><b>Observe:</b> only the path between the changed spot and the root, or down to a leaf, is touched. A tree of n items is about log2(n) levels deep, which is why a push or a pop costs O(log n).</p>
+</section>

@@ -1,0 +1,58 @@
+<section class="card demo tt" data-threads-timeline aria-labelledby="tt-title">
+  <div class="demo-head">
+    <h3 id="tt-title">Threads, processes and the clock</h3>
+    <p>Two tasks of five 2-second steps each. Pick how they run to see when each worker is busy and how long the whole run takes.</p>
+  </div>
+
+  <div class="controls">
+    <div class="seg tt-modes" role="group" aria-label="How the tasks run">
+      <button type="button" data-mode="one" aria-pressed="true">One thread</button>
+      <button type="button" data-mode="wait" aria-pressed="false">Two threads, waiting</button>
+      <button type="button" data-mode="gil" aria-pressed="false">Two threads, computing</button>
+      <button type="button" data-mode="proc" aria-pressed="false">Two processes, computing</button>
+    </div>
+  </div>
+
+  <div class="readouts tt-readouts">
+    <div class="stat"><span class="label">Total time</span><output data-out="total">20 s</output><small data-out="total-note">for both tasks</small></div>
+    <div class="stat"><span class="label">What overlaps</span><output data-out="overlap">nothing</output><small>between the two tasks</small></div>
+  </div>
+
+  <div class="tt-stage">
+    <svg viewBox="0 0 640 176" role="img" aria-labelledby="tt-svg-title tt-svg-desc">
+      <title id="tt-svg-title">A timeline of two workers from 0 to 20 seconds</title>
+      <desc id="tt-svg-desc" data-desc>Worker 1 runs task A and then task B, 20 seconds in total; worker 2 is idle.</desc>
+      <defs>
+        <pattern id="tt-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width="6" height="6" fill="#fff"/><line x1="0" y1="0" x2="0" y2="6" stroke="#cfd4dc" stroke-width="3"/>
+        </pattern>
+      </defs>
+      <g class="tt-grid">
+        <line x1="120" y1="24" x2="120" y2="146"/><line x1="245" y1="24" x2="245" y2="146"/>
+        <line x1="370" y1="24" x2="370" y2="146"/><line x1="495" y1="24" x2="495" y2="146"/>
+        <line x1="620" y1="24" x2="620" y2="146"/>
+      </g>
+      <g class="tt-ticks">
+        <text x="120" y="166" text-anchor="middle">0 s</text><text x="245" y="166" text-anchor="middle">5 s</text>
+        <text x="370" y="166" text-anchor="middle">10 s</text><text x="495" y="166" text-anchor="middle">15 s</text>
+        <text x="620" y="166" text-anchor="middle">20 s</text>
+      </g>
+      <text class="tt-lane" x="16" y="62">worker 1</text>
+      <text class="tt-lane" x="16" y="118">worker 2</text>
+      <g data-bars></g>
+      <g class="tt-end" data-end>
+        <line x1="370" y1="22" x2="370" y2="148"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="legend tt-legend">
+    <span><i class="tt-key tt-key--run"></i>running Python code</span>
+    <span><i class="tt-key tt-key--wait"></i>waiting: sleep, network, disk</span>
+    <span><i class="tt-key tt-key--gil"></i>waiting for the GIL</span>
+    <span><i class="tt-key tt-key--start"></i>starting a process</span>
+  </div>
+
+  <p class="caption" aria-live="polite"><span data-caption></span></p>
+  <p class="observe"><b>Observe:</b> with more than one worker, waiting overlaps in every mode; computing overlaps only with processes. The waiting mode is <code>multi_threading.py</code> as measured; the two computing modes are schematic.</p>
+</section>

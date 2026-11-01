@@ -1,0 +1,9 @@
+/* Two ways to retrieve (lesson 16.1). Static figure on the shared .sd-* styles: the two pipelines side by side,
+   stacked on narrow screens. Colours: blue = models (embedding, tree building, tree search), amber = data
+   (document, store, question, retrieved passages), gray = the nearest-neighbour search, rose = the answer. */
+.tp-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.tp-panels .sd-stage { padding: 4px; }
+@media (max-width: 640px) {
+  .tp-panels { grid-template-columns: minmax(0, 1fr); }
+  .tp-panels svg { max-width: 380px; margin: 0 auto; }
+}

@@ -1,0 +1,46 @@
+<section class="card demo co" data-chunk-overlap aria-labelledby="co-title">
+  <div class="demo-head">
+    <h3 id="co-title">Chunks and overlap</h3>
+    <p>Real splits of the first two paragraphs of <code>speech.txt</code>. Pick a splitter; point at a chunk in the list to find it in the text.</p>
+  </div>
+
+  <div class="controls">
+    <div class="seg co-presets" role="group" aria-label="Splitter and settings">
+      <button type="button" data-preset="r100-20" aria-pressed="true">Recursive, 100 / 20</button>
+      <button type="button" data-preset="r100-0" aria-pressed="false">Recursive, 100 / 0</button>
+      <button type="button" data-preset="c100-20" aria-pressed="false">Character, 100 / 20</button>
+    </div>
+  </div>
+
+  <div class="co-code"><code data-code></code></div>
+
+  <ol class="co-ladder" aria-label="Separators, tried in order">
+    <li data-sep="0"><code>"\n\n"</code><small data-sep-note></small></li>
+    <li data-sep="1"><code>"\n"</code><small data-sep-note></small></li>
+    <li data-sep="2"><code>" "</code><small data-sep-note></small></li>
+    <li data-sep="3"><code>""</code><small data-sep-note></small></li>
+  </ol>
+
+  <div class="co-body">
+    <p class="co-text" data-text></p>
+    <ol class="co-list" data-list aria-label="Chunks"></ol>
+  </div>
+
+  <div class="co-legend" aria-hidden="true">
+    <span><i class="co-key co-key--a"></i>one chunk</span>
+    <span><i class="co-key co-key--b"></i>the next chunk</span>
+    <span><i class="co-key co-key--both"></i>in both (overlap)</span>
+    <span><i class="co-key co-key--none"></i>in no chunk</span>
+  </div>
+
+  <div class="readouts">
+    <div class="stat stat--data"><span class="label">Chunks</span><output data-out="count">11</output><small>in these two paragraphs</small></div>
+    <div class="stat"><span class="label">Whole file</span><output data-out="total">49</output><small>chunks from <code>speech.txt</code></small></div>
+    <div class="stat"><span class="label">Longest</span><output data-out="longest">99</output><small>characters; the limit is 100</small></div>
+    <div class="stat stat--data"><span class="label">Repeated</span><output data-out="overlap">133</output><small>characters in two chunks</small></div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> an overlap of 20 is a maximum, not a fixed amount. The splitter carries over whole words only, as many as fit in 20 characters, so neighbours share 7 to 19 characters here, and nothing at all across the paragraph break.</p>
+</section>

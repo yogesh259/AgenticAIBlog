@@ -1,0 +1,4 @@
+/* How a Router picks a deployment (lesson 18.4). Static figure on the shared .sd-* styles.
+   Colours: blue = deployments (models), rose = the fallback path, gray = the call, the alias, edges and badges. */
+.rp-stage { padding: 6px; }
+.rp-stage svg { max-width: 380px; margin: 0 auto; }

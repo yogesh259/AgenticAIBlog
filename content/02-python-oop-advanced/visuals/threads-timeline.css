@@ -1,0 +1,34 @@
+/* Threads, processes and the clock (lesson 2.10). Colours: gray = workers running or waiting (control flow),
+   rose = waiting for the GIL and the end of the run (attention). Bars fade in when the mode changes. */
+.tt-modes { flex-wrap: wrap; }
+.tt-readouts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.tt-stage {
+  border: 1px solid var(--line); border-radius: 12px;
+  background-color: var(--soft); background-image: radial-gradient(#dfe3e8 1px, transparent 1px); background-size: 16px 16px;
+}
+.tt-stage svg { display: block; width: 100%; height: auto; }
+.tt-grid line { stroke: var(--line-strong); stroke-dasharray: 2 4; }
+.tt-ticks text { font: 500 11.5px var(--font-mono); fill: var(--muted); }
+.tt-lane { font: 600 12.5px var(--font-mono); fill: var(--ink-2); }
+
+.tt-bar { animation: tt-in 320ms var(--ease); }
+.tt-bar--run { fill: var(--ink-2); }
+.tt-bar--wait { fill: url(#tt-hatch); stroke: var(--line-strong); stroke-width: 1; }
+.tt-bar--gil { fill: var(--out-tint); stroke: var(--out-line); stroke-width: 1; }
+.tt-bar--start { fill: var(--sunk); stroke: var(--line-strong); stroke-width: 1; }
+@keyframes tt-in { from { opacity: 0; } to { opacity: 1; } }
+
+.tt-end { transition: transform 420ms var(--ease); }
+.tt-end line { stroke: var(--out); stroke-width: 2; stroke-dasharray: 5 4; }
+
+.tt-legend { justify-content: flex-start; margin-top: 12px; }
+.tt-legend .tt-key { display: inline-block; width: 18px; height: 12px; border-radius: 3px; border: 1px solid var(--line-strong); background: #fff; }
+.tt-legend .tt-key--run { background: var(--ink-2); border-color: var(--ink-2); }
+.tt-legend .tt-key--wait { background: repeating-linear-gradient(45deg, #fff 0 3px, #cfd4dc 3px 5px); }
+.tt-legend .tt-key--gil { background: var(--out-tint); border-color: var(--out-line); }
+.tt-legend .tt-key--start { background: var(--sunk); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-bar { animation: none; }
+  .tt-end { transition: none; }
+}

@@ -1,0 +1,21 @@
+<figure class="card figure lc" data-loop-comp aria-label="A loop and the list comprehension that builds the same list">
+  <div class="lc-panes">
+    <div class="fig-panel">
+      <div class="fig-head"><div><span class="fig-title">Loop</span><span class="fig-sub">Start empty, loop, test, append.</span></div></div>
+<pre class="lc-code"><code>lst = []
+<span class="lc-part lc-loop" data-part="loop" tabindex="0"><span class="k">for</span> i <span class="k">in</span> <span class="b">range</span>(<span class="n">10</span>):</span>
+    <span class="lc-part lc-filter" data-part="filter" tabindex="0"><span class="k">if</span> i % <span class="n">2</span> == <span class="n">0</span>:</span>
+        lst.append(<span class="lc-part lc-value" data-part="value" tabindex="0">i</span>)</code></pre>
+    </div>
+    <div class="fig-panel">
+      <div class="fig-head"><div><span class="fig-title">Comprehension</span><span class="fig-sub">The same list in one line.</span></div></div>
+<pre class="lc-code"><code>lst = [<span class="lc-part lc-value" data-part="value" tabindex="0">i</span> <span class="lc-part lc-loop" data-part="loop" tabindex="0"><span class="k">for</span> i <span class="k">in</span> <span class="b">range</span>(<span class="n">10</span>)</span> <span class="lc-part lc-filter" data-part="filter" tabindex="0"><span class="k">if</span> i % <span class="n">2</span> == <span class="n">0</span></span>]</code></pre>
+    </div>
+  </div>
+  <figcaption class="lc-legend">
+    <button type="button" class="lc-key" data-part="value"><i class="lc-swatch lc-value"></i>1 · the value to keep</button>
+    <button type="button" class="lc-key" data-part="loop"><i class="lc-swatch lc-loop"></i>2 · the loop</button>
+    <button type="button" class="lc-key" data-part="filter"><i class="lc-swatch lc-filter"></i>3 · the filter, optional</button>
+  </figcaption>
+  <p class="lc-note">Point at a part to light up its twin. Read the comprehension in that order: the value, <b>for</b> each item, <b>if</b> the test holds. The brackets make the list, so <code>lst = []</code> and <code>append</code> disappear.</p>
+</figure>

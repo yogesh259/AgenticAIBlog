@@ -1,0 +1,59 @@
+<figure class="card demo sd" aria-labelledby="rc-title">
+  <div class="demo-head">
+    <h3 id="rc-title">Who still points here?</h3>
+    <p>Left, a list freed by reference counting. Right, two objects that keep each other alive until the garbage collector runs.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 640 244" role="img" aria-labelledby="rc-svg-title rc-svg-desc">
+      <title id="rc-svg-title">Reference counts and a reference cycle</title>
+      <desc id="rc-svg-desc">Left: the names a and b both point at one list, which has two references. del b leaves one; del a leaves none and the list is freed at once. Right: the names obj1 and obj2 are deleted, but each object still refers to the other through .ref, so each count stays at 1. The pair is unreachable, and only gc.collect() frees it.</desc>
+      <defs>
+        <marker id="rc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <!-- reference counting -->
+      <text class="sd-label" x="16" y="26">reference counting</text>
+      <g class="sd-name"><rect x="24" y="52" width="52" height="26" rx="13"/><text x="50" y="69" text-anchor="middle">a</text></g>
+      <g class="sd-name"><rect x="24" y="100" width="52" height="26" rx="13"/><text x="50" y="117" text-anchor="middle">b</text></g>
+      <path class="sd-arrow" d="M76 65 C 108 65, 116 82, 148 84" marker-end="url(#rc-arrow)"/>
+      <path class="sd-arrow" d="M76 113 C 108 113, 116 98, 148 96" marker-end="url(#rc-arrow)"/>
+      <g class="sd-obj">
+        <rect class="box" x="150" y="58" width="146" height="64" rx="10"/>
+        <text class="sd-t" x="164" y="84">[]</text>
+        <text class="sd-small" x="282" y="83" text-anchor="end">a list</text>
+        <text x="164" y="108">references: 2</text>
+      </g>
+      <text x="24" y="166"><tspan>b = a</tspan><tspan class="sd-small" dx="10">two names, one list: 2</tspan></text>
+      <text x="24" y="190"><tspan>del b</tspan><tspan class="sd-small" dx="10">removes a name, not the list: 1</tspan></text>
+      <text x="24" y="214"><tspan>del a</tspan><tspan class="sd-small" dx="10">nothing points here: freed at once</tspan></text>
+
+      <line class="sd-divider" x1="316" y1="14" x2="316" y2="232"/>
+
+      <!-- a cycle -->
+      <text class="sd-label" x="332" y="26">a reference cycle</text>
+      <g class="sd-name sd-name--gone"><rect x="336" y="58" width="64" height="26" rx="13"/><text x="368" y="75" text-anchor="middle">obj1</text></g>
+      <g class="sd-name sd-name--gone"><rect x="336" y="150" width="64" height="26" rx="13"/><text x="368" y="167" text-anchor="middle">obj2</text></g>
+      <text class="sd-small" x="368" y="200" text-anchor="middle">names deleted</text>
+
+      <rect class="sd-island" x="412" y="38" width="212" height="160" rx="16"/>
+      <g class="sd-obj">
+        <rect class="box" x="432" y="50" width="160" height="40" rx="9"/>
+        <text x="446" y="75">MyObject("obj1")</text>
+      </g>
+      <g class="sd-obj">
+        <rect class="box" x="432" y="146" width="160" height="40" rx="9"/>
+        <text x="446" y="171">MyObject("obj2")</text>
+      </g>
+      <path class="sd-arrow" d="M592 70 C 622 70, 622 166, 596 166" marker-end="url(#rc-arrow)"/>
+      <path class="sd-arrow" d="M432 166 C 402 166, 402 70, 428 70" marker-end="url(#rc-arrow)"/>
+      <text class="sd-small" x="598" y="122" text-anchor="end">.ref</text>
+      <text class="sd-small" x="428" y="122">.ref</text>
+      <text class="sd-small" x="512" y="122" text-anchor="middle">1 reference each</text>
+      <text class="sd-small sd-hot" x="518" y="218" text-anchor="middle">unreachable, yet never at 0</text>
+      <text class="sd-small" x="518" y="236" text-anchor="middle">gc.collect() finds the pair and frees it</text>
+    </svg>
+  </div>
+
+  <p class="observe"><b>Observe:</b> reference counting frees an object the moment its count reaches zero. In a cycle the objects count each other, so the count never gets there; the garbage collector looks for groups that nothing outside can reach.</p>
+</figure>

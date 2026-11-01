@@ -1,0 +1,159 @@
+<section class="card demo ar" data-adaptive-run aria-labelledby="ar-title">
+  <div class="demo-head">
+    <h3 id="ar-title">Two questions through the adaptive graph</h3>
+    <p>Pick a question, then press <b>Play</b> or step with <b>Next</b>. Each replays a saved run of the graph above.</p>
+  </div>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Question">
+      <button type="button" data-preset="web" aria-pressed="true">Machine learning</button>
+      <button type="button" data-preset="index" aria-pressed="false">Agent memory</button>
+    </div>
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <figure class="code-cell ar-code">
+    <figcaption class="code-head"><span>The graph and the call</span><span class="sync">&middot; the highlighted lines are running</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre class="is-compact" data-code><code><span class="line">workflow = StateGraph(GraphState)</span>
+<span class="line"></span>
+<span class="line"><span class="c"># Define the nodes</span></span>
+<span class="line">workflow.add_node(<span class="s">"web_search"</span>, web_search)  <span class="c"># web search</span></span>
+<span class="line">workflow.add_node(<span class="s">"retrieve"</span>, retrieve)  <span class="c"># retrieve</span></span>
+<span class="line">workflow.add_node(<span class="s">"grade_documents"</span>, grade_documents)  <span class="c"># grade documents</span></span>
+<span class="line">workflow.add_node(<span class="s">"generate"</span>, generate)  <span class="c"># generate</span></span>
+<span class="line">workflow.add_node(<span class="s">"transform_query"</span>, transform_query)  <span class="c"># transform_query</span></span>
+<span class="line"></span>
+<span class="line"><span class="c"># Build graph</span></span>
+<span class="line">workflow.add_conditional_edges(</span>
+<span class="line">    START,</span>
+<span class="line">    route_question,</span>
+<span class="line">    {</span>
+<span class="line">        <span class="s">"web_search"</span>: <span class="s">"web_search"</span>,</span>
+<span class="line">        <span class="s">"vectorstore"</span>: <span class="s">"retrieve"</span>,</span>
+<span class="line">    },</span>
+<span class="line">)</span>
+<span class="line">workflow.add_edge(<span class="s">"web_search"</span>, <span class="s">"generate"</span>)</span>
+<span class="line">workflow.add_edge(<span class="s">"retrieve"</span>, <span class="s">"grade_documents"</span>)</span>
+<span class="line">workflow.add_conditional_edges(</span>
+<span class="line">    <span class="s">"grade_documents"</span>,</span>
+<span class="line">    decide_to_generate,</span>
+<span class="line">    {</span>
+<span class="line">        <span class="s">"transform_query"</span>: <span class="s">"transform_query"</span>,</span>
+<span class="line">        <span class="s">"generate"</span>: <span class="s">"generate"</span>,</span>
+<span class="line">    },</span>
+<span class="line">)</span>
+<span class="line">workflow.add_edge(<span class="s">"transform_query"</span>, <span class="s">"retrieve"</span>)</span>
+<span class="line">workflow.add_conditional_edges(</span>
+<span class="line">    <span class="s">"generate"</span>,</span>
+<span class="line">    grade_generation_v_documents_and_question,</span>
+<span class="line">    {</span>
+<span class="line">        <span class="s">"not supported"</span>: <span class="s">"generate"</span>,</span>
+<span class="line">        <span class="s">"useful"</span>: END,</span>
+<span class="line">        <span class="s">"not useful"</span>: <span class="s">"transform_query"</span>,</span>
+<span class="line">    },</span>
+<span class="line">)</span>
+<span class="line"></span>
+<span class="line"><span class="c"># Compile</span></span>
+<span class="line">app = workflow.compile()</span>
+<span class="line">app.invoke({<span class="s">"question"</span>: <span class="s" data-el="q">"What is machine learning"</span>})</span></code></pre>
+  </figure>
+
+  <div class="stage ar-stage">
+    <div class="graph-box">
+      <svg viewBox="0 0 460 412" role="img" aria-labelledby="ar-svg-title ar-svg-desc">
+        <title id="ar-svg-title">The adaptive RAG graph</title>
+        <desc id="ar-svg-desc">From START, the router sends the question to web_search or to retrieve. web_search leads to generate. retrieve leads to grade_documents, which leads to generate when chunks are left or to transform_query when none are; transform_query leads back to retrieve. After generate, the checks lead to END when the answer is useful, back to generate when it is not supported, or to transform_query when it is not useful.</desc>
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#b6bcc6"/></marker>
+          <marker id="arrow-on" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#374151"/></marker>
+        </defs>
+
+        <path data-edge="start-web" class="g-edge is-cond" d="M205 44 C170 58 112 58 102 76"/>
+        <path data-edge="start-retrieve" class="g-edge is-cond" d="M255 44 C290 58 348 58 358 76"/>
+        <path data-edge="web-generate" class="g-edge" d="M100 130 V256"/>
+        <path data-edge="retrieve-grade" class="g-edge" d="M360 130 V166"/>
+        <path data-edge="grade-generate" class="g-edge is-cond" d="M280 205 C230 205 186 236 168 256"/>
+        <path data-edge="grade-transform" class="g-edge is-cond" d="M360 220 V256"/>
+        <path data-edge="transform-retrieve" class="g-edge" d="M440 285 C457 285 457 105 434 105"/>
+        <path data-edge="generate-end" class="g-edge is-cond" d="M100 310 V364"/>
+        <path data-edge="generate-generate" class="g-edge is-cond" d="M30 272 C8 272 8 298 26 298"/>
+        <path data-edge="generate-transform" class="g-edge is-cond" d="M170 296 C210 314 248 314 276 296"/>
+
+        <text class="g-label" x="140" y="70" text-anchor="end">"web_search"</text>
+        <text class="g-label" x="320" y="70">"vectorstore"</text>
+        <text class="g-label" x="214" y="246" text-anchor="middle">"generate"</text>
+        <text class="g-label" x="354" y="243" text-anchor="end">"transform_query"</text>
+        <text class="g-label" x="108" y="342">"useful"</text>
+        <text class="g-label" x="6" y="252">"not supported"</text>
+        <text class="g-label" x="223" y="328" text-anchor="middle">"not useful"</text>
+
+        <g data-node="start" class="g-node role-ctrl">
+          <rect class="box" x="187" y="16" width="86" height="28" rx="14"/>
+          <text class="t-main" x="230" y="34" text-anchor="middle">START</text>
+        </g>
+        <g data-node="web_search" class="g-node role-tool">
+          <rect class="ring" x="26" y="76" width="148" height="58" rx="14"/>
+          <rect class="box" x="30" y="80" width="140" height="50" rx="11"/>
+          <text class="t-main" x="100" y="102" text-anchor="middle">web_search</text>
+          <text class="t-sub" x="100" y="119" text-anchor="middle">Tavily</text>
+        </g>
+        <g data-node="retrieve" class="g-node role-tool">
+          <rect class="ring" x="286" y="76" width="148" height="58" rx="14"/>
+          <rect class="box" x="290" y="80" width="140" height="50" rx="11"/>
+          <text class="t-main" x="360" y="102" text-anchor="middle">retrieve</text>
+          <text class="t-sub" x="360" y="119" text-anchor="middle">vector store</text>
+        </g>
+        <g data-node="grade_documents" class="g-node role-model">
+          <rect class="ring" x="276" y="166" width="168" height="58" rx="14"/>
+          <rect class="box" x="280" y="170" width="160" height="50" rx="11"/>
+          <text class="t-main" x="360" y="192" text-anchor="middle">grade_documents</text>
+          <text class="t-sub" x="360" y="209" text-anchor="middle">a call per chunk</text>
+        </g>
+        <g data-node="transform_query" class="g-node role-model">
+          <rect class="ring" x="276" y="256" width="168" height="58" rx="14"/>
+          <rect class="box" x="280" y="260" width="160" height="50" rx="11"/>
+          <text class="t-main" x="360" y="282" text-anchor="middle">transform_query</text>
+          <text class="t-sub" x="360" y="299" text-anchor="middle">rewrite the question</text>
+        </g>
+        <g data-node="generate" class="g-node role-model">
+          <rect class="ring" x="26" y="256" width="148" height="58" rx="14"/>
+          <rect class="box" x="30" y="260" width="140" height="50" rx="11"/>
+          <text class="t-main" x="100" y="282" text-anchor="middle">generate</text>
+          <text class="t-sub" x="100" y="299" text-anchor="middle">answer</text>
+        </g>
+        <g data-node="end" class="g-node role-end">
+          <rect class="box" x="57" y="368" width="86" height="28" rx="14"/>
+          <text class="t-main" x="100" y="386" text-anchor="middle">END</text>
+        </g>
+
+        <circle class="packet" r="6" cx="230" cy="44"/>
+      </svg>
+    </div>
+    <div class="state-box ar-state">
+      <div class="state-head"><span>state</span><span class="tag">Data</span></div>
+      <div class="ar-body">
+        <div class="ar-keys">
+          <div class="ar-kv"><code class="ar-key">question</code><span class="ar-val" data-el="question"></span></div>
+          <div class="ar-kv"><code class="ar-key">documents</code><span class="ar-val" data-el="documents"></span></div>
+          <div class="ar-kv"><code class="ar-key">generation</code><span class="ar-val" data-el="generation"></span></div>
+        </div>
+        <div class="ar-side">
+          <div class="ar-calls"><span class="ar-title">Model calls so far</span><span class="ar-count" data-el="calls">0</span></div>
+          <div class="ar-printed">
+            <span class="ar-title">Printed</span>
+            <pre data-el="printed"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> one graph, two paths. The router chose the source before any node ran, and the checks after <code>generate</code> chose where the run ended. Both are edges, so their verdicts show up only in the printed lines, never in the state.</p>
+</section>

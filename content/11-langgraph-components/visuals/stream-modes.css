@@ -1,0 +1,34 @@
+/* What each mode yields (lesson 11.6). A static figure in HTML rows, so it reflows on phones. Colours: amber = state
+   chunks (values, updates), blue = the model and its tokens, gray = control flow and event names. */
+.smf-stage { display: grid; gap: 10px; padding: 14px; container-type: inline-size; }
+.smf-run { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 4px 2px 6px; }
+.smf-node {
+  display: inline-grid; gap: 1px; padding: 6px 12px; border-radius: 999px; border: 1.5px solid var(--line-strong);
+  background: #fff; font: 600 11.5px var(--font-mono); letter-spacing: .04em; color: var(--ink-2);
+}
+.smf-node.smf-model { border-radius: 10px; border-color: var(--model-line); background: var(--model-tint); color: var(--model-ink); font-size: 13px; letter-spacing: 0; }
+.smf-node small { font: 500 11px var(--font-sans); color: var(--model); }
+.smf-arrow { color: var(--faint); font-size: 16px; }
+
+.smf-row {
+  display: grid; grid-template-columns: minmax(0, 13em) minmax(0, 1fr); gap: 10px; align-items: start;
+  padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: #fff;
+}
+.smf-mode { display: grid; gap: 3px; }
+.smf-mode code { justify-self: start; font-size: 12px; color: var(--ink); }
+.smf-mode small { font-size: 12.5px; line-height: 1.35; color: var(--muted); }
+.smf-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; min-width: 0; }
+.smf-chip {
+  display: inline-grid; gap: 2px; max-width: 100%; padding: 4px 8px; border-radius: 8px; border: 1px solid var(--line-strong);
+  background: #fff; font: 500 12px/1.45 var(--font-mono); color: var(--ink-2); overflow-wrap: anywhere;
+}
+.smf-chip i { font: 600 10px var(--font-sans); font-style: normal; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.smf-data { border-color: var(--data-line); background: var(--data-tint); color: var(--data-ink); }
+.smf-tok { border-color: var(--model-line); background: var(--model-tint); color: var(--model-ink); }
+.smf-more { border-style: dashed; color: var(--muted); font-family: var(--font-sans); }
+.smf-ev b { font-weight: 600; color: var(--ink); }
+.smf-ev-model { border-color: var(--model-line); color: var(--model-ink); }
+
+@container (max-width: 480px) {
+  .smf-row { grid-template-columns: minmax(0, 1fr); }
+}

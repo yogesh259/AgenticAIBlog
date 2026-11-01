@@ -1,0 +1,50 @@
+/* Streamlit reruns your script (lesson 3.12). Colours: gray = the script and the browser frame (control),
+   amber = widget values, which persist between runs (state), rose = the run counter. Redrawn elements glow. */
+.sr-stage { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.sr .sr-code { margin: 0; }
+.sr .sr-code pre { max-height: none; }
+
+.sr-app {
+  display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line-strong); border-radius: 12px; background: #fff;
+}
+.sr-bar { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--line); background: var(--soft); }
+.sr-dots { display: flex; gap: 5px; }
+.sr-dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line-strong); }
+.sr-url { padding: 2px 10px; border: 1px solid var(--line); border-radius: 999px; background: #fff; font: 500 12px var(--font-mono); color: var(--muted); }
+.sr-event {
+  margin-left: auto; padding: 2px 9px; border-radius: 999px; background: var(--ink-2); white-space: nowrap;
+  font: 600 11.5px var(--font-sans); color: #fff; transition: opacity var(--dur) var(--ease);
+}
+.sr-page { position: relative; display: grid; gap: 12px; align-content: start; min-height: 236px; padding: 16px 18px; }
+.sr-empty { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font-size: 13.5px; color: var(--faint); transition: opacity var(--dur) var(--ease); }
+.sr-el { border-radius: 8px; transition: opacity 320ms var(--ease), box-shadow 320ms var(--ease); }
+.sr-el.is-drawn { box-shadow: 0 0 0 4px var(--line), 0 0 0 5px var(--line-strong); }
+.sr-page .is-hidden, .sr-bar .is-hidden { opacity: 0; }
+.sr-title { font-size: 21px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+.sr-field { display: grid; gap: 6px; }
+.sr-label { font-size: 13px; color: var(--ink-2); }
+.sr-box {
+  display: flex; align-items: center; height: 34px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: 8px;
+  background: var(--soft);
+}
+.sr-value { font: 600 14px var(--font-mono); color: var(--data-ink); }
+.sr-track { position: relative; height: 6px; margin: 22px 10px 8px; border-radius: 3px; background: var(--line); }
+.sr-fill { position: absolute; inset: 0 auto 0 0; border-radius: 3px; background: var(--data-line); transition: width 420ms var(--ease); }
+.sr-thumb {
+  position: absolute; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border: 2px solid var(--data); border-radius: 50%;
+  background: #fff; transition: left 420ms var(--ease);
+}
+.sr-thumb b { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); font: 600 12px var(--font-mono); color: var(--data-ink); }
+.sr-line { font-size: 14.5px; color: var(--ink); }
+
+.sr .readouts .label.sr-mono { text-transform: none; letter-spacing: 0; font-family: var(--font-mono); }
+
+@media (max-width: 860px) {
+  .sr .readouts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .sr .code-head .sync { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sr-el, .sr-fill, .sr-thumb, .sr-event, .sr-empty { transition: none; }
+}

@@ -1,0 +1,69 @@
+<figure class="card demo sd" aria-labelledby="oc-title">
+  <div class="demo-head">
+    <h3 id="oc-title">Objects and their class</h3>
+    <p>Each object holds its own attributes. The class holds what all of them share: the class attribute and the methods.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 640 250" role="img" aria-labelledby="oc-svg-title oc-svg-desc">
+      <title id="oc-svg-title">Two Dog objects and the Dog class</title>
+      <desc id="oc-svg-desc">The names dog1 and dog2 point at two objects. dog1 holds name "Buddy" and age 3; dog2 holds name "Lucy" and age 4. Both objects link to the class Dog, which holds the class attribute legs = 4 and the methods __init__ and bark.</desc>
+      <defs>
+        <marker id="oc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <!-- names -->
+      <g class="sd-name"><rect x="16" y="56" width="76" height="26" rx="13"/><text x="54" y="73" text-anchor="middle">dog1</text></g>
+      <g class="sd-name"><rect x="16" y="172" width="76" height="26" rx="13"/><text x="54" y="189" text-anchor="middle">dog2</text></g>
+      <path class="sd-arrow" d="M92 69 L 136 69" marker-end="url(#oc-arrow)"/>
+      <path class="sd-arrow" d="M92 185 L 136 185" marker-end="url(#oc-arrow)"/>
+
+      <!-- objects -->
+      <g class="sd-obj">
+        <rect class="box" x="138" y="28" width="196" height="84" rx="10"/>
+        <text class="sd-t" x="152" y="49">Dog object</text>
+        <text class="sd-small" x="320" y="49" text-anchor="end">own attributes</text>
+        <line class="rule" x1="138" y1="59" x2="334" y2="59"/>
+        <text x="152" y="81">name = "Buddy"</text>
+        <text x="152" y="102">age = 3</text>
+      </g>
+      <g class="sd-badge"><circle cx="314" cy="77" r="9"/><text x="314" y="81" text-anchor="middle">1</text></g>
+
+      <g class="sd-obj">
+        <rect class="box" x="138" y="144" width="196" height="84" rx="10"/>
+        <text class="sd-t" x="152" y="165">Dog object</text>
+        <text class="sd-small" x="320" y="165" text-anchor="end">own attributes</text>
+        <line class="rule" x1="138" y1="175" x2="334" y2="175"/>
+        <text x="152" y="197">name = "Lucy"</text>
+        <text x="152" y="218">age = 4</text>
+      </g>
+
+      <!-- links to the class -->
+      <path class="sd-arrow sd-arrow--dash" d="M334 70 C 378 70, 380 108, 418 108" marker-end="url(#oc-arrow)"/>
+      <path class="sd-arrow sd-arrow--dash" d="M334 186 C 378 186, 380 150, 418 150" marker-end="url(#oc-arrow)"/>
+      <text class="sd-small" x="377" y="133" text-anchor="middle">__class__</text>
+
+      <!-- class -->
+      <g class="sd-cls">
+        <rect class="box" x="420" y="28" width="204" height="200" rx="10"/>
+        <text class="sd-t" x="434" y="50">class Dog</text>
+        <line class="rule" x1="420" y1="60" x2="624" y2="60"/>
+        <text class="sd-label" x="434" y="80">class attribute</text>
+        <text x="434" y="101">legs = 4</text>
+        <line class="rule" x1="434" y1="116" x2="610" y2="116" stroke-dasharray="3 4"/>
+        <text class="sd-label" x="434" y="136">methods</text>
+        <text x="434" y="158">__init__(self, name, age)</text>
+        <text x="434" y="181">bark(self)</text>
+      </g>
+      <g class="sd-badge"><circle cx="604" cy="97" r="9"/><text x="604" y="101" text-anchor="middle">3</text></g>
+      <g class="sd-badge"><circle cx="604" cy="177" r="9"/><text x="604" y="181" text-anchor="middle">2</text></g>
+    </svg>
+  </div>
+
+  <ol class="sd-keys">
+    <li><code>dog1.name</code> is found in the object itself: <code>"Buddy"</code>.</li>
+    <li><code>dog1.bark()</code> isn't in the object, so Python looks in its class and runs <code>Dog.bark(dog1)</code>: <code>self</code> is <code>dog1</code>.</li>
+    <li><code>dog1.legs</code> isn't in the object either; the class has it, one value for every dog.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> data lives in each object; methods and shared values live once, in the class. To read <code>obj.x</code>, Python tries the object first, then its class.</p>
+</figure>

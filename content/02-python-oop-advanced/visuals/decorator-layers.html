@@ -1,0 +1,38 @@
+<figure class="card demo sd" aria-labelledby="dl-title">
+  <div class="demo-head">
+    <h3 id="dl-title">Three layers of a decorator with arguments</h3>
+    <p><code>@repeat(3)</code> above <code>def say_hello</code> runs <code>say_hello = repeat(3)(say_hello)</code>. Each layer runs at a different time.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 640 252" role="img" aria-labelledby="dl-svg-title dl-svg-desc">
+      <title id="dl-svg-title">repeat contains decorator, which contains wrapper</title>
+      <desc id="dl-svg-desc">The outer function repeat(n) runs once, at @repeat(3), and returns decorator. decorator(func) runs once, when Python decorates say_hello, and returns wrapper. wrapper(*args, **kwargs) runs on every call of say_hello and calls func n times.</desc>
+
+      <g class="sd-cls">
+        <rect class="box" x="16" y="14" width="608" height="224" rx="14"/>
+        <text class="sd-t" x="32" y="40">def repeat(n):</text>
+        <text class="sd-small" x="608" y="39" text-anchor="end">runs once, at @repeat(3)</text>
+        <text x="32" y="226">return decorator</text>
+      </g>
+
+      <g class="sd-cls">
+        <rect class="box" x="40" y="54" width="560" height="152" rx="12"/>
+        <text class="sd-t" x="56" y="80">def decorator(func):</text>
+        <text class="sd-small" x="584" y="79" text-anchor="end">runs once, when Python decorates say_hello</text>
+        <text x="56" y="194">return wrapper</text>
+      </g>
+
+      <g class="sd-cls">
+        <rect class="sd-ring" x="61" y="91" width="518" height="82" rx="12"/>
+        <rect class="box" x="64" y="94" width="512" height="76" rx="10"/>
+        <text class="sd-t" x="80" y="119">def wrapper(*args, **kwargs):</text>
+        <text class="sd-small sd-hot" x="560" y="118" text-anchor="end">runs on every say_hello() call</text>
+        <text x="110" y="141">for _ in range(n):</text>
+        <text x="140" y="161">func(*args, **kwargs)</text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="observe"><b>Observe:</b> the name <code>say_hello</code> ends up pointing at the innermost function, <code>wrapper</code>. It can still use <code>n</code> and <code>func</code> because inner functions keep the variables of the functions around them (closures).</p>
+</figure>

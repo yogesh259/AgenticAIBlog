@@ -1,0 +1,71 @@
+<figure class="card demo sd" aria-labelledby="ap-title">
+  <div class="demo-head">
+    <h3 id="ap-title">An agent's parts</h3>
+    <p>One call to <code>create_agent</code>, and the lesson that covers each argument.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 720 300" role="img" aria-labelledby="ap-svg-title ap-svg-desc">
+      <title id="ap-svg-title">The arguments of create_agent and what each one adds</title>
+      <desc id="ap-svg-desc">model: the model, which chooses the next step, lesson 9.1. tools: functions the model may call, lesson 9.3. system_prompt: instructions sent first on every call, lesson 9.2. response_format: a validated object instead of text, lesson 9.5. checkpointer: the state saved per thread ID, lesson 9.4. middleware: code that runs before, around and after each step, lessons 9.6 and 9.7.</desc>
+      <defs>
+        <marker id="ap-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <text class="sd-t" x="20" y="30">agent = create_agent(</text>
+      <text x="44" y="66">model="openai:gpt-5",</text>
+      <text x="44" y="104">tools=[get_weather],</text>
+      <text x="44" y="142">system_prompt="...",</text>
+      <text x="44" y="180">response_format=Weather,</text>
+      <text x="44" y="218">checkpointer=InMemorySaver(),</text>
+      <text x="44" y="256">middleware=[...],</text>
+      <text class="sd-t" x="20" y="280">)</text>
+
+      <path class="sd-arrow" d="M276 62 H322" marker-end="url(#ap-arrow)"/>
+      <path class="sd-arrow" d="M276 100 H322" marker-end="url(#ap-arrow)"/>
+      <path class="sd-arrow" d="M276 138 H322" marker-end="url(#ap-arrow)"/>
+      <path class="sd-arrow" d="M276 176 H322" marker-end="url(#ap-arrow)"/>
+      <path class="sd-arrow" d="M276 214 H322" marker-end="url(#ap-arrow)"/>
+      <path class="sd-arrow" d="M276 252 H322" marker-end="url(#ap-arrow)"/>
+
+      <g class="sd-model">
+        <rect class="box" x="326" y="46" width="380" height="32" rx="8"/>
+        <text class="sd-t" x="340" y="66">model</text>
+        <text class="sd-small" x="400" y="66">chooses the next step: answer or call a tool</text>
+        <text class="sd-small" x="694" y="66" text-anchor="end">9.1</text>
+      </g>
+      <g class="sd-tool">
+        <rect class="box" x="326" y="84" width="380" height="32" rx="8"/>
+        <text class="sd-t" x="340" y="104">tools</text>
+        <text class="sd-small" x="400" y="104">functions the model may ask to run</text>
+        <text class="sd-small" x="694" y="104" text-anchor="end">9.3</text>
+      </g>
+      <g class="sd-obj">
+        <rect class="box" x="326" y="122" width="380" height="32" rx="8"/>
+        <text class="sd-t" x="340" y="142">prompt</text>
+        <text class="sd-small" x="400" y="142">instructions sent first on every model call</text>
+        <text class="sd-small" x="694" y="142" text-anchor="end">9.2</text>
+      </g>
+      <g class="sd-answer">
+        <rect class="box" x="326" y="160" width="380" height="32" rx="8"/>
+        <text x="340" y="180">answer</text>
+        <text class="sd-small" x="400" y="180">a validated object instead of text</text>
+        <text class="sd-small" x="694" y="180" text-anchor="end">9.5</text>
+      </g>
+      <g class="sd-obj">
+        <rect class="box" x="326" y="198" width="380" height="32" rx="8"/>
+        <text class="sd-t" x="340" y="218">memory</text>
+        <text class="sd-small" x="400" y="218">the state, saved after every step per thread ID</text>
+        <text class="sd-small" x="694" y="218" text-anchor="end">9.4</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="326" y="236" width="380" height="32" rx="8"/>
+        <text class="sd-t" x="340" y="256">hooks</text>
+        <text class="sd-small" x="400" y="256">code before, around and after each step</text>
+        <text class="sd-small" x="694" y="256" text-anchor="end">9.6, 9.7</text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="observe"><b>Observe:</b> only <code>model</code> is required. Without tools the agent makes one model call and stops; each further argument adds one capability without changing the loop.</p>
+</figure>

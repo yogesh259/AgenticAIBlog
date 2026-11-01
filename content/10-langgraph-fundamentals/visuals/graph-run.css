@@ -1,0 +1,47 @@
+/* A state through a graph (lesson 10.2). Built on the style board's graph player (theme.css: .graph-box, .g-node,
+   .g-edge, .packet, .state-box). Colours: gray = the nodes (plain functions) and the edges, amber = the state,
+   rose = END and the returned state. A lit node glows; nothing changes hue. */
+.gr-code { margin: 0 0 14px; }
+.gr .controls .seg, .gr .btns { flex-wrap: wrap; }
+.gr-stage { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: start; }
+
+/* Nodes that are plain Python functions: gray, like control flow */
+.gr .role-func .box { fill: #fff; stroke: var(--line-strong); }
+.gr .role-func .t-main { font: 600 13.5px var(--font-mono); fill: var(--ink); }
+.gr .role-func .t-sub { fill: var(--muted); }
+.gr .role-func .ring { stroke: var(--ink-2); }
+.gr .role-func.is-active .box { stroke: var(--ink-2); filter: drop-shadow(0 0 8px rgba(55, 65, 81, .28)); }
+.gr .g-edge.is-off { opacity: .3; }
+
+/* The state panel */
+.gr-body { display: grid; gap: 10px; padding: 12px; }
+.gr-title { display: block; margin-bottom: 4px; font: 600 10.5px var(--font-sans); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.gr-kv {
+  display: grid; gap: 4px; padding: 8px 10px;
+  border: 1.5px solid var(--data-line); border-radius: 10px; background: #fff;
+  transition: box-shadow var(--dur) var(--ease);
+}
+.gr-key { justify-self: start; padding: 0; border: 0; background: none; font: 600 12px var(--font-mono); color: var(--data-ink); }
+.gr-val { overflow-wrap: anywhere; font: 500 13px/1.5 var(--font-mono); color: var(--ink); }
+.gr-kv:has(.gr-val.is-new) { box-shadow: 0 0 0 4px var(--data-tint), 0 0 0 5px var(--data-line); }
+.gr-update {
+  padding: 8px 10px; border: 1.5px dashed var(--line-strong); border-radius: 10px; background: #fff;
+  transition: opacity var(--dur) var(--ease);
+}
+.gr-update.is-empty { opacity: .6; }
+.gr-update.is-empty .gr-utext { font-family: var(--font-sans); color: var(--muted); }
+.gr-update.is-final { border: 1.5px solid var(--out-line); background: var(--out-tint); }
+.gr-update.is-final .gr-utext { color: var(--out-ink); }
+.gr-utext { display: block; padding: 0; border: 0; background: none; overflow-wrap: anywhere; white-space: normal; font: 500 12.5px/1.5 var(--font-mono); color: var(--ink-2); }
+.gr-printed pre {
+  min-height: 3.4em; margin: 0; padding: 8px 10px; overflow-x: auto;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--soft);
+  font: 500 12px/1.6 var(--font-mono); white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gr-kv, .gr-update { transition: none; }
+}
+@media (max-width: 760px) {
+  .gr-stage { grid-template-columns: minmax(0, 1fr); }
+}

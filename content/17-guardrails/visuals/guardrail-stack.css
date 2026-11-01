@@ -1,0 +1,54 @@
+/* The guardrail stack, in run order (lesson 17.4). Colours: blue = the model node, green = the tools node,
+   gray = middleware nodes and control flow, amber = the request, rose = the tag on the node that ends or pauses the run.
+   Nodes on the path glow; nodes off the path fade. None changes hue. */
+.gs-presets { flex-wrap: wrap; }
+.gs-request { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; margin: 0 0 12px; }
+.gs-label { font: 600 10.5px var(--font-sans); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.gs-request code {
+  max-width: 100%; overflow-wrap: anywhere; white-space: normal; padding: 4px 8px; border: 1px solid var(--data-line);
+  border-radius: 7px; background: var(--data-tint); font: 500 13px var(--font-mono); color: var(--data-ink);
+}
+
+.gs-stage {
+  margin-bottom: 10px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px;
+  background-color: var(--soft); background-image: radial-gradient(#dfe3e8 1px, transparent 1px); background-size: 16px 16px;
+}
+.gs-flow { display: grid; gap: 8px; max-width: 620px; margin: 0 auto; padding: 0; list-style: none; }
+.gs-node {
+  display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 10px; align-items: start; padding: 8px 12px;
+  border: 1.5px solid var(--line-strong); border-radius: 10px; background: #fff;
+  transition: opacity var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.gs-node > div { min-width: 0; }
+.gs-node code { display: block; overflow-wrap: anywhere; padding: 0; border: 0; background: none; font: 600 13px var(--font-mono); color: var(--ink); }
+.gs-role { display: block; font: 600 10.5px var(--font-sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.gs-note { margin: 4px 0 2px; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+.gs-node small { display: block; font-size: 11.5px; line-height: 1.4; color: var(--muted); overflow-wrap: anywhere; }
+.gs-badge {
+  align-self: start; justify-self: start; min-width: 26px; padding: 2px 7px; border: 1.25px solid var(--ink-2); border-radius: 999px;
+  background: #fff; font: 600 11.5px var(--font-mono); color: var(--ink-2); text-align: center; white-space: nowrap;
+}
+.gs-badge:empty { visibility: hidden; }
+.gs-ctrl { border-radius: 18px; }
+.gs-model { border-color: var(--model-line); }
+.gs-model code { color: var(--model-ink); }
+.gs-tool { border-color: var(--tool-line); }
+.gs-tool code { color: var(--tool-ink); }
+
+.gs-node.is-on { box-shadow: 0 0 0 4px var(--sunk), 0 0 0 5px var(--line-strong); }
+.gs-model.is-on { box-shadow: 0 0 0 4px var(--model-tint), 0 0 0 5px var(--model-line); }
+.gs-tool.is-on { box-shadow: 0 0 0 4px var(--tool-tint), 0 0 0 5px var(--tool-line); }
+.gs-tag {
+  display: inline-block; margin: 3px 0 2px; padding: 1px 8px; border: 1px solid var(--out-line); border-radius: 999px;
+  background: var(--out-tint); font: 600 11px var(--font-sans); color: var(--out-ink);
+}
+.gs-tag[hidden] { display: none; }
+.gs-node.is-off { opacity: .45; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gs-node { transition: none; }
+}
+@media (max-width: 640px) {
+  .gs-stage { padding: 12px 10px; }
+  .gs-node { grid-template-columns: 1fr; gap: 4px; }
+}

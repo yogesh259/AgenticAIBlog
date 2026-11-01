@@ -1,0 +1,1 @@
+Python's libraries for data and small apps: NumPy arrays and pandas tables, charts with Matplotlib and Seaborn, a SQLite database and logging, then web apps with Flask and Streamlit. Run the notebook cells in order; the Flask and Streamlit lessons run scripts from a terminal. Try each practice task before you open its solution.

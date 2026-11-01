@@ -1,0 +1,45 @@
+<section class="card demo s2" data-slice-2d aria-labelledby="s2-title">
+  <div class="demo-head">
+    <h3 id="s2-title">Slicing a 2-D array</h3>
+    <p>Pick one of the lesson's expressions, or type your own row and column ranges. The lit cells are the result.</p>
+  </div>
+
+  <div class="controls">
+    <div class="seg s2-presets" role="group" aria-label="Expressions on arr">
+      <button type="button" data-preset="1||1|3" aria-pressed="true">arr[1:, 1:3]</button>
+      <button type="button" data-preset="0|2|2|" aria-pressed="false">arr[0:2, 2:]</button>
+      <button type="button" data-preset="1||2|" aria-pressed="false">arr[1:, 2:]</button>
+      <button type="button" data-preset="1|||" aria-pressed="false">arr[1:]</button>
+      <button type="button" data-preset="#0,0" aria-pressed="false">arr[0, 0]</button>
+      <button type="button" data-preset="#:,1" aria-pressed="false">arr[:, 1]</button>
+      <button type="button" data-preset="||1|2" aria-pressed="false">arr[:, 1:2]</button>
+    </div>
+    <div class="s2-inputs">
+      <span class="s2-group">rows<input type="number" data-in="r0" step="1" aria-label="row start, blank for the first row"><b>:</b><input type="number" data-in="r1" step="1" aria-label="row stop, blank for the end"></span>
+      <span class="s2-group">columns<input type="number" data-in="c0" step="1" aria-label="column start, blank for the first column"><b>:</b><input type="number" data-in="c1" step="1" aria-label="column stop, blank for the end"></span>
+    </div>
+  </div>
+
+  <div class="s2-body">
+    <div class="s2-grid-wrap" aria-hidden="true">
+      <span class="s2-axis s2-axis--1">axis 1: columns &rarr;</span>
+      <div class="s2-grid" data-grid></div>
+      <span class="s2-axis s2-axis--0">axis 0: rows &darr;</span>
+    </div>
+    <div class="s2-result">
+      <code data-expr>arr[1:, 1:3]</code>
+      <pre class="s2-out" data-result></pre>
+    </div>
+  </div>
+
+  <div class="readouts">
+    <div class="stat"><span class="label">Rows</span><output data-out="rows">1, 2</output><small>picked by the first part</small></div>
+    <div class="stat"><span class="label">Columns</span><output data-out="cols">1, 2</output><small>picked by the second</small></div>
+    <div class="stat stat--data"><span class="label">Shape</span><output data-out="shape">(2, 2)</output><small>of the result</small></div>
+    <div class="stat"><span class="label">Values</span><output data-out="count">4</output><small>in the result</small></div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> a slice such as <code>1:3</code> keeps its axis, even when it picks one row or column: <code>arr[:, 1:2]</code> has shape <code>(3, 1)</code>. A single number picks one and drops the axis: <code>arr[:, 1]</code> has shape <code>(3,)</code>.</p>
+</section>

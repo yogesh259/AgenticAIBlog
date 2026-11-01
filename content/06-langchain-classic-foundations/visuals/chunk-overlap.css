@@ -1,0 +1,62 @@
+/* Chunks and overlap (lesson 6.5). Colours: amber = the text's chunks (data), gray = separators and settings
+   (control), rose = a chunk over the size limit. The chunk you point at glows; it never changes hue. */
+.co-presets { flex-wrap: wrap; }
+.co-code { margin: 0 0 12px; }
+.co-code code { display: inline-block; max-width: 100%; overflow-wrap: anywhere; white-space: normal; font: 500 13px var(--font-mono); color: var(--ink-2); background: var(--sunk); padding: 4px 8px; border-radius: 7px; }
+
+.co-ladder { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; padding: 0; list-style: none; counter-reset: rung; }
+.co-rung {
+  display: grid; flex: 1 1 0; gap: 2px; min-width: 0; padding: 7px 10px; border: 1px solid var(--line); border-radius: 9px; background: #fff;
+  counter-increment: rung; transition: opacity var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.co-rung code { font: 600 13px var(--font-mono); color: var(--ink); }
+.co-rung code::before { content: counter(rung) ". "; font-weight: 500; color: var(--faint); }
+.co-rung small { font-size: 11.5px; color: var(--muted); }
+.co-rung--used { border-color: var(--line-strong); box-shadow: 0 0 0 3px var(--sunk); }
+.co-rung--absent small, .co-rung--unused small { color: var(--faint); }
+.co-rung--off { opacity: .45; }
+.co-rung--off code { text-decoration: line-through; }
+
+.co-body {
+  display: grid; gap: 14px; margin-bottom: 10px;
+  padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px;
+  background-color: var(--soft); background-image: radial-gradient(#dfe3e8 1px, transparent 1px); background-size: 16px 16px;
+}
+.co-text { margin: 0; font: 400 15px/2.05 var(--font-sans); color: var(--ink); }
+.co-seg { padding: 3px 0; border-bottom: 2px solid transparent; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+  transition: box-shadow var(--dur) var(--ease); }
+.co-seg--a { background: var(--data-tint); border-bottom-color: var(--data-line); }
+.co-seg--b { background: #fff; border-bottom-color: var(--data-line); }
+.co-seg--both { background: var(--data-line); border-bottom-color: var(--data); color: var(--data-ink); font-weight: 600; }
+.co-seg--none { color: var(--faint); }
+.co-seg.is-hot { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--data); }
+.co-break { display: inline-block; margin: 0 4px; padding: 0 5px; border: 1px dashed var(--line-strong); border-radius: 6px;
+  font: 500 11.5px/1.6 var(--font-mono); color: var(--muted); background: #fff; }
+
+.co-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
+.co-list li {
+  display: grid; grid-template-columns: 22px auto minmax(0, 1fr); gap: 8px; align-items: baseline;
+  padding: 5px 8px; border: 1px solid var(--data-line); border-radius: 8px; background: #fff; cursor: default;
+  font-size: 12.5px; transition: box-shadow var(--dur) var(--ease);
+}
+.co-list li b { font: 600 12px var(--font-mono); color: var(--data-ink); }
+.co-list .co-len { font: 500 12px var(--font-mono); color: var(--ink-2); }
+.co-list .co-words { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--muted); }
+.co-list li.is-over { border-color: var(--out-line); }
+.co-list li.is-over .co-len { color: var(--out-ink); font-weight: 600; }
+.co-list li.is-hot, .co-list li:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--data-tint), 0 0 0 4px var(--data); }
+
+.co-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0 0 14px; font-size: 12.5px; color: var(--ink-2); }
+.co-legend span { display: inline-flex; align-items: center; gap: 7px; }
+.co-key { display: inline-block; width: 22px; height: 12px; border-radius: 3px; border-bottom: 2px solid var(--data-line); }
+.co-key--a { background: var(--data-tint); }
+.co-key--b { background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
+.co-key--both { background: var(--data-line); border-bottom-color: var(--data); }
+.co-key--none { background: transparent; border-bottom: 2px dotted var(--faint); }
+
+.co-stat-over { border-color: var(--out-line); }
+.co-stat-over output { color: var(--out-ink); }
+
+@media (max-width: 560px) {
+  .co-ladder { display: grid; grid-template-columns: 1fr 1fr; }
+}

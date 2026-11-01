@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block main %}
+    <article class="home" data-pagefind-body>
+
+      <h1>{{ title }}</h1>
+      <p class="lede">{{ lede }}</p>
+
+{{ body }}
+
+      <h2 id="modules">Modules</h2>
+{% for part in parts %}
+      <h3 class="part-title">{{ part.name }}</h3>
+      <ol class="lesson-list module-list" data-pagefind-ignore>
+{% for m in part.modules %}
+        <li class="lesson-row"><span class="num">{{ m.number }}</span><a class="lesson-card" href="{{ m.url }}"><span class="txt"><b>{{ m.title }}</b><small>{{ m.summary }}</small></span><span class="type type--muted">{% if m.count %}{{ m.count }} lesson{{ "s" if m.count != 1 }}{% else %}Planned{% endif %}</span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a></li>
+{% endfor %}
+      </ol>
+{% endfor %}
+
+    </article>
+{% endblock %}

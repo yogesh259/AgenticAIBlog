@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en" data-root="{{ root }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <title>{{ title }}{% if title != site_name %} · {{ site_name }}{% endif %}</title>
+{% if description %}
+  <meta name="description" content="{{ description }}">
+{% endif %}
+  <link rel="icon" href="{{ root }}assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=JetBrains+Mono:wght@400..600&display=swap">
+  <link rel="stylesheet" href="{{ root }}assets/theme.css?v={{ asset_v['theme.css'] }}">
+  <link rel="stylesheet" href="{{ root }}assets/site.css?v={{ asset_v['site.css'] }}">
+{% for href in styles %}
+  <link rel="stylesheet" href="{{ href }}">
+{% endfor %}
+  <script>
+    (function() {
+      var HASH = "81a83544cf93c245178cbc1620030f1123f435af867c79d87135983c52ab39d9";
+      var unlocked = false;
+      try {
+        if (localStorage.getItem("site_pin_auth") === HASH) {
+          unlocked = true;
+        }
+      } catch (e) {}
+      if (!unlocked) {
+        document.documentElement.classList.add("is-locked");
+      }
+    })();
+  </script>
+  <style>
+    html.is-locked body > *:not(#lock-screen) {
+      display: none !important;
+    }
+    #lock-screen {
+      display: none;
+    }
+    html.is-locked #lock-screen {
+      display: flex !important;
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      background: #090d16;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .lock-card {
+      width: 100%;
+      max-width: 380px;
+      background: #111827;
+      border: 1px solid #1f293d;
+      border-radius: 16px;
+      padding: 2.25rem 1.75rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      text-align: center;
+      color: #f8fafc;
+    }
+    .lock-icon-wrap {
+      width: 56px;
+      height: 56px;
+      background: rgba(37, 99, 235, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem auto;
+      color: #38bdf8;
+    }
+    .lock-card h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #f8fafc;
+    }
+    .lock-card p {
+      margin: 0 0 1.5rem 0;
+      font-size: 0.88rem;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+    .lock-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .lock-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.85rem 1rem;
+      font-size: 1.25rem;
+      text-align: center;
+      letter-spacing: 0.3em;
+      background: #0f172a;
+      border: 1px solid #283548;
+      border-radius: 10px;
+      color: #f8fafc;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .lock-input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+    .lock-button {
+      width: 100%;
+      padding: 0.85rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      background: #2563eb;
+      color: #ffffff;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .lock-button:hover, .lock-button:active {
+      background: #1d4ed8;
+    }
+    .lock-error {
+      color: #f87171;
+      font-size: 0.82rem;
+      margin-top: 0.25rem;
+    }
+    .lock-toggle {
+      background: transparent;
+      border: 1px solid var(--border, #334155);
+      border-radius: 6px;
+      padding: 5px 8px;
+      color: var(--text-dim, #94a3b8);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 8px;
+      transition: all 0.15s;
+    }
+    .lock-toggle:hover {
+      color: var(--text, #f8fafc);
+      border-color: var(--border-strong, #64748b);
+    }
+  </style>
+</head>
+<body>
+
+<div id="lock-screen" aria-live="polite">
+  <div class="lock-card">
+    <div class="lock-icon-wrap">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+    </div>
+    <h2>Private Reader</h2>
+    <p>Enter PIN to access Agentic AI lessons</p>
+    <form class="lock-form" onsubmit="event.preventDefault(); verifyPin();">
+      <input type="password" id="pin-input" class="lock-input" inputmode="numeric" pattern="[0-9]*" maxlength="10" placeholder="••••" autocomplete="current-password" autofocus required>
+      <button type="submit" class="lock-button">Unlock</button>
+      <div id="pin-error" class="lock-error" role="alert" style="display: none;">Incorrect PIN. Please try again.</div>
+    </form>
+  </div>
+</div>
+
+<script>
+  const PIN_HASH = "81a83544cf93c245178cbc1620030f1123f435af867c79d87135983c52ab39d9";
+
+  async function hashPin(str) {
+    if (window.crypto && crypto.subtle) {
+      try {
+        const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+      } catch (e) {}
+    }
+    return str;
+  }
+
+  async function verifyPin() {
+    const input = document.getElementById("pin-input");
+    const err = document.getElementById("pin-error");
+    if (!input) return;
+    const val = input.value.trim();
+    const hashed = await hashPin(val);
+    if (hashed === PIN_HASH || val === "2000") {
+      try {
+        localStorage.setItem("site_pin_auth", PIN_HASH);
+      } catch (e) {}
+      document.documentElement.classList.remove("is-locked");
+      const screen = document.getElementById("lock-screen");
+      if (screen) screen.style.display = "none";
+    } else {
+      if (err) err.style.display = "block";
+      input.value = "";
+      input.focus();
+    }
+  }
+
+  function lockSite() {
+    try {
+      localStorage.removeItem("site_pin_auth");
+    } catch (e) {}
+    window.location.reload();
+  }
+</script>
+
+{{ sprite }}
+
+<header class="topbar">
+  <a class="brand" href="{{ root }}index.html">
+    <svg viewBox="0 0 28 28" aria-hidden="true">
+      <rect x="1" y="1" width="26" height="26" rx="8" fill="#eef4fa" stroke="#b9cfe5"/>
+      <path d="M9 9.5 19 14 9 18.5" fill="none" stroke="#3776ab" stroke-width="1.6" stroke-linejoin="round"/>
+      <circle cx="9" cy="9.5" r="3" fill="#3776ab"/>
+      <circle cx="19" cy="14" r="3.2" fill="#ffd43b" stroke="#e0a800"/>
+      <circle cx="9" cy="18.5" r="3" fill="#2f9466"/>
+    </svg>
+    {{ site_name }}
+  </a>
+  <nav class="topnav" aria-label="Site">
+    <a href="{{ root }}index.html"{% if section == "home" %} aria-current="page"{% endif %}>Modules</a>
+  </nav>
+  <div class="search-wrap" data-search>
+    <label class="search">
+      <svg class="icon"><use href="#i-search"/></svg>
+      <input type="search" placeholder="Search…" aria-label="Search" autocomplete="off" data-search-input>
+      <kbd data-search-kbd>Ctrl K</kbd>
+    </label>
+    <div class="search-results" data-search-results hidden></div>
+  </div>
+  <button type="button" class="lock-toggle" onclick="lockSite()" title="Lock site" aria-label="Lock site">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+    </svg>
+  </button>
+</header>
+
+<div class="shell{% if not toc %} shell--no-toc{% endif %}">
+
+{% include "sidebar.html" %}
+
+  <main class="content" id="top">
+{% block main %}{% endblock %}
+  </main>
+
+{% if toc %}
+  <aside class="toc" aria-label="On this page">
+    <span class="label">On this page</span>
+    <ol>
+{% for id, label in toc %}
+      <li><a href="#{{ id }}">{{ label }}</a></li>
+{% endfor %}
+    </ol>
+  </aside>
+{% endif %}
+
+</div>
+
+<script src="{{ root }}assets/site.js?v={{ asset_v['site.js'] }}" defer></script>
+{% for src in scripts %}
+<script src="{{ src }}" defer></script>
+{% endfor %}
+</body>
+</html>

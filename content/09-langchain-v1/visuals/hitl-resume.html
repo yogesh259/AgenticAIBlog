@@ -1,0 +1,58 @@
+<section class="card demo hr" data-hitl-resume aria-labelledby="hr-title">
+  <div class="demo-head">
+    <h3 id="hr-title">Pause, decide, resume</h3>
+    <p>Pick a decision, then press <b>Play</b> or step with <b>Next</b>. Each replays a saved run of the email agent above.</p>
+  </div>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Decision">
+      <button type="button" data-preset="approve" aria-pressed="true">Approve</button>
+      <button type="button" data-preset="reject" aria-pressed="false">Reject</button>
+      <button type="button" data-preset="edit" aria-pressed="false">Edit</button>
+    </div>
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <figure class="code-cell hr-code">
+    <figcaption class="code-head"><span>Request, then resume</span><span class="sync">&middot; the highlighted lines are running</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre data-code><code><span class="line">config = {<span class="s">"configurable"</span>: {<span class="s">"thread_id"</span>: <span class="s" data-el="thread">"test-approve"</span>}}</span>
+<span class="line">result = agent.invoke({<span class="s">"messages"</span>: [HumanMessage(content=request)]}, config=config)</span>
+<span class="line"><span class="k">if</span> <span class="s">"__interrupt__"</span> <span class="k">in</span> result:</span>
+<span class="line">    result = agent.invoke(</span>
+<span class="line">        Command(resume={<span class="s">"decisions"</span>: [<span data-el="decision">{"type": "approve"}</span>]}),</span>
+<span class="line">        config=config,</span>
+<span class="line">    )</span>
+<span class="line"><span class="b">print</span>(result[<span class="s">"messages"</span>][-1].content)</span></code></pre>
+  </figure>
+
+  <div class="hr-stage" aria-hidden="true">
+    <div class="hr-parts">
+      <div class="hr-part hr-part--model" data-part="model"><svg class="icon"><use href="#i-spark"/></svg><div><b>model</b><span>writes the tool call</span></div></div>
+      <div class="hr-part" data-part="hitl"><svg class="icon icon--fill"><use href="#i-pause"/></svg><div><b>Approval middleware</b><span>after_model: pauses before the send</span></div></div>
+      <div class="hr-part" data-part="reviewer"><svg class="icon"><use href="#i-user"/></svg><div><b>Reviewer</b><span>your code asks a person</span></div></div>
+      <div class="hr-part hr-part--tool" data-part="tools"><svg class="icon"><use href="#i-wrench"/></svg><div><b>tools</b><span>send_email_tool</span></div></div>
+      <div class="hr-part hr-part--memory" data-part="saver"><svg class="icon"><use href="#i-msg"/></svg><div><b>Checkpointer</b><span data-el="saver">state per thread</span></div></div>
+    </div>
+    <div class="hr-msgs">
+      <div class="hr-head"><span class="hr-title">Messages</span><span class="hr-count" data-el="count"></span></div>
+      <ol class="hr-rows" data-el="rows"></ol>
+      <div class="hr-box hr-interrupt" data-el="interrupt">
+        <span class="hr-title">__interrupt__</span>
+        <p data-el="itext"></p>
+      </div>
+      <div class="hr-box hr-answer" data-el="answer">
+        <span class="hr-title">Printed</span>
+        <p data-el="atext"></p>
+      </div>
+    </div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> the first <code>invoke</code> returns with the tool not yet run; the second continues the same thread from the saved pause. Whatever the decision, the model writes the final answer.</p>
+</section>

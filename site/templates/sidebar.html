@@ -1,0 +1,20 @@
+  <nav class="sidebar" aria-label="Modules">
+    <div class="side-title">Modules</div>
+{% for m in nav %}
+{% if m.part %}
+    <span class="label side-part">{{ m.part }}</span>
+{% endif %}
+    <a class="mod{% if m.open %} is-open{% endif %}" href="{{ root }}{{ m.url }}"{% if m.open and m.lessons %} aria-expanded="true" aria-controls="side-lessons-{{ m.number }}"{% endif %}><svg class="icon"><use href="#i-book"/></svg><span><span class="mod-name">{{ m.title }}</span><span class="mod-meta">Module {{ m.number }}{% if m.count %} · {{ m.count }} lesson{{ "s" if m.count != 1 }}{% endif %}</span></span>{% if m.open and m.lessons %}<svg class="icon mod-chev" aria-hidden="true"><use href="#i-chev"/></svg>{% endif %}</a>
+{% if m.open and m.lessons %}
+    <ol class="side-lessons" id="side-lessons-{{ m.number }}">
+{% for l in m.lessons %}
+{% if l.planned %}
+      <li><span class="is-planned" title="Planned"><span class="num">{{ loop.index }}</span>{{ l.title }}</span></li>
+{% else %}
+      <li><a href="{{ root }}{{ l.url }}"{% if l.current %} aria-current="page"{% endif %}><span class="num">{{ loop.index }}</span>{{ l.title }}</a></li>
+{% endif %}
+{% endfor %}
+    </ol>
+{% endif %}
+{% endfor %}
+  </nav>

@@ -1,0 +1,57 @@
+/* One question through an LCEL chain (lesson 7.1). Colours: amber = the question and the values passed along,
+   gray = chain steps and the dict's fork, blue = the chat model. The running block glows; no block changes hue. */
+.lr-code { margin: 0 0 14px; }
+.lr-flow {
+  display: grid; justify-items: center; gap: 0; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px;
+  background-color: var(--soft); background-image: radial-gradient(#dfe3e8 1px, transparent 1px); background-size: 16px 16px;
+}
+.lr-node {
+  display: grid; gap: 2px; justify-items: center; min-width: 150px; padding: 9px 10px; border: 1.5px solid var(--line-strong);
+  border-radius: 10px; background: #fff; text-align: center; transition: box-shadow var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+.lr-node b { font: 600 13.5px var(--font-mono); color: var(--ink); }
+.lr-node span { font-size: 11.5px; color: var(--muted); }
+.lr-node--data { min-width: 120px; border-color: var(--data-line); background: var(--data-tint); }
+.lr-node--data b { color: var(--data-ink); }
+.lr-node--model { border-color: var(--model-line); }
+.lr-node--model b { color: var(--model-ink); }
+.lr-node.is-active { box-shadow: 0 0 0 4px var(--sunk), 0 0 0 5px var(--line-strong); }
+.lr-node--data.is-active { box-shadow: 0 0 0 4px var(--data-tint), 0 0 0 5px var(--data-line); }
+.lr-node--model.is-active { box-shadow: 0 0 0 4px var(--model-tint), 0 0 0 5px var(--model-line); }
+.lr-node.is-done { opacity: .6; }
+
+.lr-down { display: block; width: 2px; height: 22px; margin: 2px 0; background: var(--faint); position: relative; }
+.lr-down::after { content: ""; position: absolute; left: -4px; bottom: -1px; border: 5px solid transparent; border-top: 7px solid var(--faint); border-bottom: 0; }
+.lr-down--short { height: 16px; }
+
+.lr-fork {
+  position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; width: min(100%, 560px); margin-top: 4px;
+  padding: 26px 16px 14px; border: 1.5px dashed var(--line-strong); border-radius: 12px; background: rgba(255, 255, 255, .55);
+  transition: box-shadow var(--dur) var(--ease);
+}
+.lr-fork.is-active { box-shadow: 0 0 0 4px var(--sunk); }
+.lr-fork-label {
+  position: absolute; top: 6px; left: 12px; font: 600 10.5px var(--font-sans); letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+}
+.lr-branch { display: grid; justify-items: center; align-content: start; gap: 4px; }
+.lr-key { font: 600 12px var(--font-mono); color: var(--ink-2); }
+
+.lr-tail { display: grid; grid-template-columns: 1fr 26px 1fr 26px 1fr; align-items: center; width: min(100%, 620px); }
+.lr-tail .lr-node { min-width: 0; }
+.lr-arrow { height: 2px; margin: 0 4px; background: var(--faint); position: relative; }
+.lr-arrow::after { content: ""; position: absolute; right: -1px; top: -4px; border: 5px solid transparent; border-left: 7px solid var(--faint); border-right: 0; }
+
+.lr-value {
+  width: 100%; margin-top: 16px; padding: 10px 12px; border: 1.5px solid var(--data-line); border-radius: 10px; background: var(--data-tint);
+  transition: opacity var(--dur) var(--ease);
+}
+.lr-value.is-empty { opacity: .55; }
+.lr-type { display: block; margin-bottom: 4px; font: 600 11px var(--font-sans); letter-spacing: .06em; text-transform: uppercase; color: var(--data-ink); }
+.lr-value pre { margin: 0; min-height: 1.5em; white-space: pre-wrap; overflow-wrap: anywhere; font: 500 13px/1.5 var(--font-mono); color: var(--ink); background: none; padding: 0; }
+
+@media (max-width: 560px) {
+  .lr-fork { grid-template-columns: 1fr; gap: 12px; }
+  .lr-tail { grid-template-columns: 1fr; gap: 6px; }
+  .lr-arrow { width: 2px; height: 14px; margin: 0 auto; }
+  .lr-arrow::after { right: -4px; top: auto; bottom: -1px; border: 5px solid transparent; border-top: 7px solid var(--faint); border-bottom: 0; }
+}

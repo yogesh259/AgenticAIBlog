@@ -1,0 +1,157 @@
+# Site modules in learning order. Mirrors course/course-map.md: keep the two in sync.
+# Each module's lessons live in content/<slug>/NN-name.md; its landing text is content/<slug>/index.md.
+# `part` groups modules in the sidebar and on the home page.
+# `source` is internal (which course section the material came from) and is never shown on the site.
+
+[[module]]
+number = "00"
+slug = "00-project-setup"
+title = "Project setup"
+summary = "Start any agentic AI project the same way: Python and a project environment with pip or uv, notebooks in VS Code, and API keys in a `.env` file."
+part = "Foundations"
+source = ["1 Setup"]
+
+[[module]]
+number = "01"
+slug = "01-python-core"
+title = "Python core"
+summary = "Python from scratch: syntax, types, control flow, data structures, functions, modules, files and exceptions."
+part = "Foundations"
+source = ["2 Complete-Python-Bootcamp"]
+
+[[module]]
+number = "02"
+slug = "02-python-oop-advanced"
+title = "Python: OOP and advanced"
+summary = "Classes and inheritance, magic methods, iterators, generators, decorators, memory, threads and processes."
+part = "Foundations"
+source = ["2 Complete-Python-Bootcamp"]
+
+[[module]]
+number = "03"
+slug = "03-python-data-apps"
+title = "Python for data and apps"
+summary = "NumPy, pandas and plotting, SQLite, logging, and small web apps with Flask and Streamlit."
+part = "Foundations"
+source = ["2 Complete-Python-Bootcamp"]
+
+[[module]]
+number = "04"
+slug = "04-pydantic"
+title = "Pydantic essentials"
+summary = "Typed data models with validation: the base for structured output and graph state later on."
+part = "Foundations"
+source = ["3 Pydentic Overview"]
+
+# Not from the course: added at the user's request (course-map decision 8).
+[[module]]
+number = "05"
+slug = "05-python-cheat-sheet"
+title = "Python cheat sheet"
+summary = "Python at a glance: the core syntax, the data structures and library tools coding problems need, and the patterns agentic AI code uses, each with practice tasks."
+part = "Foundations"
+source = []
+
+[[module]]
+number = "06"
+slug = "06-langchain-classic-foundations"
+title = "LangChain classic: models, documents and vector stores"
+summary = "Chat models with OpenAI and Ollama, a first RAG app, document loaders, text splitters, embeddings, FAISS and Chroma."
+part = "LangChain"
+source = ["4 Langchain", "5 OpenAI and Ollama"]
+
+[[module]]
+number = "07"
+slug = "07-langchain-classic-apps"
+title = "LangChain classic: LCEL apps and chat history"
+summary = "Chains with LCEL and the Runnable interface, serving a chain with LangServe, and a chatbot that remembers each conversation and trims what it sends."
+part = "LangChain"
+source = ["6 Building Basic LLM APP using LCEL", "7 AI agent with history using langchain"]
+
+[[module]]
+number = "08"
+slug = "08-agents-vs-agentic-ai"
+title = "AI agents vs agentic AI"
+summary = "What makes a program an AI agent, how agentic AI systems split a goal among cooperating agents, and how much control to give the model."
+part = "LangChain"
+source = ["8 AgenticAI vs AI Agent"]
+
+[[module]]
+number = "09"
+slug = "09-langchain-v1"
+title = "LangChain v1: agents, tools and middleware"
+summary = "LangChain 1.x: `create_agent`, model integrations, tools, messages, structured output and middleware."
+part = "LangChain"
+source = ["9 LangChain Updated"]
+
+[[module]]
+number = "10"
+slug = "10-langgraph-fundamentals"
+title = "LangGraph fundamentals"
+summary = "State, nodes and edges: your first graphs and a first chatbot."
+part = "LangGraph"
+source = ["10 Intro to LangGraph"]
+
+[[module]]
+number = "11"
+slug = "11-langgraph-components"
+title = "LangGraph components"
+summary = "State schemas, chains inside graphs, tools, the ReAct agent, memory and streaming."
+part = "LangGraph"
+source = ["11 LangGraph Components"]
+
+[[module]]
+number = "12"
+slug = "12-debugging-langsmith"
+title = "Debugging: LangSmith and Studio"
+summary = "Trace every run in LangSmith and step through graphs in LangGraph Studio."
+part = "LangGraph"
+source = ["12 Debugging with LangSmith"]
+
+[[module]]
+number = "13"
+slug = "13-workflow-patterns"
+title = "Workflow patterns"
+summary = "Prompt chaining, parallelization, routing, orchestrator-worker and evaluator-optimizer."
+part = "LangGraph"
+source = ["13 Different Workflow in LangGraph"]
+
+[[module]]
+number = "14"
+slug = "14-human-in-the-loop"
+title = "Human-in-the-loop"
+summary = "Pause a graph for approval, edit its state, and carry on."
+part = "LangGraph"
+source = ["14 Human in the loop"]
+
+[[module]]
+number = "15"
+slug = "15-rag-with-langgraph"
+title = "RAG with LangGraph"
+summary = "Agentic, corrective and adaptive retrieval-augmented generation."
+part = "RAG and production"
+source = ["15 RAG with LangGraph"]
+
+[[module]]
+number = "16"
+slug = "16-vectorless-rag"
+title = "Vectorless RAG"
+summary = "Retrieval without embeddings: PageIndex's tree-based search."
+part = "RAG and production"
+source = ["16 Vectorless RAG"]
+
+[[module]]
+number = "17"
+slug = "17-guardrails"
+title = "Guardrails"
+summary = "Middleware that checks what goes in and out: PII, human approval and custom rules."
+part = "RAG and production"
+source = ["17 Guardrails"]
+
+[[module]]
+number = "18"
+slug = "18-llm-gateway"
+title = "LLM gateway"
+summary = "One API for many models with LiteLLM: fallbacks, costs and caching, routing, logs and guardrails."
+part = "RAG and production"
+source = ["18 LLM Gateway"]

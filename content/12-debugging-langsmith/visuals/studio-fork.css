@@ -1,0 +1,40 @@
+/* Edit a step and fork (lesson 12.2). A static figure in HTML lists; each card is a checkpoint of the thread.
+   Colours: amber = checkpoints and the human message (state), blue = the model's tool call, green = tool results,
+   rose = answers and the edited checkpoint (attention, shown with a glow), gray = the pause and labels. */
+.stf { container: stf / inline-size; }
+.stf-stage { display: grid; gap: 12px; padding: 14px; }
+
+.stf-lane { list-style: none; display: grid; gap: 8px; margin: 0; padding: 0 0 0 20px; border-left: 2px solid var(--data-line); }
+.stf-cp {
+  position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 7px 10px;
+  border: 1px solid var(--data-line); border-radius: 10px; background: #fff;
+}
+.stf-cp::before {
+  content: ""; position: absolute; left: -28px; top: 50%; width: 10px; height: 10px; margin-top: -7px;
+  border: 2px solid var(--data); border-radius: 50%; background: #fff;
+}
+.stf-after { min-width: 8.5em; font: 600 10.5px var(--font-sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.stf-msg {
+  max-width: 100%; padding: 2px 8px; border: 1px solid var(--line-strong); border-radius: 7px;
+  font: 500 12.5px/1.45 var(--font-mono); color: var(--ink-2); overflow-wrap: anywhere;
+}
+.stf-human { border-color: var(--data-line); background: var(--data-tint); color: var(--data-ink); }
+.stf-call { border-color: var(--model-line); background: var(--model-tint); color: var(--model-ink); }
+.stf-tool { border-color: var(--tool-line); background: var(--tool-tint); color: var(--tool-ink); }
+.stf-answer { border-color: var(--out-line); background: var(--out-tint); color: var(--out-ink); font-weight: 600; }
+.stf-note {
+  margin-left: auto; padding: 1px 9px; border: 1px dashed var(--line-strong); border-radius: 999px; background: var(--soft);
+  font: 600 11px/1.6 var(--font-sans); color: var(--ink-2);
+}
+.stf-edited { border-color: var(--out-line); box-shadow: 0 0 0 4px var(--out-tint); }
+
+.stf-from { margin: 0 0 -2px 20px; font: 600 10.5px var(--font-sans); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.stf-split { display: grid; gap: 12px; margin-left: 20px; }
+.stf-branch { min-width: 0; padding: 10px 12px 12px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.stf-branch h4 { margin: 0 0 10px; font: 600 13.5px var(--font-sans); color: var(--ink); }
+
+@container stf (max-width: 460px) {
+  .stf-split { margin-left: 0; }
+  .stf-from { margin-left: 0; }
+  .stf-note { margin-left: 0; }
+}

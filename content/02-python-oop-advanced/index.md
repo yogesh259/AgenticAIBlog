@@ -1,0 +1,1 @@
+Python's object model and the features agent libraries are built on: classes, inheritance and the special methods behind built-in syntax; iterators, generators and decorators; then how Python frees memory and runs work in threads and processes. Run the notebook cells in order; the last two lessons run scripts from a terminal. Try each practice task before you open its solution.

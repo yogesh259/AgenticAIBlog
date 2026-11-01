@@ -1,0 +1,71 @@
+<figure class="card demo sd" aria-labelledby="ag-title">
+  <div class="demo-head">
+    <h3 id="ag-title">The graph inside create_agent</h3>
+    <p>Two nodes and a loop between them; every node adds to one list of messages.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 720 266" role="img" aria-labelledby="ag-svg-title ag-svg-desc">
+      <title id="ag-svg-title">The agent graph and the messages it builds</title>
+      <desc id="ag-svg-desc">The graph starts at __start__, which leads to the model node. When the model's reply has tool calls, an edge leads to the tools node, and the tools node leads back to the model. When the reply has no tool calls, the model node leads to __end__. Beside the graph, the state's message list for one tool round: 1, a HumanMessage from the input; 2, an AIMessage with tool calls from the model node; 3, a ToolMessage from the tools node; 4, an AIMessage with the answer from the model node.</desc>
+      <defs>
+        <marker id="ag-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <g class="sd-cls">
+        <rect class="box" x="40" y="16" width="120" height="36" rx="18"/>
+        <text class="sd-t" x="100" y="38" text-anchor="middle">__start__</text>
+      </g>
+      <g class="sd-model">
+        <rect class="box" x="40" y="96" width="120" height="56" rx="10"/>
+        <text class="sd-t" x="100" y="120" text-anchor="middle">model</text>
+        <text class="sd-small" x="100" y="139" text-anchor="middle">calls the LLM</text>
+      </g>
+      <g class="sd-tool">
+        <rect class="box" x="300" y="96" width="120" height="56" rx="10"/>
+        <text class="sd-t" x="360" y="120" text-anchor="middle">tools</text>
+        <text class="sd-small" x="360" y="139" text-anchor="middle">runs each call</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="40" y="204" width="120" height="36" rx="18"/>
+        <text class="sd-t" x="100" y="226" text-anchor="middle">__end__</text>
+      </g>
+
+      <path class="sd-arrow" d="M100 52 V92" marker-end="url(#ag-arrow)"/>
+      <path class="sd-arrow sd-arrow--on" d="M160 110 H296" marker-end="url(#ag-arrow)"/>
+      <text class="sd-small" x="230" y="102" text-anchor="middle">reply has tool calls</text>
+      <path class="sd-arrow" d="M300 138 H164" marker-end="url(#ag-arrow)"/>
+      <text class="sd-small" x="230" y="158" text-anchor="middle">tool results</text>
+      <path class="sd-arrow" d="M100 152 V200" marker-end="url(#ag-arrow)"/>
+      <text class="sd-small" x="110" y="182">no tool calls</text>
+
+      <!-- the state -->
+      <g class="sd-obj">
+        <rect class="sd-ring" x="460" y="16" width="244" height="238" rx="10"/>
+        <rect class="box" x="460" y="16" width="244" height="238" rx="10"/>
+        <text class="sd-t" x="476" y="40">state["messages"]</text>
+        <line class="rule" x1="460" y1="52" x2="704" y2="52"/>
+        <text x="500" y="78">HumanMessage</text>
+        <text class="sd-small" x="500" y="94">the input</text>
+        <text x="500" y="126">AIMessage + tool_calls</text>
+        <text class="sd-small" x="500" y="142">added by model</text>
+        <text x="500" y="174">ToolMessage</text>
+        <text class="sd-small" x="500" y="190">added by tools</text>
+        <text x="500" y="222">AIMessage, the answer</text>
+        <text class="sd-small" x="500" y="238">added by model</text>
+      </g>
+      <g class="sd-badge"><circle cx="482" cy="82" r="10"/><text x="482" y="86" text-anchor="middle">1</text></g>
+      <g class="sd-badge"><circle cx="482" cy="130" r="10"/><text x="482" y="134" text-anchor="middle">2</text></g>
+      <g class="sd-badge"><circle cx="482" cy="178" r="10"/><text x="482" y="182" text-anchor="middle">3</text></g>
+      <g class="sd-badge"><circle cx="482" cy="224" r="10"/><text x="482" y="228" text-anchor="middle">4</text></g>
+    </svg>
+  </div>
+
+  <ol class="sd-keys">
+    <li>The input enters at <code>__start__</code>; a plain string becomes a <code>HumanMessage</code>.</li>
+    <li>The <code>model</code> node sends the system prompt and every message so far, and appends the reply.</li>
+    <li>If the reply has tool calls, the <code>tools</code> node runs them, appends one <code>ToolMessage</code> per call, and hands back to the model.</li>
+    <li>A reply without tool calls goes to <code>__end__</code>; the result is the whole state, all four messages.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> each node that runs is one step against <code>recursion_limit</code>, so one tool round takes three. Middleware hooks become extra nodes on these edges.</p>
+</figure>

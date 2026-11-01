@@ -1,0 +1,52 @@
+/* Pause, look, resume (lesson 14.1). Built on the style board's graph player (theme.css: .graph-box, .g-node,
+   .g-edge, .packet, .state-box). Colours: blue = the model node, green = the tools node, gray = START and the edges,
+   amber = the messages and the checkpoints, rose = the breakpoint, the pause and END. Active elements glow. */
+.bpr-code { margin: 0 0 14px; }
+.bpr .btns { flex-wrap: wrap; }
+.bpr-stage { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; }
+
+.bpr-mark circle { fill: var(--out-tint); stroke: var(--out-line); stroke-width: 1.5; transition: stroke var(--dur) var(--ease), filter var(--dur) var(--ease); }
+.bpr-mark rect { fill: var(--out); }
+.bpr-mark.is-active circle { stroke: var(--out); stroke-width: 2; filter: drop-shadow(0 0 6px rgba(209, 77, 99, .55)); }
+.graph-box .bpr-mark-label { fill: var(--out-ink); }
+
+.bpr-msgs { display: grid; gap: 6px; margin: 0; padding: 12px; list-style: none; min-height: 6.2em; }
+.bpr-msg {
+  display: grid; grid-template-columns: 4.2em minmax(0, 1fr); gap: 8px; align-items: baseline;
+  padding: 5px 8px; border: 1px solid var(--data-line); border-radius: 8px; background: #fff;
+  font: 500 12.5px/1.45 var(--font-mono); color: var(--ink); overflow-wrap: anywhere;
+}
+.bpr-msg b { font: 600 10.5px var(--font-sans); letter-spacing: .06em; text-transform: uppercase; color: var(--data-ink); }
+.bpr-msg.bpr-ai b { color: var(--model-ink); }
+.bpr-msg.bpr-tool b { color: var(--tool-ink); }
+.bpr-msg.is-new { box-shadow: 0 0 0 3px var(--data-tint), 0 0 0 4px var(--data); }
+.bpr-empty { font: 500 12.5px var(--font-sans); color: var(--muted); }
+
+.bpr-thread { margin: 0 12px 12px; padding: 8px 10px 10px; border: 1.5px dashed var(--data-line); border-radius: 10px; background: #fff; }
+.bpr-thread-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 6px; }
+.bpr-title { font: 600 10.5px var(--font-sans); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.bpr-status { padding: 1px 8px; border: 1px solid var(--line-strong); border-radius: 999px; font: 600 11px/1.6 var(--font-mono); color: var(--ink-2); }
+.bpr-status:empty { display: none; }
+.bpr-status.is-paused { border-color: var(--out); background: var(--out-tint); color: var(--out-ink); box-shadow: 0 0 0 3px var(--out-tint); }
+.bpr-status.is-done { border-color: var(--out-line); background: var(--out-tint); color: var(--out-ink); }
+
+.bpr-cps { display: grid; gap: 3px; margin: 0; padding: 0; list-style: none; }
+.bpr-cp {
+  display: grid; grid-template-columns: 30px 52px minmax(0, 1fr); gap: 6px; align-items: baseline;
+  padding: 3px 6px; border-radius: 6px; font: 500 11.5px/1.5 var(--font-mono); color: var(--data-ink); white-space: nowrap;
+}
+.bpr-cp > span:first-child { text-align: right; }
+.bpr-cp .bpr-src { color: var(--muted); }
+.bpr-cp-head { padding-top: 0; padding-bottom: 0; font: 600 10px/1.6 var(--font-sans); letter-spacing: .06em; text-transform: uppercase; color: var(--faint); }
+.bpr-cp.is-latest { background: var(--data-tint); }
+.bpr-cp.is-read { box-shadow: 0 0 0 2px var(--data); }
+.bpr-cp.is-new { animation: bpr-in 420ms var(--ease) both; }
+@keyframes bpr-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bpr-cp.is-new { animation: none; }
+  .bpr-mark circle { transition: none; }
+}
+@media (max-width: 760px) {
+  .bpr-stage { grid-template-columns: minmax(0, 1fr); }
+}

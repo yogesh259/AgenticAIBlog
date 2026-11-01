@@ -1,0 +1,93 @@
+<figure class="card demo sd" aria-labelledby="rag-title">
+  <div class="demo-head">
+    <h3 id="rag-title">Index once, ask many times</h3>
+    <p>The objects of a RAG app in LangChain, and the lesson that covers each one.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 760 270" role="img" aria-labelledby="rag-svg-title rag-svg-desc">
+      <title id="rag-svg-title">The two phases of a RAG app</title>
+      <desc id="rag-svg-desc">Top row, run once to build the index: WebBaseLoader loads documents, RecursiveCharacterTextSplitter cuts them into chunks, OpenAIEmbeddings turns the chunks into vectors, and FAISS stores them. Bottom row, run for each question: the retriever embeds the question with the same embeddings model and searches the FAISS index for the 4 nearest chunks; create_stuff_documents_chain puts the chunks and the question into the prompt; ChatOpenAI writes the answer.</desc>
+      <defs>
+        <marker id="rag-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <text class="sd-label" x="16" y="26">once, to build the index</text>
+
+      <!-- top row: load, split, embed, store -->
+      <g class="sd-cls">
+        <rect class="box" x="16" y="38" width="140" height="64" rx="10"/>
+        <text class="sd-small" x="86" y="58" text-anchor="middle">load · 6.4</text>
+        <text class="sd-t" x="86" y="80" text-anchor="middle">WebBaseLoader</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="216" y="38" width="170" height="64" rx="10"/>
+        <text class="sd-small" x="301" y="56" text-anchor="middle">split · 6.5</text>
+        <text class="sd-t" x="301" y="75" text-anchor="middle">RecursiveCharacter</text>
+        <text class="sd-t" x="301" y="91" text-anchor="middle">TextSplitter</text>
+      </g>
+      <g class="sd-model">
+        <rect class="box" x="436" y="38" width="150" height="64" rx="10"/>
+        <text class="sd-small" x="511" y="58" text-anchor="middle">embed · 6.6</text>
+        <text class="sd-t" x="511" y="80" text-anchor="middle">OpenAIEmbeddings</text>
+      </g>
+      <g class="sd-obj">
+        <rect class="box" x="636" y="38" width="108" height="64" rx="10"/>
+        <text class="sd-small" x="690" y="58" text-anchor="middle">store · 6.7</text>
+        <text class="sd-t" x="690" y="80" text-anchor="middle">FAISS</text>
+      </g>
+      <path class="sd-arrow" d="M156 70 H212" marker-end="url(#rag-arrow)"/>
+      <path class="sd-arrow" d="M386 70 H432" marker-end="url(#rag-arrow)"/>
+      <path class="sd-arrow" d="M586 70 H632" marker-end="url(#rag-arrow)"/>
+      <text class="sd-small" x="186" y="62" text-anchor="middle">docs</text>
+      <text class="sd-small" x="411" y="62" text-anchor="middle">chunks</text>
+      <text class="sd-small" x="611" y="62" text-anchor="middle">vectors</text>
+
+      <!-- links from the retriever to the embeddings model and to the index -->
+      <path class="sd-arrow sd-arrow--dash" d="M176 196 V124 H511 V106" marker-end="url(#rag-arrow)"/>
+      <path class="sd-arrow sd-arrow--dash" d="M220 196 V144 H690 V106" marker-end="url(#rag-arrow)"/>
+      <text class="sd-small" x="343" y="118" text-anchor="middle">embeds the question with the same model</text>
+      <text class="sd-small" x="606" y="138" text-anchor="middle">searches the index</text>
+
+      <text class="sd-label" x="16" y="184">for each question</text>
+
+      <!-- bottom row: question, retrieve, stuff, generate, answer -->
+      <g class="sd-obj">
+        <rect class="box" x="16" y="196" width="84" height="64" rx="10"/>
+        <text class="sd-t" x="58" y="232" text-anchor="middle">question</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="130" y="196" width="136" height="64" rx="10"/>
+        <text class="sd-small" x="198" y="216" text-anchor="middle">retrieve · 6.7</text>
+        <text class="sd-t" x="198" y="238" text-anchor="middle">as_retriever()</text>
+      </g>
+      <g class="sd-cls">
+        <rect class="box" x="326" y="196" width="176" height="64" rx="10"/>
+        <text class="sd-small" x="414" y="214" text-anchor="middle">stuff into the prompt · 6.8</text>
+        <text class="sd-t" x="414" y="233" text-anchor="middle">create_stuff_</text>
+        <text class="sd-t" x="414" y="249" text-anchor="middle">documents_chain</text>
+      </g>
+      <g class="sd-model">
+        <rect class="box" x="532" y="196" width="110" height="64" rx="10"/>
+        <text class="sd-small" x="587" y="216" text-anchor="middle">generate · 6.1</text>
+        <text class="sd-t" x="587" y="238" text-anchor="middle">ChatOpenAI</text>
+      </g>
+      <g class="sd-answer">
+        <rect class="box" x="664" y="196" width="80" height="64" rx="10"/>
+        <text x="704" y="232" text-anchor="middle">answer</text>
+      </g>
+      <path class="sd-arrow" d="M100 228 H126" marker-end="url(#rag-arrow)"/>
+      <path class="sd-arrow" d="M266 228 H322" marker-end="url(#rag-arrow)"/>
+      <path class="sd-arrow" d="M502 228 H528" marker-end="url(#rag-arrow)"/>
+      <path class="sd-arrow" d="M642 228 H660" marker-end="url(#rag-arrow)"/>
+      <text class="sd-small" x="296" y="220" text-anchor="middle">4 chunks</text>
+    </svg>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b>Once:</b> the loader reads the page, the splitter cuts it into chunks, the embeddings model turns each chunk into a vector, and FAISS stores the vectors with their chunks.</li>
+    <li><b>For each question:</b> the retriever embeds the question with the same model and takes the 4 nearest chunks; the stuff chain puts them in <code>{context}</code> and the question in <code>{input}</code>; the chat model writes the answer.</li>
+    <li><b>The result:</b> <code>create_retrieval_chain</code> returns all three, <code>{"input": …, "context": […], "answer": …}</code>: the question, the 4 chunks and the answer.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> only the bottom row runs for each question: one embedding call and one call to the chat model. The top row runs again only when the documents or the embeddings model change.</p>
+</figure>

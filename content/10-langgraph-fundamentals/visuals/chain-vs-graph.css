@@ -1,0 +1,9 @@
+/* A chain and a graph (lesson 10.1). Static figure on the shared .sd-* styles: two panels side by side,
+   stacked on narrow screens. Colours: blue = the model, green = the tool, amber = the state, rose = the answer,
+   gray = steps, START, END and edges. */
+.cg-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.cg-panels .sd-stage { padding: 4px; }
+@media (max-width: 640px) {
+  .cg-panels { grid-template-columns: minmax(0, 1fr); }
+  .cg-panels svg { max-width: 380px; margin: 0 auto; }
+}

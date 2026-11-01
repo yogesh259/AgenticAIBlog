@@ -1,0 +1,134 @@
+<section class="card demo ps" data-parallel-steps aria-labelledby="ps-title">
+  <div class="demo-head">
+    <h3 id="ps-title">Fan out, fan in</h3>
+    <p>Pick a graph, then press <b>Play</b> or step with <b>Next</b>. Each replays a real run of the lesson's <code>build(shape)</code>.</p>
+  </div>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Graph shape">
+      <button type="button" data-preset="even" aria-pressed="true">Even branches</button>
+      <button type="button" data-preset="uneven" aria-pressed="false">Uneven branches</button>
+      <button type="button" data-preset="waiting" aria-pressed="false">Waiting edge</button>
+    </div>
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <figure class="code-cell ps-code">
+    <figcaption class="code-head"><span>build(shape)</span><span class="sync">&middot; the highlighted lines are running</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre class="is-compact" data-code><code><span class="line"><span class="k">def</span> <span class="f">node</span>(name):</span>
+<span class="line">    <span class="k">def</span> <span class="f">run</span>(state: Trace):</span>
+<span class="line">        <span class="k">if</span> name == <span class="s">"combine"</span>:</span>
+<span class="line">            <span class="b">print</span>(<span class="s">"  combine sees"</span>, state[<span class="s">"log"</span>])</span>
+<span class="line">        <span class="k">return</span> {<span class="s">"log"</span>: [name]}</span>
+<span class="line">    <span class="k">return</span> run</span>
+<span class="line"></span>
+<span class="line"><span class="k">def</span> <span class="f">build</span>(shape):</span>
+<span class="line">    builder = StateGraph(Trace)</span>
+<span class="line">    <span class="k">for</span> name <span class="k">in</span> [<span class="s">"character"</span>, <span class="s">"setting"</span>, <span class="s">"premise"</span>, <span class="s">"combine"</span>]:</span>
+<span class="line">        builder.add_node(name, node(name))</span>
+<span class="line">    <span class="k">for</span> name <span class="k">in</span> [<span class="s">"character"</span>, <span class="s">"setting"</span>, <span class="s">"premise"</span>]:</span>
+<span class="line">        builder.add_edge(START, name)</span>
+<span class="line">    last = [<span class="s">"character"</span>, <span class="s">"setting"</span>, <span class="s">"premise"</span>]</span>
+<span class="line">    <span class="k">if</span> shape != <span class="s">"even"</span>:</span>
+<span class="line">        builder.add_node(<span class="s">"polish"</span>, node(<span class="s">"polish"</span>))</span>
+<span class="line">        builder.add_edge(<span class="s">"premise"</span>, <span class="s">"polish"</span>)</span>
+<span class="line">        last = [<span class="s">"character"</span>, <span class="s">"setting"</span>, <span class="s">"polish"</span>]</span>
+<span class="line">    <span class="k">if</span> shape == <span class="s">"waiting edge"</span>:</span>
+<span class="line">        builder.add_edge(last, <span class="s">"combine"</span>)</span>
+<span class="line">    <span class="k">else</span>:</span>
+<span class="line">        <span class="k">for</span> name <span class="k">in</span> last:</span>
+<span class="line">            builder.add_edge(name, <span class="s">"combine"</span>)</span>
+<span class="line">    builder.add_edge(<span class="s">"combine"</span>, END)</span>
+<span class="line">    <span class="k">return</span> builder.compile()</span>
+<span class="line"></span>
+<span class="line">build(shape).invoke({<span class="s">"log"</span>: []})</span></code></pre>
+  </figure>
+
+  <div class="stage ps-stage">
+    <div class="graph-box">
+      <svg viewBox="0 0 440 390" role="img" aria-labelledby="ps-svg-title ps-svg-desc">
+        <title id="ps-svg-title">The story-elements graph</title>
+        <desc id="ps-svg-desc">START leads to three nodes, character, setting and premise. Each leads to combine, which leads to END. In the uneven and waiting-edge graphs, premise leads to polish instead, and polish leads to combine.</desc>
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#b6bcc6"/></marker>
+          <marker id="arrow-on" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#374151"/></marker>
+        </defs>
+
+        <rect class="g-group" x="8" y="8" width="424" height="374" rx="14"/>
+        <text class="g-group-label" x="22" y="30">StateGraph(Trace)</text>
+
+        <path data-edge="start-character" class="g-edge" d="M200 66 L96 98"/>
+        <path data-edge="start-setting" class="g-edge" d="M220 66 V98"/>
+        <path data-edge="start-premise" class="g-edge" d="M240 66 L344 98"/>
+        <path data-edge="character-combine" class="g-edge" d="M80 148 C80 230 120 283 156 283"/>
+        <path data-edge="setting-combine" class="g-edge" d="M220 148 V256"/>
+        <path data-edge="premise-combine" class="g-edge" data-shape="even" d="M360 148 C360 230 320 283 284 283"/>
+        <path data-edge="premise-polish" class="g-edge" data-shape="uneven waiting" d="M360 148 V176"/>
+        <path data-edge="polish-combine" class="g-edge" data-shape="uneven waiting" d="M360 226 C360 262 322 283 284 283"/>
+        <path data-edge="combine-end" class="g-edge" d="M220 306 V338"/>
+
+        <g data-node="start" class="g-node role-ctrl">
+          <rect class="box" x="177" y="38" width="86" height="28" rx="14"/>
+          <text class="t-main" x="220" y="56" text-anchor="middle">START</text>
+        </g>
+        <g data-node="character" class="g-node role-func">
+          <rect class="ring" x="16" y="98" width="128" height="50" rx="13"/>
+          <rect class="box" x="20" y="102" width="120" height="42" rx="10"/>
+          <text class="t-main" x="80" y="128" text-anchor="middle">character</text>
+        </g>
+        <g data-node="setting" class="g-node role-func">
+          <rect class="ring" x="156" y="98" width="128" height="50" rx="13"/>
+          <rect class="box" x="160" y="102" width="120" height="42" rx="10"/>
+          <text class="t-main" x="220" y="128" text-anchor="middle">setting</text>
+        </g>
+        <g data-node="premise" class="g-node role-func">
+          <rect class="ring" x="296" y="98" width="128" height="50" rx="13"/>
+          <rect class="box" x="300" y="102" width="120" height="42" rx="10"/>
+          <text class="t-main" x="360" y="128" text-anchor="middle">premise</text>
+        </g>
+        <g data-node="polish" class="g-node role-func" data-shape="uneven waiting">
+          <rect class="ring" x="296" y="176" width="128" height="50" rx="13"/>
+          <rect class="box" x="300" y="180" width="120" height="42" rx="10"/>
+          <text class="t-main" x="360" y="206" text-anchor="middle">polish</text>
+        </g>
+        <g data-node="combine" class="g-node role-func">
+          <rect class="ring" x="156" y="256" width="128" height="54" rx="13"/>
+          <rect class="box" x="160" y="260" width="120" height="46" rx="10"/>
+          <text class="t-main" x="220" y="280" text-anchor="middle">combine</text>
+          <text class="t-sub" x="220" y="297" text-anchor="middle" data-el="combine-sub">after any input</text>
+        </g>
+        <g data-node="end" class="g-node role-end">
+          <rect class="box" x="177" y="338" width="86" height="28" rx="14"/>
+          <text class="t-main" x="220" y="356" text-anchor="middle">END</text>
+        </g>
+
+        <circle class="packet" data-packet r="6" cx="220" cy="66"/>
+        <circle class="packet" data-packet r="6" cx="220" cy="66"/>
+        <circle class="packet" data-packet r="6" cx="220" cy="66"/>
+      </svg>
+    </div>
+    <div class="state-box ps-state">
+      <div class="state-head"><span>run</span><span class="tag">Data</span></div>
+      <div class="ps-body">
+        <div class="ps-steps">
+          <span class="ps-title">Super-steps</span>
+          <ol data-el="steps"></ol>
+        </div>
+        <div class="ps-kv"><code class="ps-key">log</code><span class="ps-val" data-el="log"></span></div>
+        <div class="ps-printed">
+          <span class="ps-title">Printed</span>
+          <pre data-el="printed"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> an edge into a node schedules it for the step after its source ran. With branches of equal length every edge into <code>combine</code> fires in the same step, so it runs once; with a longer branch it runs once per step in which an input finished, unless one edge from a list makes it wait for all of them.</p>
+</section>

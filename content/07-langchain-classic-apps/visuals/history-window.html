@@ -1,0 +1,52 @@
+<section class="card demo hw" data-history-window aria-labelledby="hw-title">
+  <div class="demo-head">
+    <h3 id="hw-title">What the model sees</h3>
+    <p>Press <b>Play</b> or step with <b>Next</b>. The token counts are the ones the trimmer uses with a Groq model: GPT-2's tokenizer, role included. The budget is 45.</p>
+  </div>
+
+  <div class="controls">
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <figure class="code-cell hw-code">
+    <figcaption class="code-head"><span>The cells, shortened</span><span class="sync">&middot; the highlighted line is running</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre data-code><code><span class="line">trimmer = trim_messages(max_tokens=<span class="n">45</span>, strategy=<span class="s">"last"</span>, token_counter=model,</span>
+<span class="line">                        include_system=<span class="k">True</span>, allow_partial=<span class="k">False</span>, start_on=<span class="s">"human"</span>)</span>
+<span class="line">trimmer.invoke(messages)</span>
+<span class="line"></span>
+<span class="line">chain = RunnablePassthrough.assign(messages=itemgetter(<span class="s">"messages"</span>) | trimmer) | prompt | model</span>
+<span class="line">chain.invoke({<span class="s">"messages"</span>: messages + [HumanMessage(<span class="s">"What ice cream do i like"</span>)], ...})</span>
+<span class="line">chain.invoke({<span class="s">"messages"</span>: messages + [HumanMessage(<span class="s">"what math problem did i ask"</span>)], ...})</span>
+<span class="line"></span>
+<span class="line">with_message_history = RunnableWithMessageHistory(chain, get_session_history, input_messages_key=<span class="s">"messages"</span>)</span>
+<span class="line">with_message_history.invoke({<span class="s">"messages"</span>: messages + [HumanMessage(<span class="s">"whats my name?"</span>)], ...}, config)</span>
+<span class="line">with_message_history.invoke({<span class="s">"messages"</span>: [HumanMessage(<span class="s">"what math problem did i ask?"</span>)], ...}, config)</span></code></pre>
+  </figure>
+
+  <div class="hw-stage" aria-hidden="true">
+    <div class="hw-col">
+      <div class="hw-head"><span class="hw-title">Input to the trimmer</span><span class="hw-store" data-el="store"></span></div>
+      <ol class="hw-rows" data-el="rows"></ol>
+    </div>
+    <div class="hw-side">
+      <div class="hw-budget">
+        <span class="hw-label">Sent to the model</span>
+        <div class="hw-bar"><span data-el="fill"></span></div>
+        <span class="hw-count" data-el="count"></span>
+      </div>
+      <div class="hw-answer" data-el="answer">
+        <span class="hw-label">Answer</span>
+        <p data-el="atext"></p>
+      </div>
+    </div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> the store only grows, while the window slides with each new message. A message survives only when everything newer fits in the budget too.</p>
+</section>

@@ -1,0 +1,94 @@
+<figure class="card demo sd" aria-labelledby="sac-title">
+  <div class="demo-head">
+    <h3 id="sac-title">Split, apply, combine</h3>
+    <p>What <code>df.groupby('Product')['Value'].mean()</code> does, shown on the first six rows of <code>data.csv</code>.</p>
+  </div>
+
+  <div class="sd-stage">
+    <svg viewBox="0 0 640 240" role="img" aria-labelledby="sac-svg-title sac-svg-desc">
+      <title id="sac-svg-title">groupby in three steps</title>
+      <desc id="sac-svg-desc">Six rows of Product and Value. Split: rows go to three groups, Product1 with 28.0 and 8.0, Product2 with 32.0, Product3 with 39.0, 26.0 and 54.0. Apply: the mean of each group is 18.0, 32.0 and 39.67. Combine: the means form one Series indexed by Product, named Value.</desc>
+      <defs>
+        <marker id="sac-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#9ca3af"/></marker>
+      </defs>
+
+      <text class="sd-label" x="16" y="24">six rows</text>
+      <text class="sd-label" x="214" y="24">1 split</text>
+      <text class="sd-label" x="404" y="24">2 apply</text>
+      <text class="sd-label" x="502" y="24">3 combine</text>
+
+      <!-- rows -->
+      <text class="sd-t" x="26" y="48">Product</text>
+      <text class="sd-t" x="150" y="48" text-anchor="end">Value</text>
+      <g class="sd-obj">
+        <rect class="box" x="16" y="58" width="144" height="146" rx="8"/>
+        <line class="rule" x1="16" y1="82" x2="160" y2="82"/>
+        <line class="rule" x1="16" y1="106" x2="160" y2="106"/>
+        <line class="rule" x1="16" y1="130" x2="160" y2="130"/>
+        <line class="rule" x1="16" y1="154" x2="160" y2="154"/>
+        <line class="rule" x1="16" y1="178" x2="160" y2="178"/>
+        <text x="26" y="75">Product1</text><text x="150" y="75" text-anchor="end">28.0</text>
+        <text x="26" y="99">Product3</text><text x="150" y="99" text-anchor="end">39.0</text>
+        <text x="26" y="123">Product2</text><text x="150" y="123" text-anchor="end">32.0</text>
+        <text x="26" y="147">Product1</text><text x="150" y="147" text-anchor="end">8.0</text>
+        <text x="26" y="171">Product3</text><text x="150" y="171" text-anchor="end">26.0</text>
+        <text x="26" y="195">Product3</text><text x="150" y="195" text-anchor="end">54.0</text>
+      </g>
+
+      <!-- split: each row to its group -->
+      <path class="sd-arrow" d="M160 70 C 188 70, 186 81, 210 81" marker-end="url(#sac-arrow)"/>
+      <path class="sd-arrow" d="M160 142 C 190 142, 184 81, 210 81" marker-end="url(#sac-arrow)"/>
+      <path class="sd-arrow" d="M160 118 C 188 118, 186 137, 210 137" marker-end="url(#sac-arrow)"/>
+      <path class="sd-arrow" d="M160 94 C 192 94, 182 193, 210 193" marker-end="url(#sac-arrow)"/>
+      <path class="sd-arrow" d="M160 166 C 188 166, 186 193, 210 193" marker-end="url(#sac-arrow)"/>
+      <path class="sd-arrow" d="M160 190 C 186 190, 188 193, 210 193" marker-end="url(#sac-arrow)"/>
+
+      <g class="sd-obj">
+        <rect class="box" x="214" y="58" width="156" height="46" rx="8"/>
+        <rect class="box" x="214" y="114" width="156" height="46" rx="8"/>
+        <rect class="box" x="214" y="170" width="156" height="46" rx="8"/>
+        <text x="226" y="96">28.0   8.0</text>
+        <text x="226" y="152">32.0</text>
+        <text x="226" y="208">39.0   26.0   54.0</text>
+      </g>
+      <text class="sd-t" x="226" y="76">Product1</text>
+      <text class="sd-t" x="226" y="132">Product2</text>
+      <text class="sd-t" x="226" y="188">Product3</text>
+
+      <!-- apply: mean per group -->
+      <path class="sd-arrow" d="M370 81 L 400 81" marker-end="url(#sac-arrow)"/>
+      <path class="sd-arrow" d="M370 137 L 400 137" marker-end="url(#sac-arrow)"/>
+      <path class="sd-arrow" d="M370 193 L 400 193" marker-end="url(#sac-arrow)"/>
+      <text class="sd-small" x="440" y="48" text-anchor="middle">mean()</text>
+      <g class="sd-obj">
+        <rect class="box" x="404" y="69" width="72" height="24" rx="12"/><text x="440" y="85" text-anchor="middle">18.0</text>
+        <rect class="box" x="404" y="125" width="72" height="24" rx="12"/><text x="440" y="141" text-anchor="middle">32.0</text>
+        <rect class="box" x="404" y="181" width="72" height="24" rx="12"/><text x="440" y="197" text-anchor="middle">39.67</text>
+      </g>
+
+      <!-- combine: one Series -->
+      <path class="sd-arrow" d="M476 81 C 492 81, 486 124, 500 124" marker-end="url(#sac-arrow)"/>
+      <path class="sd-arrow" d="M476 137 C 490 137, 486 148, 500 148" marker-end="url(#sac-arrow)"/>
+      <path class="sd-arrow" d="M476 193 C 492 193, 486 172, 500 172" marker-end="url(#sac-arrow)"/>
+      <g class="sd-obj">
+        <rect class="sd-ring" x="502" y="86" width="130" height="100" rx="10"/>
+        <rect class="box" x="502" y="86" width="130" height="100" rx="10"/>
+        <text x="624" y="128" text-anchor="end">18.00</text>
+        <text x="624" y="152" text-anchor="end">32.00</text>
+        <text x="624" y="176" text-anchor="end">39.67</text>
+      </g>
+      <text class="sd-small" x="510" y="104">Product</text>
+      <text class="sd-t" x="510" y="128">Product1</text>
+      <text class="sd-t" x="510" y="152">Product2</text>
+      <text class="sd-t" x="510" y="176">Product3</text>
+      <text class="sd-small" x="502" y="206">Name: Value</text>
+    </svg>
+  </div>
+
+  <ol class="sd-keys">
+    <li><b>Split:</b> rows with the same <code>Product</code> go to the same group, wherever they are in the table.</li>
+    <li><b>Apply:</b> <code>mean()</code> runs once per group. <code>sum()</code>, <code>count()</code> or <code>agg(['mean', 'sum'])</code> change only this step.</li>
+    <li><b>Combine:</b> the results form a Series indexed by the group keys, named after the column, <code>Value</code>.</li>
+  </ol>
+  <p class="observe"><b>Observe:</b> on all 50 rows the same call gives 46.21, 52.80 and 55.17. Grouping by two columns splits by each pair of values, which is where the two-level index comes from.</p>
+</figure>

@@ -1,0 +1,13 @@
+/* Without and with a gateway (lesson 18.1). Static figure on the shared .sd-* styles: two panels side by side,
+   stacked on narrow screens. Colours: blue = providers' models, rose = input checks, amber = cache and logs (data),
+   gray = applications, the gateway and its control steps. */
+.gm-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.gm-panels .sd-stage { padding: 4px; }
+.gm .gm-wires .sd-arrow { stroke-width: 1.1; opacity: .8; }
+.gm .gm-note rect { fill: #fff; stroke: var(--line); stroke-width: 1; }
+.gm .gm-gate .box { stroke-width: 1.75; }
+.sd-stage .gm-step text { font: 500 12px var(--font-sans); }
+@media (max-width: 640px) {
+  .gm-panels { grid-template-columns: minmax(0, 1fr); }
+  .gm-panels svg { max-width: 380px; margin: 0 auto; }
+}

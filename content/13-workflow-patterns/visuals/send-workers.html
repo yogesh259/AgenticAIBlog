@@ -1,0 +1,125 @@
+<section class="card demo sw" data-send-workers aria-labelledby="sw-title">
+  <div class="demo-head">
+    <h3 id="sw-title">One worker per section</h3>
+    <p>Press <b>Play</b> or step with <b>Next</b>. It replays the lesson's run with stand-in workers: the plan, the sends, three workers and the reducer.</p>
+  </div>
+
+  <div class="controls">
+    <div class="btns">
+      <button type="button" class="btn" data-act="prev" aria-label="Previous step"><svg class="icon"><use href="#i-prev"/></svg></button>
+      <button type="button" class="btn btn--primary" data-act="play"><svg class="icon icon--fill"><use href="#i-play"/></svg><span>Play</span></button>
+      <button type="button" class="btn" data-act="next">Next<svg class="icon"><use href="#i-chev"/></svg></button>
+      <button type="button" class="btn btn--ghost" data-act="reset"><svg class="icon"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+  </div>
+
+  <figure class="code-cell sw-code">
+    <figcaption class="code-head"><span>The stand-ins, the edge function and the synthesizer</span><span class="sync">&middot; the highlighted lines are running</span><span class="lang">Python</span><button class="copy" type="button" data-copy><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button></figcaption>
+<pre class="is-compact" data-code><code><span class="line"><span class="k">def</span> <span class="f">plan_stand_in</span>(state: State):</span>
+<span class="line">    <span class="k">return</span> {<span class="s">"sections"</span>: PLAN}</span>
+<span class="line"></span>
+<span class="line"><span class="k">def</span> <span class="f">assign_workers</span>(state: State):</span>
+<span class="line">    <span class="k">return</span> [Send(<span class="s">"llm_call"</span>, {<span class="s">"section"</span>: s}) <span class="k">for</span> s <span class="k">in</span> state[<span class="s">"sections"</span>]]</span>
+<span class="line"></span>
+<span class="line"><span class="k">def</span> <span class="f">write_stand_in</span>(state: WorkerState):</span>
+<span class="line">    section = state[<span class="s">"section"</span>]</span>
+<span class="line">    time.sleep(DELAY[section.name])</span>
+<span class="line">    <span class="b">print</span>(<span class="s">f"wrote {section.name!r}; the worker received {list(state)}"</span>)</span>
+<span class="line">    <span class="k">return</span> {<span class="s">"completed_sections"</span>: [<span class="s">f"## {section.name}\n{section.description}."</span>]}</span>
+<span class="line"></span>
+<span class="line"><span class="k">def</span> <span class="f">synthesizer</span>(state: State):</span>
+<span class="line">    completed_sections = state[<span class="s">"completed_sections"</span>]</span>
+<span class="line">    completed_report_sections = <span class="s">"\n\n---\n\n"</span>.join(completed_sections)</span>
+<span class="line">    <span class="k">return</span> {<span class="s">"final_report"</span>: completed_report_sections}</span>
+<span class="line"></span>
+<span class="line">state = demo.invoke({<span class="s">"topic"</span>: <span class="s">"Agentic AI systems"</span>})</span></code></pre>
+  </figure>
+
+  <div class="stage sw-stage">
+    <div class="graph-box">
+      <svg viewBox="0 0 440 420" role="img" aria-labelledby="sw-svg-title sw-svg-desc">
+        <title id="sw-svg-title">The orchestrator-worker graph at run time</title>
+        <desc id="sw-svg-desc">START leads to orchestrator. Three dashed Send edges lead from orchestrator to three runs of the same node, llm_call, each with one section as its input. All three lead to synthesizer, which leads to END.</desc>
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#b6bcc6"/></marker>
+          <marker id="arrow-on" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#374151"/></marker>
+        </defs>
+
+        <rect class="g-group" x="8" y="8" width="424" height="404" rx="14"/>
+        <text class="g-group-label" x="22" y="30">StateGraph(State)</text>
+
+        <path data-edge="start" class="g-edge" d="M220 64 V82"/>
+        <path data-edge="send-0" class="g-edge is-cond" d="M196 136 L92 190"/>
+        <path data-edge="send-1" class="g-edge is-cond" d="M220 136 V190"/>
+        <path data-edge="send-2" class="g-edge is-cond" d="M244 136 L348 190"/>
+        <text class="g-label" x="228" y="168">Send × 3</text>
+        <path data-edge="join-0" class="g-edge" d="M74 258 C74 300 110 323 136 323"/>
+        <path data-edge="join-1" class="g-edge" d="M220 258 V294"/>
+        <path data-edge="join-2" class="g-edge" d="M366 258 C366 300 330 323 304 323"/>
+        <path data-edge="end" class="g-edge" d="M220 348 V370"/>
+
+        <g data-node="start" class="g-node role-ctrl">
+          <rect class="box" x="177" y="36" width="86" height="28" rx="14"/>
+          <text class="t-main" x="220" y="54" text-anchor="middle">START</text>
+        </g>
+        <g data-node="orchestrator" class="g-node role-func">
+          <rect class="ring" x="136" y="82" width="168" height="58" rx="14"/>
+          <rect class="box" x="140" y="86" width="160" height="50" rx="11"/>
+          <text class="t-main" x="220" y="108" text-anchor="middle">orchestrator</text>
+          <text class="t-sub" x="220" y="125" text-anchor="middle">plan_stand_in</text>
+        </g>
+        <g data-node="w0" class="g-node role-func sw-worker">
+          <rect class="ring" x="8" y="190" width="132" height="72" rx="14"/>
+          <rect class="box" x="12" y="194" width="124" height="64" rx="11"/>
+          <text class="t-main" x="74" y="215" text-anchor="middle">llm_call</text>
+          <text class="t-sub sw-input" x="74" y="232" text-anchor="middle" data-el="in-0"></text>
+          <text class="t-sub" x="74" y="248" text-anchor="middle" data-el="done-0"></text>
+        </g>
+        <g data-node="w1" class="g-node role-func sw-worker">
+          <rect class="ring" x="154" y="190" width="132" height="72" rx="14"/>
+          <rect class="box" x="158" y="194" width="124" height="64" rx="11"/>
+          <text class="t-main" x="220" y="215" text-anchor="middle">llm_call</text>
+          <text class="t-sub sw-input" x="220" y="232" text-anchor="middle" data-el="in-1"></text>
+          <text class="t-sub" x="220" y="248" text-anchor="middle" data-el="done-1"></text>
+        </g>
+        <g data-node="w2" class="g-node role-func sw-worker">
+          <rect class="ring" x="300" y="190" width="132" height="72" rx="14"/>
+          <rect class="box" x="304" y="194" width="124" height="64" rx="11"/>
+          <text class="t-main" x="366" y="215" text-anchor="middle">llm_call</text>
+          <text class="t-sub sw-input" x="366" y="232" text-anchor="middle" data-el="in-2"></text>
+          <text class="t-sub" x="366" y="248" text-anchor="middle" data-el="done-2"></text>
+        </g>
+        <g data-node="synthesizer" class="g-node role-func">
+          <rect class="ring" x="136" y="294" width="168" height="58" rx="14"/>
+          <rect class="box" x="140" y="298" width="160" height="50" rx="11"/>
+          <text class="t-main" x="220" y="320" text-anchor="middle">synthesizer</text>
+          <text class="t-sub" x="220" y="337" text-anchor="middle">joins with ---</text>
+        </g>
+        <g data-node="end" class="g-node role-end">
+          <rect class="box" x="177" y="370" width="86" height="28" rx="14"/>
+          <text class="t-main" x="220" y="388" text-anchor="middle">END</text>
+        </g>
+
+        <circle class="packet" data-packet r="6" cx="220" cy="64"/>
+        <circle class="packet" data-packet r="6" cx="220" cy="64"/>
+        <circle class="packet" data-packet r="6" cx="220" cy="64"/>
+      </svg>
+    </div>
+    <div class="state-box sw-state">
+      <div class="state-head"><span>state</span><span class="tag">Data</span></div>
+      <div class="sw-body">
+        <div class="sw-kv" data-key="sections"><code class="sw-key">sections</code><span class="sw-val" data-el="sections"></span></div>
+        <div class="sw-kv" data-key="completed"><code class="sw-key">completed_sections</code><span class="sw-val" data-el="completed"></span></div>
+        <div class="sw-kv" data-key="report"><code class="sw-key">final_report</code><span class="sw-val" data-el="report"></span></div>
+        <div class="sw-printed">
+          <span class="sw-title">Printed</span>
+          <pre data-el="printed"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="caption" aria-live="polite"><span class="step-badge" data-badge>Ready</span><span data-caption></span></p>
+
+  <p class="observe"><b>Observe:</b> the graph has one worker node, and the sends decide how many times it runs. Each run gets only its payload. Here the results came back in the order of the sends although the workers finished in another; send each worker its position when the order must be guaranteed.</p>
+</section>

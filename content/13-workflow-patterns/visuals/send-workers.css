@@ -1,0 +1,44 @@
+/* One worker per section (lesson 13.4). Built on the style board's graph player (theme.css: .graph-box, .g-node,
+   .g-edge, .packet, .state-box). Colours: gray = the nodes (plain functions here) and the edges, amber = the state
+   and each worker's input, rose = END and the final report. A lit node glows; nothing changes hue. */
+.sw-code { margin: 0 0 14px; }
+.sw-code .code-head { flex-wrap: wrap; }
+.sw .btns { flex-wrap: wrap; }
+.sw-stage { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: start; }
+
+/* Nodes that are plain Python functions: gray, like control flow */
+.sw .role-func .box { fill: #fff; stroke: var(--line-strong); transition: opacity var(--dur) var(--ease); }
+.sw .role-func .t-main { font: 600 13.5px var(--font-mono); fill: var(--ink); }
+.sw .role-func .t-sub { fill: var(--muted); }
+.sw .role-func .ring { stroke: var(--ink-2); }
+.sw .role-func.is-active .box { stroke: var(--ink-2); filter: drop-shadow(0 0 8px rgba(55, 65, 81, .28)); }
+.sw .sw-worker .sw-input { fill: var(--data-ink); font-weight: 600; }
+.sw .sw-worker.is-idle { opacity: .45; }
+.sw .sw-worker { transition: opacity var(--dur) var(--ease); }
+
+/* The state panel */
+.sw-body { display: grid; gap: 10px; padding: 12px; }
+.sw-title { display: block; margin-bottom: 4px; font: 600 10.5px var(--font-sans); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.sw-kv {
+  display: grid; gap: 4px; padding: 8px 10px;
+  border: 1.5px solid var(--data-line); border-radius: 10px; background: #fff;
+  transition: box-shadow var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+.sw-kv.is-empty { opacity: .6; }
+.sw-kv.is-new, .sw-kv.is-busy { box-shadow: 0 0 0 4px var(--data-tint), 0 0 0 5px var(--data-line); }
+.sw-kv.is-final { border-color: var(--out-line); background: var(--out-tint); }
+.sw-kv.is-final .sw-key { color: var(--out-ink); }
+.sw-key { justify-self: start; padding: 0; border: 0; background: none; font: 600 12px var(--font-mono); color: var(--data-ink); }
+.sw-val { overflow-wrap: anywhere; font: 500 12px/1.5 var(--font-mono); color: var(--ink); }
+.sw-printed pre {
+  min-height: 3.4em; max-height: 220px; margin: 0; padding: 8px 10px; overflow: auto;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--soft);
+  font: 500 12px/1.6 var(--font-mono); white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-kv, .sw .sw-worker, .sw .role-func .box { transition: none; }
+}
+@media (max-width: 760px) {
+  .sw-stage { grid-template-columns: minmax(0, 1fr); }
+}
